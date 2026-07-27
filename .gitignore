@@ -1,0 +1,24 @@
+# Saída gerada
+build/
+*.docx.bak
+~$*
+
+# Exceção: o template de estilos ABNT é versionado
+!scripts/reference-abnt.docx
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.swp
+
+# Segredos — nunca versionar
+.env
+**/.env
+*.pem
+*.key
+
+# Artefatos de ferramentas
+__pycache__/
+*.pyc
+.idea/
+.vscode/

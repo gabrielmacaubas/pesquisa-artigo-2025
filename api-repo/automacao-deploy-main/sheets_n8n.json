@@ -1,0 +1,448 @@
+{
+  "name": "Automação capacitação",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "1e3b9259-c5a4-4482-8669-9772b6f651cb",
+      "name": "inicio",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        820,
+        740
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://django-deployment-ten.vercel.app/login/",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{ \"username\": \"admin\", \"password\": \"123\" }",
+        "options": {}
+      },
+      "id": "88685083-97de-41b7-8873-87666bef6078",
+      "name": "faz login na API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1000,
+        900
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1B8yR_fVt9D0ztlMrgJ2uHvgT1jo0mTlYhwy0bzQk7LU",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1271057189,
+          "mode": "list",
+          "cachedResultName": "Respostas ao formulário 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1B8yR_fVt9D0ztlMrgJ2uHvgT1jo0mTlYhwy0bzQk7LU/edit#gid=1271057189"
+        },
+        "options": {}
+      },
+      "id": "06dc7781-1d15-469a-a604-0b07e72551aa",
+      "name": "lê toda a planilha",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.3,
+      "position": [
+        1200,
+        900
+      ],
+      "alwaysOutputData": true,
+      "notesInFlow": true,
+      "retryOnFail": true,
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "EPVzmV8YEPZQnRVP",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"nome\": \"{{ $json['Nome completo:'] }}\",\n  \"email\": \"{{ $json['Endereço de e-mail'] }}\",\n  \"curso\": \"{{ $json['Curso:'] }}\" ,\n  \"mentor\": \"{{ $json['Nome do(a) Mentor(a) Técnico(a):'] }}\",\n  \"matricula\": \"{{ $json['Matrícula:'] }}\",\n  \"projeto\": \"{{ $json['Projeto vinculado:'] }}\",\n  \"data_entrada\": \"{{ $json['Data em que entrou no Projeto:'] }}\",\n  \"respostas\": {\n    \"PENSAMENTO CRÍTICO & INOVAÇÃO\": [\n      \"{{ $json['1.1 Descrevo e exemplifico os elementos de um processo, dando contextos de onde eles ocorrem.'] }}\",\n\"{{ $json['1.2 Formulo perguntas sobre situações desconhecidas, a partir de informações coletadas por meio da observação.'] }}\",\n\"{{ $json['1.3 Determino as melhores soluções para um problema complexo e justifico a minha escolha.'] }}\",\n\"{{ $json['1.4 Analiso e explico os recursos utilizados, as soluções aplicadas e as conclusões geradas por uma investigação.'] }}\",\n\"{{ $json['1.5 Sintetizo informações de diferentes pontos de referência.'] }}\", \"{{ $json['1.6 Crio uma maneira inovadora de resolver problemas comuns.'] }}\"\n    ],\n    \"APRENDIZAGEM ATIVA & ESTRATÉGIAS DE APRENDIZAGEM\": [\n\"{{ $json['2.1 Gero novas maneiras de pensar.'] }}\", \"{{ $json['2.2 Compreendo os problemas, fazendo perguntas esclarecedoras para uma tomada de decisão. '] }}\", \"{{ $json['2.3 Proponho soluções e conclusões embasadas e avalio sua eficácia. '] }}\", \"{{ $json['2.4 Estimo a pesquisa, a origem dos dados e a atualização constante.'] }}\"\n    ],\n    \"CRIATIVIDADE, ORIGINALIDADE & INICIATIVA\": [\n\"{{ $json['3.1 Tenho disposição para assumir responsabilidades e encarar desafios.'] }}\", \"{{ $json['3.2 Experimento minhas próprias ideias e tomo decisões por conta própria.'] }}\", \"{{ $json['3.3 Planejo meu trabalho sem nenhuma supervisão.'] }}\", \"{{ $json['3.4 Apresento ideias incomuns ou inteligentes sobre determinado assunto ou situação.'] }}\", \"{{ $json['3.5 Desenvolvo formas criativas de resolver um problema.'] }}\", \"{{ $json['3.6 Estou aberto/a a novas experiências culturais e intelectuais.'] }}\"\n    ],\n    \"RESOLUÇÃO DE PROBLEMAS COMPLEXOS\": [\n \"{{ $json['4.1 Concretizo estratégias para organizar e analisar formas de resolução de problemas.'] }}\", \"{{ $json['4.2 Desenvolvo habilidades reflexivas, analíticas e de avaliação para resolver problemas e alcançar soluções.'] }}\", \"{{ $json['4.3 Identifico e analiso a origem dos problemas, agindo nas causas e não somente nos sintomas para garantir que não sejam recorrentes.'] }}\"\n    ],\n    \"LIDERANÇA & INFLUÊNCIA SOCIAL\": [\n     \"{{ $json['5.1 Expresso opiniões divergentes de forma construtiva, de maneira franca e respeitosa, não me intimidando em posicionar-me.'] }}\", \"{{ $json['5.2 Cultivo a escuta para elaborar uma boa comunicação na relação com outras pessoas.'] }}\", \"{{ $json['5.3 Comunico de forma objetiva, simples e clara, adequando minha linguagem aos diferentes públicos e checando o entendimento das pessoas.'] }}\", \"{{ $json['5.4 Demonstro clareza sobre meus interesses, pontos fortes e pontos a melhorar.'] }}\", \"{{ $json['5.5 Trabalho de forma colaborativa em atividades que envolvem diferentes áreas e pessoas.'] }}\", \"{{ $json['5.6 Ofereço ajuda quando percebo necessidades dentro ou até fora da minha área de atuação.'] }}\"\n    ],\n    \"EMPREENDEDORISMO\": [\n\"{{ $json['6.1 Atuo em prol da realização de um propósito coletivo, considerando os impactos e as consequências de suas atitudes e ações na cadeia de processo da organização. '] }}\", \"{{ $json['6.2 Antecipo problemas, agregando considerável valor para a área.'] }}\", \"{{ $json['6.3 Contribuo de forma voluntária para projetos e atividades.'] }}\", \"{{ $json['6.4 Ajo de forma proativa às oportunidades e dificuldades, para aproveitá-las ou corrigi-las, buscando ajuda necessária e/ou orientações específicas para iniciar minhas ações.'] }}\", \"{{ $json['6.5 Enfrento adversidades, resisto às frustrações, buscando estratégias construtivas para alcançar objetivos. '] }}\"\n    ]\n  },\n  \"observacao\": \"{{ $json[\"Deseja acrescentar alguma informação que não foi contemplada em alguma(as) da(s) questão(ões) ou até mesmo prover sugestões sobre este formulário? Fique à vontade para contribuir conosco fornecendo um feedback.\"] }}\"\n}            ",
+        "options": {}
+      },
+      "id": "6560526d-122d-494e-97e6-4db5aca49491",
+      "name": "Organiza Dados",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        1300,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "cd9ef55a-846e-4273-a205-dca9279f836e",
+      "name": "Loop",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1480,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"nome\": \"{{ $json[\"nome\"] }}\",\n  \"email\": \"{{ $json[\"email\"] }}\",\n  \"curso\": \"{{ $json[\"curso\"] }}\",\n  \"mentor\": \"{{ $json[\"mentor\"] }}\",\n  \"matricula\": \"{{ $json[\"matricula\"] }}\",\n  \"projeto\": \"{{ $json[\"projeto\"] }}\",\n  \"data_entrada\": \"{{ $json[\"data_entrada\"] }}\",\n  \"respostas\": { \"{{ Object.keys($json[\"respostas\"])[0] }}\": {{ Object.values($json[\"respostas\"])[0] }},\n  \"{{ Object.keys($json[\"respostas\"])[1] }}\": {{ Object.values($json[\"respostas\"])[1] }},\n  \"{{ Object.keys($json[\"respostas\"])[2] }}\": {{ Object.values($json[\"respostas\"])[2] }},\n  \"{{ Object.keys($json[\"respostas\"])[3] }}\": {{ Object.values($json[\"respostas\"])[3] }},\n  \"{{ Object.keys($json[\"respostas\"])[4] }}\": {{ Object.values($json[\"respostas\"])[4] }},\n  \"{{ Object.keys($json[\"respostas\"])[5] }}\": {{ Object.values($json[\"respostas\"])[5] }}},\n  \"observacao\": \"{{ $json.observacao }}\"\n}",
+        "options": {}
+      },
+      "id": "2f7d0994-6dd7-4010-a48d-68b6dc07dcab",
+      "name": "Organiza dados novamente",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        1680,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://django-deployment-ten.vercel.app/api/capacitacao/autoavaliacao_notas/",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "=token {{ $node[\"faz login na API\"].data.token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $node[\"Organiza dados novamente\"].data.toJsonString() }}",
+        "options": {}
+      },
+      "id": "e386c172-f040-4f4c-8ff5-351475bdd353",
+      "name": "Envia para API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1880,
+        660
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "=1c7UNq_514lFtvSRr94cTlZrxBjD7sOIhRqeReQJgMMQ",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1620667929,
+          "mode": "list",
+          "cachedResultName": "Notas",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1c7UNq_514lFtvSRr94cTlZrxBjD7sOIhRqeReQJgMMQ/edit#gid=1620667929"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ALUNO": "={{ $json.aluno }}",
+            "AUTOAVALIAÇÃO": "={{ $json.autoavaliacao }}",
+            "PENSAMENTO CRÍTICO E INOVAÇÃO": "={{ $json['pensamento crítico & inovação'] }}",
+            "APRENDIZAGEM ATIVA E ESTRATÉGIAS DE APRENDIZAGEM": "={{ $json['aprendizagem ativa & estratégias de aprendizagem'] }}",
+            "CRIATIVIDADE, ORIGINALIDADE E INICIATIVA": "={{ $json['criatividade, originalidade & iniciativa'] }}",
+            "RESOLUÇÃO DE PROBLEMAS COMPLEXOS": "={{ $json['resolução de problemas complexos'] }}",
+            "LIDERANÇA E INFLUÊNCIA SOCIAL": "={{ $json['liderança & influência social'] }}",
+            "EMPREENDEDORISMO": "={{ $json.empreendedorismo }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "ALUNO",
+              "displayName": "ALUNO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "AUTOAVALIAÇÃO",
+              "displayName": "AUTOAVALIAÇÃO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PENSAMENTO CRÍTICO E INOVAÇÃO",
+              "displayName": "PENSAMENTO CRÍTICO E INOVAÇÃO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "APRENDIZAGEM ATIVA E ESTRATÉGIAS DE APRENDIZAGEM",
+              "displayName": "APRENDIZAGEM ATIVA E ESTRATÉGIAS DE APRENDIZAGEM",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CRIATIVIDADE, ORIGINALIDADE E INICIATIVA",
+              "displayName": "CRIATIVIDADE, ORIGINALIDADE E INICIATIVA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "RESOLUÇÃO DE PROBLEMAS COMPLEXOS",
+              "displayName": "RESOLUÇÃO DE PROBLEMAS COMPLEXOS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LIDERANÇA E INFLUÊNCIA SOCIAL",
+              "displayName": "LIDERANÇA E INFLUÊNCIA SOCIAL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "EMPREENDEDORISMO",
+              "displayName": "EMPREENDEDORISMO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "aluno",
+              "displayName": "aluno",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "autoavaliacao",
+              "displayName": "autoavaliacao",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "pensamento crítico & inovação",
+              "displayName": "pensamento crítico & inovação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "aprendizagem ativa & estratégias de aprendizagem",
+              "displayName": "aprendizagem ativa & estratégias de aprendizagem",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "criatividade, originalidade & iniciativa",
+              "displayName": "criatividade, originalidade & iniciativa",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "resolução de problemas complexos",
+              "displayName": "resolução de problemas complexos",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "liderança & influência social",
+              "displayName": "liderança & influência social",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "empreendedorismo",
+              "displayName": "empreendedorismo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9b90628e-6f36-4fc0-bbe8-cd51f4f721ba",
+      "name": "insere na planilha intermediaria",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.3,
+      "position": [
+        2040,
+        660
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "EPVzmV8YEPZQnRVP",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "inicio": {
+      "main": [
+        [
+          {
+            "node": "faz login na API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "faz login na API": {
+      "main": [
+        [
+          {
+            "node": "lê toda a planilha",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "lê toda a planilha": {
+      "main": [
+        [
+          {
+            "node": "Organiza Dados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Organiza Dados": {
+      "main": [
+        [
+          {
+            "node": "Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Organiza dados novamente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Organiza dados novamente": {
+      "main": [
+        [
+          {
+            "node": "Envia para API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envia para API": {
+      "main": [
+        [
+          {
+            "node": "insere na planilha intermediaria",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "insere na planilha intermediaria": {
+      "main": [
+        [
+          {
+            "node": "Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "2d653d1e-fb4e-44ac-8ca7-621b0562ce1c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0d5b43104db548113e20f7676a381187d345232bbf82b9544ee77a27f5654bd8"
+  },
+  "id": "xfgkmh2GWBTRXyZx",
+  "tags": []
+}

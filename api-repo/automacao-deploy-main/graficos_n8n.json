@@ -1,0 +1,240 @@
+{
+  "name": "gráficos",
+  "nodes": [
+    {
+      "parameters": {
+        "functionCode": "const avaliacoes = items[0].json.autoavaliacoes;\nlet resultado = '';\nfor (let i = 0, len = avaliacoes.length; i < len; ++i) {\n  let av = \"{label:'A\"+avaliacoes[i].unidade+\"',data:[\"\n  for (let e = 0, len = avaliacoes[i].notas.length; e < len; ++e) {\n    if (e == avaliacoes[i].notas.length-1) {\n      av += avaliacoes[i].notas[e].nota + ''\n    } else {\n      av += avaliacoes[i].notas[e].nota + ', '\n    }\n  }\n  if (i == avaliacoes.length-1) {\n    av += \"], borderDash: [2, 2], fill: false}\"\n  } else {\n    av += \"]},\"\n  }\n  resultado += av\n}\n\nreturn {\n  json: {\n    nome: items[0].json.nome,\n    data: resultado\n  }\n};"
+      },
+      "name": "Process Data",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        380
+      ],
+      "id": "cd700358-90b4-4723-a34b-43929a36c217"
+    },
+    {
+      "parameters": {
+        "url": "=https://quickchart.io/chart?c={type:'radar',data:{labels:['PENSAMENTO CRÍTICO E INOVAÇÃO', 'APRENDIZAGEM ATIVA E ESTRATÉGIAS DE APRENDIZAGEM', 'CRIATIVIDADE, ORIGINALIDADE E INICIATIVA', 'RESOLUÇÃO DE PROBLEMAS COMPLEXOS', 'LIDERANÇA E INFLUÊNCIA SOCIAL', 'EMPREENDEDORISMO'],datasets:[{{ $json.data }}]}, options: { maintainAspectRatio: false, responsive: true, title: { display: true, text: \"{{ $json.nome }}\" }, scale: { pointLabels: { fontSize: 8 }, ticks: { stepSize: 1, beginAtZero: true, min: 0, max: 4 } }, plugins: { backgroundColor: 'blue' } },} ",
+        "options": {}
+      },
+      "id": "b7ba2f62-f659-4e08-af56-1c226c61cb2c",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2040,
+        380
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "89091bca-b304-45f0-918f-c1a0f180564c",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1380,
+        600
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "4101e606-9406-4730-bae8-b35ef1d45ba2",
+      "name": "When clicking \"Test workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        820,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://django-deployment-ten.vercel.app/login/",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{ \"username\": \"admin\", \"password\": \"123\" }",
+        "options": {}
+      },
+      "id": "e9ae968c-dd2a-4359-be2d-0b67c6ce6b44",
+      "name": "faz login na API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1020,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "1ac6df3f-1b43-42d8-969d-d61e245f1e6c",
+      "name": "Loop Over Items1",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1440,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://django-deployment-ten.vercel.app/api/capacitacao/discentes/",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "=token {{ $node[\"faz login na API\"].data.token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "42c55477-6a54-484b-8186-3a312eb5ee42",
+      "name": "Get discentes",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1220,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://django-deployment-ten.vercel.app/api/capacitacao/discentes_notas/{{ $json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "=token {{ $node[\"faz login na API\"].data.token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "20bf73cf-e557-46eb-b8fe-e5b982774b34",
+      "name": "Get notas do discente",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1660,
+        380
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Loop Over Items": {
+      "main": [
+        [],
+        []
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking \"Test workflow\"": {
+      "main": [
+        [
+          {
+            "node": "faz login na API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "faz login na API": {
+      "main": [
+        [
+          {
+            "node": "Get discentes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Get notas do discente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get discentes": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get notas do discente": {
+      "main": [
+        [
+          {
+            "node": "Process Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Data": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "3859751e-16f5-489d-bf22-ddd7dfe08d43",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0d5b43104db548113e20f7676a381187d345232bbf82b9544ee77a27f5654bd8"
+  },
+  "id": "5i2uULzqJnJhUUdn",
+  "tags": []
+}

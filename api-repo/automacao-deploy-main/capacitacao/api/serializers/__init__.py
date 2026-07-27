@@ -1,0 +1,3 @@
+from .autoavaliacao import CreateAutoavaliacaoSerializer, ListAutoavaliacaoSerializer
+from .users import UserSerializer
+from .discente import ListDiscenteSerializer
