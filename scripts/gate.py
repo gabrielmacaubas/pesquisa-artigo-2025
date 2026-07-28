@@ -18,6 +18,7 @@ Exit: 0 limpo | 1 bloqueante | 2 apenas pendências
 Uso:
   python3 scripts/gate.py             # verificação completa
   python3 scripts/gate.py --figuras   # só a lista de imagens a produzir
+  python3 scripts/gate.py --estilo    # só a checagem de voz (parecer texto de IA)
 """
 
 import os
@@ -29,9 +30,10 @@ RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECOES = os.path.join(RAIZ, 'secoes')
 REFS = os.path.join(RAIZ, 'refs.md')
 
-TETO_PAGINAS = 20.0
-ALVO_PAGINAS = 18.0
-PALAVRAS_POR_PAGINA = 380.0
+TETO_PAGINAS = 18.0
+MIN_PAGINAS = 12.0
+ALVO_PAGINAS = 16.0
+PALAVRAS_POR_PAGINA = 700.0
 CM_POR_PAGINA = 24.0
 FOLGA_LEGENDA_CM = 1.5
 
@@ -39,15 +41,31 @@ CAMPOS_FIG = ['tipo', 'status', 'origem', 'dados', 'descricao',
               'legenda', 'largura', 'altura_cm', 'arquivo']
 STATUS_FIG = ['criar', 'reutilizar', 'pronto']
 
+# --- perfil de estilo do grupo, medido no manuscrito de 2024 -----------------
+ALVO_PALAVRAS_FRASE = (21.0, 30.0)      # media do grupo: 25,4
+ALVO_PALAVRAS_PARAGRAFO = (60.0, 105.0)  # media do grupo: 81
+CONECTIVOS_PROIBIDOS = [
+    'Ademais', 'Outrossim', 'Nesse sentido', 'Cumpre destacar', 'Vale salientar',
+    'Vale ressaltar', 'Vale destacar', 'Por conseguinte', 'Destarte', 'Em suma',
+    'Em síntese', 'É importante ressaltar', 'É importante notar', 'Cabe destacar',
+]
+LEXICO_SUSPEITO = [
+    'robusto', 'robusta', 'abrangente', 'holístic', 'poderos', 'revolucionári',
+    'aprofundar-se', 'mergulh', 'panorama', 'cenário atual', 'na era digital',
+    'desempenha um papel', 'de suma importância', 'amplamente reconhecid',
+]
+PRIMEIRA_PESSOA = r'\b(realizamos|utilizamos|desenvolvemos|apresentamos|observamos|nossa|nosso|nossos|nossas)\b'
+
 # --- padrões -----------------------------------------------------------------
 # refs.md:  ## [SILVA, 2020]
 RE_REF_CHAVE = re.compile(r'^##\s*\[([^\],]+),\s*(\d{4}[a-z]?)\]', re.M)
 RE_REF_CAMPO = re.compile(r'^-\s*\*\*(\w+):\*\*\s*(.*)$', re.M)
 
 # citação entre parênteses: (SILVA, 2020) (SILVA; COSTA, 2020) (SILVA et al., 2020)
-RE_CIT_PAREN = re.compile(r'\(([A-ZÁÂÃÉÊÍÓÔÕÚÇ][A-ZÁÂÃÉÊÍÓÔÕÚÇ\s;.\-]+?)'
+_NOME = r'[A-ZÁÂÃÉÊÍÓÔÕÚÇ][A-Za-zÀ-ÿ]+(?:\s+(?:Junior|J\u00fanior|Neto|Filho|Sobrinho|de|da|dos))*'
+RE_CIT_PAREN = re.compile(r'\((' + _NOME + r'(?:\s*;\s*' + _NOME + r')*)'
                           r'(?:\s+et\s+al\.)?,\s*(\d{4}[a-z]?)'
-                          r'(?:,\s*p\.\s*[\d\-]+)?\)')
+                          r'(?:,\s*p\.\s*[\d\u2013\-]+)?\)')
 # citação narrativa: Silva (2020) / Silva e Costa (2020) / Silva et al. (2020)
 RE_CIT_NARR = re.compile(r'\b([A-ZÁÂÃÉÊÍÓÔÕÚÇ][a-zçãéêíóôõáâú]+)'
                          r'(?:\s+(?:e|et\s+al\.)\s*[A-ZÁÂÃÉÊÍÓÔÕÚÇ]?[a-zçãéêíóôõáâú]*)?'
@@ -251,7 +269,7 @@ def orcamento(secoes, figuras, refs):
         if campos.get('largura') == 'meia':
             custo /= 2.0
         pag_fig += custo
-    pag_refs = len(refs) / 3.0
+    pag_refs = len(refs) / 5.0
     total = pag_texto + pag_fig + pag_refs
 
     print('\n── Orçamento de páginas ' + '─' * 40)
@@ -263,9 +281,14 @@ def orcamento(secoes, figuras, refs):
     print('     figuras (%d) ... %5.1f pág' % (len(figuras), pag_fig))
     print('     referências ... %5.1f pág' % pag_refs)
     print('     ' + '-' * 30)
-    print('     ESTIMADO ...... %5.1f pág   (alvo %.0f | teto %.0f)'
-          % (total, ALVO_PAGINAS, TETO_PAGINAS))
+    print('     ESTIMADO ...... %5.1f pág   (janela %.0f-%.0f | alvo %.0f)'
+          % (total, MIN_PAGINAS, TETO_PAGINAS, ALVO_PAGINAS))
 
+    if total < MIN_PAGINAS and total > 1.0:
+        aviso('abaixo do mínimo da revista: %.1f pág, exigido %.0f '
+              '(faltam ~%d palavras)'
+              % (total, MIN_PAGINAS,
+                 int((ALVO_PAGINAS - total) * PALAVRAS_POR_PAGINA)))
     if total > TETO_PAGINAS:
         erro('orçamento estourado: %.1f páginas estimadas, teto é %.0f '
              '(cortar ~%d palavras)'
@@ -274,6 +297,57 @@ def orcamento(secoes, figuras, refs):
     elif total > ALVO_PAGINAS:
         aviso('orçamento em %.1f pág — acima do alvo de %.0f, sem folga para revisão'
               % (total, ALVO_PAGINAS))
+
+
+def checar_estilo(secoes):
+    print('\n── Voz e estilo ' + '─' * 48)
+    print('   (perfil do grupo em 2024: %.0f-%.0f palavras/frase, %.0f-%.0f/parágrafo)'
+          % (ALVO_PALAVRAS_FRASE + ALVO_PALAVRAS_PARAGRAFO))
+    for nome, texto in secoes:
+        corpo = sem_codigo(RE_FRONTMATTER.sub('', texto))
+        corpo = RE_PLACEHOLDER.sub('', RE_FIG_REF.sub('', corpo))
+        corpo = re.sub(r'^#{1,6}\s.*$', '', corpo, flags=re.M)
+
+        frases = [f for f in re.split(r'(?<=[.!?])\s+', corpo) if len(f.split()) > 3]
+        paras = [p for p in corpo.split('\n') if len(p.split()) > 25]
+        if not frases:
+            continue
+        mf = sum(len(f.split()) for f in frases) / float(len(frases))
+        mp = (sum(len(p.split()) for p in paras) / float(len(paras))) if paras else 0.0
+        print('   %-30s %4.1f pal/frase   %5.1f pal/parágrafo  (%d frases)'
+              % (nome, mf, mp, len(frases)))
+
+        if mf < ALVO_PALAVRAS_FRASE[0]:
+            aviso('%s: frases curtas demais (%.1f pal) — o grupo escreve ~25; '
+                  'texto picotado é marcador de geração automática' % (nome, mf))
+        elif mf > ALVO_PALAVRAS_FRASE[1]:
+            aviso('%s: frases longas demais (%.1f pal) mesmo para o padrão do grupo'
+                  % (nome, mf))
+        if paras and mp < ALVO_PALAVRAS_PARAGRAFO[0]:
+            aviso('%s: parágrafos curtos demais (%.0f pal) — o grupo escreve ~81'
+                  % (nome, mp))
+
+        for c in CONECTIVOS_PROIBIDOS:
+            for m in re.finditer(r'\b' + c, corpo, re.I):
+                aviso('%s:%d conectivo "%s" não é usado pelo grupo (marcador de IA)'
+                      % (nome, linha_de(corpo, m.start()), c))
+        for t in LEXICO_SUSPEITO:
+            for m in re.finditer(t, corpo, re.I):
+                aviso('%s:%d léxico suspeito "%s" — ausente no texto de 2024'
+                      % (nome, linha_de(corpo, m.start()), m.group(0)))
+        for m in re.finditer(PRIMEIRA_PESSOA, corpo, re.I):
+            erro('%s:%d "%s" — a revista exige forma impessoal'
+                 % (nome, linha_de(corpo, m.start()), m.group(0)))
+        for m in re.finditer(r'\s—\s[^—\n]{3,60}\s—\s', corpo):
+            aviso('%s:%d travessão duplo (aposto) — hábito de LLM; use vírgula'
+                  % (nome, linha_de(corpo, m.start())))
+        for m in re.finditer(r'\b(\w+),\s+(\w+)\s+e\s+(\w+)\b', corpo):
+            if all(len(g) > 5 for g in m.groups()):
+                aviso('%s:%d possível tríade "%s" — enumerar em três é reflexo de LLM'
+                      % (nome, linha_de(corpo, m.start()), m.group(0)[:45]))
+        for m in re.finditer(r'^\s*[-*•]\s+', corpo, re.M):
+            aviso('%s:%d lista no corpo — o texto de 2024 é prosa corrida'
+                  % (nome, linha_de(corpo, m.start())))
 
 
 def listar_figuras(figuras):
@@ -298,6 +372,7 @@ def listar_figuras(figuras):
 
 def main():
     so_figuras = '--figuras' in sys.argv
+    so_estilo = '--estilo' in sys.argv
     refs = carregar_refs()
     secoes = carregar_secoes()
 
@@ -311,9 +386,18 @@ def main():
         listar_figuras(figuras)
         return 0
 
+    if so_estilo:
+        checar_estilo(secoes)
+        for p in pendencias:
+            print('  🟡 %s' % p)
+        for b in bloqueantes:
+            print('  🔴 %s' % b)
+        return 1 if bloqueantes else (2 if pendencias else 0)
+
     checar_citacoes(secoes, refs)
     checar_placeholders(secoes)
     orcamento(secoes, figuras, refs)
+    checar_estilo(secoes)
     listar_figuras(figuras)
 
     if bloqueantes:

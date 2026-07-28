@@ -1,61 +1,75 @@
-# Orçamento de Páginas — teto rígido de 20
+# Orçamento de Páginas — janela de 12 a 18
 
 ## A restrição
 
-O artigo **não pode passar de 20 páginas** formatadas. Isso não é meta, é teto. Se as
-diretrizes do veículo (`docs/`) impuserem limite menor, o menor prevalece — registre em
-`ESTADO.md`.
+A Revista Principia exige **no mínimo 12 e no máximo 18 páginas**, incluindo referências,
+tabelas e ilustrações. **As duas pontas rejeitam**: curto demais é barrado na triagem,
+longo demais também. Alvo de trabalho: **16 páginas**, com folga nas duas direções.
 
-Estourar o limite é caro no pior momento: você descobre na formatação final, quando cortar
-significa desmontar argumento já revisado. Por isso o orçamento é verificado a **cada
-seção escrita**, não no fim.
+Verificar a cada seção escrita, nunca só no fim — descobrir o desvio na formatação final
+significa desmontar argumento já revisado.
 
 ## Modelo de estimativa
 
-Base ABNT (Arial 12, espaçamento 1,5, margens 3/2 cm): **≈ 380 palavras por página** de
-texto corrido.
+Formato Principia (A4, TNR 11, **espaçamento simples**, margens 3,5/2/2,5/2,5):
+área útil de 16 × 24,2 cm ≈ **700 palavras por página**.
+
+Atenção: espaçamento simples cabe quase o dobro de um layout ABNT 1,5. Um artigo de 16
+páginas aqui tem ~10.000 palavras — bem mais texto do que a contagem de páginas sugere.
 
 | Elemento | Custo |
 |---|---|
-| 380 palavras | 1,0 página |
-| Figura `1col`, `altura_cm: H` | `(H + 1,5) / 24` página (o +1,5 é legenda + respiro) |
+| 700 palavras | 1,0 página |
+| Figura `1col`, altura `H` cm | `(H + 1,5) / 24` página |
 | Figura `meia` | metade do acima |
-| Tabela | conte as linhas: `(linhas × 0,7 cm + 2) / 24` |
-| Referências | ≈ 3 por página, espaçamento simples |
-| Pré-textuais (capa, resumo, sumário) | conforme veículo — orce 2 páginas se exigidos |
+| Tabela | `(linhas × 0,55 + 2) / 24` página |
+| Referências | ≈ 5 por página (TNR 11, simples) |
 
-`scripts/gate.py` calcula isso e reporta. A estimativa erra para mais ou para menos em
-torno de 5% — trabalhe com **18 páginas como alvo**, deixando folga.
+`scripts/gate.py` calcula e reporta. Erro típico de ±5%.
 
-## Distribuição inicial sugerida (ajuste no outline)
+## Distribuição alvo (~16 páginas)
 
-Para 20 páginas com ~4 figuras, sobram ~16 páginas de texto ≈ **6.000 palavras**:
+Referência: o manuscrito de 2024 tem 8.495 palavras. Este precisa ser maior, porque
+cobre duas frentes (persistência/API e certificação/n8n).
 
-| Seção | Palavras | Páginas |
+| Seção | Palavras | ~Páginas |
 |---|---|---|
-| Resumo + Abstract | 500 | 1,3 |
-| 1. Introdução | 900 | 2,4 |
-| 2. Referencial teórico | 1.000 | 2,6 |
-| 3. Metodologia / Arquitetura | 1.400 | 3,7 |
-| 4. Resultados | 1.200 | 3,2 |
-| 5. Discussão | 700 | 1,8 |
-| 6. Conclusão | 500 | 1,3 |
-| Referências | — | 1,5 |
-| Figuras (4 × 6 cm) | — | 1,3 |
+| Resumo + Abstract + palavras-chave | 550 | 0,8 |
+| 1 Introdução | 1.100 | 1,6 |
+| 2 Referencial teórico | 1.600 | 2,3 |
+| 3 Método da pesquisa | 2.200 | 3,1 |
+| 4 Resultados e discussões | 2.800 | 4,0 |
+| 5 Conclusão | 700 | 1,0 |
+| Financiamento + Conflito de interesses + Agradecimentos | 100 | 0,1 |
+| **Subtotal texto** | **9.050** | **12,9** |
+| Figuras (≈6, média 6 cm) | — | 1,9 |
+| Referências (≈20) | — | 1,2 |
+| **Total estimado** | | **≈16,0** |
 
-Cada seção declara seu alvo em `00-outline.md`. O gate compara o real com o alvo.
+Cada seção declara seu alvo no front matter; o gate compara com o real.
 
-## Quando estourar
+## Se faltar página (abaixo de 12)
 
-Na ordem, corte:
-1. **Referencial teórico** — é onde quase sempre há excesso. Ele existe para posicionar
-   a contribuição, não para provar que você leu.
-2. **Descrição de implementação** — detalhe de configuração do n8n vai para apêndice ou
-   para o repositório, com link. Artigo descreve decisão de projeto, não passo a passo.
+Mais provável do que sobrar, dado o espaçamento simples. Na ordem, expanda:
+
+1. **Resultados e discussões** — discutir cada achado à luz da literatura, que é
+   exatamente o que a revista pede e o que costuma faltar.
+2. **Referencial teórico** — o campo (automação de processos educacionais, low-code,
+   avaliação de competências) tem literatura recente e a revista prefere ≥2019.
+3. **Método** — reprodutibilidade é critério explícito da revista; detalhar o fluxo de
+   decisão da regra de 2/3 e o modelo de dados agrega valor real.
+
+Não infle com adjetivo nem com repetição do que já foi dito. Página ganha por conteúdo.
+
+## Se passar de 18
+
+1. **Detalhe de implementação** → pseudocódigo + link do repositório (a revista recomenda
+   isso explicitamente).
+2. **Referencial** que não sustenta a contribuição.
 3. **Figuras redundantes** — duas que mostram o mesmo fenômeno viram uma.
 
-Nunca corte: limitações, contribuição incremental sobre 2024, ou origem dos dados.
+Nunca corte: limitações, origem dos dados, ou a discussão dos resultados à luz da
+literatura.
 
-Se o corte necessário for maior que ~15%, o problema é de escopo, não de redação —
-**use `AskUserQuestion`** para o autor decidir o que sai, em vez de comprimir tudo
-uniformemente até o texto ficar ilegível.
+Se o ajuste necessário passar de ~15%, o problema é de escopo, não de redação — use
+`AskUserQuestion` para o autor decidir o que entra ou sai.

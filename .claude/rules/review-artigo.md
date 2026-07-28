@@ -45,18 +45,46 @@ os achados:
 
 ## 5. Forma
 
-- [ ] Pessoa verbal consistente em todo o artigo
+- [ ] Forma impessoal em todo o artigo (exigência da revista) — zero primeira pessoa
 - [ ] Sem adjetivo avaliativo sem número atrás
 - [ ] Sem formatação manual dentro dos `.md`
 - [ ] Alvos de palavras por seção respeitados (gate avisa)
 - [ ] Resumo/abstract escritos por último e refletindo o texto final
+- [ ] Entre 12 e 18 páginas estimadas
+- [ ] Introdução termina com parágrafo apresentando as seções seguintes
+- [ ] Nenhuma seção tem subseção sem texto introdutório antes
 
-## 6. Ética e autoria
+## 5b. Voz — o texto parece escrito por IA? (🟡 MAJOR, pode virar 🔴)
 
-- [ ] Todos os participantes/parceiros com contribuição relevante estão creditados
-- [ ] Financiamento/apoio institucional declarado, se houver
-- [ ] Dados de pessoas (se houver) anonimizados ou com consentimento registrado
-- [ ] Ordem de autoria acordada — `[[DECIDIR]]` até confirmação explícita do autor
+> Referência: `.claude/rules/voz-e-estilo.md`, calibrada sobre o manuscrito de 2024 do
+> próprio grupo. Rodar `python3 scripts/gate.py --estilo` antes desta seção.
+
+- [ ] Média de palavras por frase entre 21 e 30 (o grupo escreve 25,4). Frase curta
+      demais é o marcador mais forte de geração automática neste projeto
+- [ ] Parágrafos entre 60 e 105 palavras (o grupo escreve 81) — não blocos curtos uniformes
+- [ ] Nenhum conectivo da lista proibida (`Ademais`, `Nesse sentido`, `Em suma`,
+      `Vale ressaltar`, `Outrossim`, `Destarte`, `Por conseguinte`…)
+- [ ] Léxico suspeito ausente (`robusto`, `abrangente`, `poderoso`, `holístico`,
+      `panorama`, `na era digital`, `desempenha um papel`…)
+- [ ] Sem tríades reflexas ("eficiência, escalabilidade e confiabilidade")
+- [ ] Sem travessão duplo para aposto
+- [ ] Sem frase-resumo vazia fechando parágrafos
+- [ ] Sem lista com marcadores no corpo (o texto de 2024 é prosa corrida)
+- [ ] Terminologia constante: sempre `discente`, `unidade`, `soft skill` — sem sinônimos
+      alternando por elegância
+- [ ] **Teste final:** um avaliador que leu o manuscrito de 2024 reconheceria a mesma mão?
+      Se não, é problema de voz mesmo com o conteúdo correto
+
+## 6. Normas da revista e autoria
+
+- [ ] Manuscrito **sem qualquer identificação de autoria** (submissão duplo-cega)
+- [ ] Seções obrigatórias presentes: Financiamento e Conflito de interesses
+- [ ] Equipe não-autora creditada em Agradecimentos (11 integrantes, 4 autores)
+- [ ] **Nenhum dado individual de discente** no texto, tabelas ou figuras
+- [ ] Nenhuma credencial, hostname ou URL de banco no texto ou em figura
+- [ ] Nada citado que a revista proíba: trabalho em avaliação (manuscrito 2024),
+      slides (apresentação 2024), relatório de estágio
+- [ ] Referências majoritariamente de 2019 em diante, com DOI quando disponível
 
 ## Veredito
 

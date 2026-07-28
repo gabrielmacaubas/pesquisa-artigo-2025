@@ -1,80 +1,86 @@
-# Outline — Artigo 2025
+# Outline — Artigo 2025 · Revista Principia
 
-> Preenchido pelo comando `/definir-argumento` (etapa 2). **Nenhuma seção pode ser
-> escrita antes deste arquivo estar aprovado pelo autor.** Este é o "PRD" do artigo.
-
----
+> Aprovado em 27/07/2026 (D-1). Alterações aqui exigem nova decisão do autor.
 
 ## Identificação
 
-- **Título provisório:** [[DECIDIR]]
-- **Veículo:** [[VERIFICAR: confirmar destino e suas diretrizes em `docs/`]]
-- **Teto:** 20 páginas · **alvo de trabalho:** 18 · **orçamento de texto:** ~6.000 palavras
-- **Pessoa verbal:** [[DECIDIR: terceira pessoa vs. primeira do plural]]
+- **Título provisório:** `[[DECIDIR]]` — máx. 50 palavras, só a 1ª letra maiúscula, sem
+  ponto final. Precisa de versão em inglês.
+- **Veículo:** Revista Principia — artigo original
+- **Janela:** 12 a 18 páginas · **alvo 16** · ~9.050 palavras de texto
+- **Voz:** impessoal (exigência da revista e padrão do grupo)
+- **Autores (D-3):** Gabriel Macaúbas Melo · Juliana Ferreira Cavalcante ·
+  Heremita Brasileiro Lira · Francisco Petrônio — **não identificados no manuscrito**
 
-## Tese
+## Tese (D-1)
 
-Uma frase. A afirmação que o artigo inteiro sustenta.
+> A automação de um ciclo formativo não se completa na geração de indicadores de
+> desempenho; ela exige a camada de decisão — a certificação por critério objetivo — e a
+> camada de intervenção — a recomendação pedagógica dirigida. Ambas só se sustentam sobre
+> persistência estruturada com rastreabilidade histórica, e não sobre planilhas.
 
-> _(a definir)_
+## Contribuição
 
-## Contribuição incremental sobre o artigo de 2024
+O ciclo anterior do projeto automatizou a produção de indicadores (gráficos radar e
+tabelas) a partir de planilhas. Persistia a etapa que efetivamente encerra o ciclo
+formativo: decidir quem está apto à certificação e devolver ao discente uma orientação
+acionável. Este trabalho apresenta:
 
-O que existe aqui que não existia lá. **Este é o parágrafo que decide se o artigo é
-publicável.** Se não for possível escrevê-lo com evidência, o problema é de resultado,
-não de redação — e precisa ser resolvido antes de escrever qualquer seção.
+1. Modelo de dados com rastreabilidade histórica (`models.PROTECT`), que torna a
+   comparação longitudinal entre unidades possível
+2. Operacionalização da regra de certificação — evolução de nível em ao menos 2/3 das
+   competências avaliadas — como consulta sobre dados persistidos
+3. Módulo de recomendação pedagógica (práticas *hands-on* / PBL) com envio autônomo
+4. Migração de infraestrutura Railway → Neon/Vercel, com API serverless
 
-> _(a definir)_
+⚠️ **O manuscrito de 2024 não pode ser citado** (trabalho em avaliação). A continuidade é
+narrada como histórico do projeto, sustentada em dados próprios do mapa de fatos — nunca
+em "(Autor, 2024)".
 
-## Limitações declaradas
+## Limitações a declarar
 
-O que o estudo **não** demonstra. Declarar aqui evita que a conclusão ultrapasse os
-resultados depois.
-
-> _(a definir)_
-
----
+- Recorte de operação real, não censo do programa: o resultado é **viabilidade
+  demonstrada**, não escala.
+- Latência: API e banco em `us-east-1`; hospedagem local no IFPB apontada como mitigação.
+- Autoavaliação como instrumento — `[[VERIFICAR: há mecanismo contra notas infladas?]]`
 
 ## Mapa de seções
 
-Para cada seção: função no argumento, alvo de palavras, fontes que a alimentam, figuras
-previstas. Os alvos abaixo são a distribuição sugerida em
-`.claude/rules/orcamento-paginas.md` — ajuste conforme o argumento escolhido, mantendo o
-total em ~6.000.
-
 | # | Arquivo | Função no argumento | Alvo | Fontes | Figuras |
 |---|---|---|---|---|---|
-| 00 | `secoes/00-resumo.md` | Resumo + abstract + palavras-chave (escrever **por último**) | 500 | todo o artigo | — |
-| 01 | `secoes/01-introducao.md` | Problema, lacuna, tese, contribuição | 900 | mapa-de-fatos, artigo 2024 | — |
-| 02 | `secoes/02-referencial.md` | Posiciona a contribuição na literatura (não prova que leu) | 1.000 | refs externas | — |
-| 03 | `secoes/03-metodologia.md` | Arquitetura n8n + API + geração + envio; reprodutibilidade | 1.400 | mapa-de-fatos, `api-repo/` | diagrama de arquitetura |
-| 04 | `secoes/04-resultados.md` | O que foi medido, sem interpretar | 1.200 | dados do n8n, TCCs | gráficos |
-| 05 | `secoes/05-discussao.md` | Interpreta; compara com 2024; limitações | 700 | — | — |
-| 06 | `secoes/06-conclusao.md` | Retoma a tese; trabalhos futuros | 500 | — | — |
+| 00 | `secoes/00-resumo.md` | Resumo (200–300 pal, sem citações) + Abstract + palavras-chave. **Escrever por último** | 550 | todo o artigo | — |
+| 01 | `secoes/01-introducao.md` | Problema, lacuna, objetivo. **Termina com parágrafo apresentando as seções** | 1.100 | mapa §1, §2 | — |
+| 02 | `secoes/02-referencial.md` | Automação de processos educacionais, low-code/n8n, avaliação de competências. Prioriza ≥2019 | 1.600 | literatura a levantar | — |
+| 03 | `secoes/03-metodo.md` | Arquitetura, modelo de dados, regra de 2/3, tratamento dos dados. Reprodutibilidade | 2.200 | mapa §4, §5, §11; `api-repo/` | arquitetura, DER |
+| 04 | `secoes/04-resultados.md` | Snapshot do banco, cobertura longitudinal, desempenho, discussão à luz da literatura | 2.800 | mapa §6, §9 | cobertura, distribuição |
+| 05 | `secoes/05-conclusao.md` | Retoma objetivo, limitações, trabalhos futuros | 700 | — | — |
+| 06 | `secoes/06-declaracoes.md` | Agradecimentos (equipe não-autora) · Financiamento · Conflito de interesses | 100 | mapa §1, §3 | — |
 
 ## Ordem de escrita
 
-Seções mais ancoradas em evidência primeiro; as que dependem do conjunto, por último.
-
-1. `03-metodologia` — a mais factual, ancora o resto
+1. `03-metodo` — mais ancorada em evidência
 2. `04-resultados`
-3. `02-referencial`
-4. `05-discussao`
-5. `01-introducao`
-6. `06-conclusao`
-7. `00-resumo` — **sempre por último**
+3. `02-referencial` — depende de levantamento bibliográfico ainda não feito
+4. `01-introducao`
+5. `05-conclusao` · `06-declaracoes`
+6. `00-resumo` — **sempre por último**
 
-## Front matter obrigatório de cada seção
-
-O gate lê estes campos. Toda seção começa com:
+## Front matter obrigatório
 
 ```markdown
 ---
-secao: 03-metodologia
-titulo: Metodologia
-alvo_palavras: 1400
+secao: 03-metodo
+titulo: Método da pesquisa
+alvo_palavras: 2200
 status: rascunho
 ---
 ```
 
 `status`: `rascunho` | `revisado-autor` | `revisado-orientadora` | `final`
+
+## Bloqueios conhecidos
+
+- Relatórios de estágio (`docs/tcc_*.pdf`) ainda não lidos integralmente — obrigatório
+  antes de `03-metodo` e `04-resultados`
+- Referencial teórico sem nenhuma referência levantada — `refs.md` está vazio
+- `[[VERIFICAR]]` de certificados/e-mails emitidos: não há tabela desses eventos no banco

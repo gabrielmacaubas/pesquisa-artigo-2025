@@ -57,6 +57,21 @@ O gate cruza os dois sentidos e ambos são **bloqueantes**:
 
 Figura não referenciada no texto é erro de norma ABNT, não só descuido.
 
+## Exigências da Revista Principia (bloqueiam a submissão)
+
+- Figuras em `.jpg`/`.png` com **mínimo 300 dpi**.
+- **Texto interno da figura em Times New Roman, tamanho ≥ 18**, proporcional. Isso
+  inviabiliza a maioria dos screenshots de código e de tela — prefira redesenhar como
+  diagrama, ou usar pseudocódigo no corpo do texto (a revista recomenda explicitamente).
+- **Tabelas e quadros têm de ser editáveis — nunca imagem.** Use `[[TAB:...]]` com o
+  conteúdo em markdown, não uma captura de planilha.
+- `Fonte:` em Times New Roman 8, obrigatória: `dados da pesquisa`,
+  `elaborado pelos autores` ou `Autor (ano, p. x)`.
+- Elemento vem **logo após ser citado** no texto.
+- **Screenshots com dados de discentes precisam de máscara** — ver
+  `.claude/rules/dados-e-privacidade.md`. Nome, CPF, matrícula e e-mail não podem
+  aparecer em nenhuma figura.
+
 ## Regras de conteúdo
 
 - **Legenda autoexplicativa**: o leitor entende a figura sem ler o parágrafo. Inclua

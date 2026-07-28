@@ -2,9 +2,15 @@
 
 ## Voz e pessoa
 
-Português brasileiro, registro acadêmico formal. Terceira pessoa ou primeira do plural
-(`realizamos`, `observou-se`) — escolha uma no `00-outline.md` e mantenha em todo o
-artigo. Nunca alterne.
+Português brasileiro, registro acadêmico formal, **sempre na forma impessoal** —
+exigência da Revista Principia e padrão do próprio grupo (zero ocorrências de primeira
+pessoa no manuscrito de 2024). Use `foi/foram`, `utilizou-se`, `observou-se`,
+`adotou-se`. Nunca `realizamos`, `nossa abordagem`.
+
+> **Antes de escrever qualquer seção, leia `.claude/rules/voz-e-estilo.md`.** Ele traz o
+> perfil medido de escrita do grupo (frases de ~25 palavras, parágrafos de ~81) e a lista
+> de marcadores que denunciam texto gerado por IA. Não é preferência estética: é o que
+> evita que o artigo destoe do texto anterior dos mesmos autores.
 
 ## Estrutura do parágrafo
 
@@ -56,6 +62,6 @@ O gate conta esses marcadores. Eles são o mecanismo que substitui inventar.
 
 Gráficos e planilhas gerados pela automação são **resultados primários** deste artigo.
 Cada um precisa de: origem (qual workflow/execução gerou), período dos dados, e legenda
-autoexplicativa. Referencie no texto como `[FIGURA 1: descrição]` e registre em
-`LOG.md` de onde o arquivo veio — a rastreabilidade é o que sustenta o resultado na
+autoexplicativa. Referencie no texto com `[[@FIG:id]]` (ver `figuras.md`) e registre em
+`00-contexto/mapa-de-fatos.md` de onde o arquivo veio — a rastreabilidade é o que sustenta o resultado na
 revisão.

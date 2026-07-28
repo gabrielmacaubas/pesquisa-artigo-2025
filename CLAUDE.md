@@ -1,121 +1,111 @@
-# CLAUDE.md — Artigo 2025
+# CLAUDE.md — Artigo 2025 (Revista Principia)
 
-Instruções para o Claude Code neste repositório. **Este projeto não tem relação com o
-v1surgicalweb** — não aplique nada daquele repo aqui (Python 2.7, Django, multi-tenant).
-O que foi importado de lá é só a *metodologia*: rules explícitas, gate antes de commit,
-checklist de review, e comandos por etapa.
+Instruções para o Claude Code neste repositório. **Sem relação com o v1surgicalweb** —
+não aplique nada daquele repo aqui. O que veio de lá é só a *metodologia*: rules
+explícitas, gate antes de commit, checklist de review, comandos por etapa.
 
 ## ⚠️ Ao iniciar QUALQUER sessão, leia nesta ordem
 
 1. Este arquivo
-2. **`ESTADO.md`** — onde o projeto está agora e qual é a próxima ação
-3. **`LOG.md`** — decisões já tomadas, feedback da orientadora, o que foi descartado
+2. **`ESTADO.md`** — onde o projeto está e qual a próxima ação
+3. **`LOG.md`** — decisões tomadas (D-1…), feedback da orientadora, descartados
+4. **`00-contexto/mapa-de-fatos.md`** — a base factual inteira do artigo
 
-O autor trabalha em conversas curtas (`/clear` + um comando) e **nunca deve precisar
-reexplicar o projeto**. Isso só funciona porque o estado vive nesses dois arquivos.
-Ao encerrar, `/encerrar-sessao` é obrigatório.
+O autor trabalha em conversas curtas (`/clear` + um comando) e **nunca deve reexplicar o
+projeto**. Ao encerrar, `/encerrar-sessao` é obrigatório.
 
-## O que é este repositório
+## O artigo
 
-Produção de **um artigo científico (2025)** sobre um projeto de pesquisa de 2 anos que
-gerou: automação em n8n, API hospedada em plano gratuito, geração de gráficos e
-planilhas, e recomendações enviadas por e-mail. O projeto já rendeu **4 TCCs** e **1
-artigo (2024)**.
+Artigo original para a **Revista Principia**, sobre o ciclo 2025 do projeto de automação
+do programa **Capacitação 4.0** (Polo de Inovação IFPB / EMBRAPII).
 
-Repositório **local**, sem remote — nada é enviado para GitLab/GitHub.
+**Tese (D-1):** a automação de um ciclo formativo não se completa na geração de
+indicadores; exige a camada de decisão (certificação) e a de intervenção (recomendação) —
+e ambas só se sustentam sobre persistência estruturada, não sobre planilhas.
+
+O ciclo de 2024 automatizou gráficos e planilhas. O de 2025 entregou certificação
+automatizada pela regra de 2/3, recomendações pedagógicas por e-mail, API Django/DRF com
+rastreabilidade histórica, e a migração Railway → Neon/Vercel.
+
+Repositório **local**, sem remote.
 
 ## Regra fundamental: nada de fato sem fonte
 
-A falha mais cara que posso cometer é **inventar** — uma citação, um número, um nome, uma
-data. Em artigo científico isso é fraude, e é indetectável na revisão porque sai fluente.
+Inventar um número, citação, nome ou data é a falha mais cara possível aqui — sai fluente
+e passa despercebido.
 
-- Todo dado empírico vem de `00-contexto/mapa-de-fatos.md` ou de `docs/`. Se não está
-  lá, **não escrevo** — marco `[[VERIFICAR: pergunta específica]]`.
-- Toda citação precisa de entrada em `refs.md` com campo `origem` preenchido. O gate
-  bloqueia sem isso.
-- **Nunca** preencho lacuna com valor plausível. A lacuna explícita é o produto correto.
-- Minha memória de treinamento **não é fonte**. "Sei que existe um artigo sobre isso"
-  autoriza uma busca, não uma citação.
+- Todo dado vem de `00-contexto/mapa-de-fatos.md`. Se não está lá, marco
+  `[[VERIFICAR: pergunta específica]]`. **Nunca preencho com valor plausível.**
+- Toda citação tem entrada em `refs.md` com campo `origem`. O gate bloqueia sem isso.
+- Minha memória de treinamento **não é fonte** — autoriza uma busca, não uma citação.
 
 ## Restrições rígidas
 
 | Restrição | Onde é verificada |
 |---|---|
-| **Máximo 20 páginas** (alvo de trabalho: 18) | `gate.py`, a cada seção |
-| Conteúdo e formatação separados — ABNT só no build | `.claude/rules/abnt.md` |
-| Uma seção por arquivo em `secoes/` | — |
-| Figuras declaradas em bloco, nunca embutidas | `.claude/rules/figuras.md` |
+| **12 a 18 páginas** (alvo 16) — as duas pontas rejeitam | `gate.py` |
+| **Forma impessoal**, zero primeira pessoa | `gate.py --estilo` (bloqueante) |
+| **Não parecer texto de IA** — calibrado no manuscrito de 2024 | `gate.py --estilo` |
+| Submissão **duplo-cega** — nenhum nome de autor no manuscrito | review §6 |
+| Máximo 6 autores (definidos 4, D-3) | — |
+| **Nenhum dado pessoal de discente** em texto ou figura | `dados-e-privacidade.md` |
+| Proibido citar trabalho em avaliação, slides, relatório de estágio | `fontes-e-citacoes.md` |
 
 ## Fluxo de trabalho
 
 | Etapa | Comando | Artefato |
 |---|---|---|
-| 1. Ingestão do contexto | `/ingerir-contexto` | `00-contexto/mapa-de-fatos.md` |
-| 2. Argumento (o "PRD") | `/definir-argumento` | `00-outline.md` |
-| 3. Escrita, uma seção por vez | `/escrever-secao 03-metodologia` | `secoes/NN-*.md` |
+| 1. Ingestão | `/ingerir-contexto` | `00-contexto/mapa-de-fatos.md` ✅ parcial |
+| 2. Argumento | `/definir-argumento` | `00-outline.md` ✅ |
+| 3. Escrita | `/escrever-secao 03-metodo` | `secoes/NN-*.md` |
 | 4. Gate | `python3 scripts/gate.py` | — |
-| 5. Review completo | `/revisar-artigo` | `build/review-<data>.md` |
-| 6. Feedback da orientadora | `/aplicar-review-orientadora` | correção + entrada no `LOG.md` |
+| 5. Review | `/revisar-artigo` | `build/review-<data>.md` |
+| 6. Orientadora | `/aplicar-review-orientadora` | correção + entrada no `LOG.md` |
 | 7. Build | `bash scripts/build.sh` | `build/artigo.docx` |
-| — | `/situacao` | diz onde estamos e o que fazer |
-| — | `/encerrar-sessao` | atualiza `ESTADO.md` + `LOG.md` + commit |
-
-**Nunca pule a etapa 2.** Escrever seções antes do outline aprovado produz prosa que não
-sustenta argumento — e o retrabalho é total, não incremental.
+| — | `/consultar-banco` | extração agregada do Neon |
+| — | `/situacao` · `/encerrar-sessao` | retomada e fechamento |
 
 ## ⚠️ Gate antes de cada commit
 
 ```bash
 python3 scripts/gate.py            # 0 limpo | 1 bloqueante | 2 pendências
-python3 scripts/gate.py --figuras  # lista de imagens a produzir
+python3 scripts/gate.py --figuras  # imagens a produzir
+python3 scripts/gate.py --estilo   # voz: parece texto de IA?
 ```
 
-Bloqueante: citação sem entrada em `refs.md`, referência sem `origem`, bloco de figura
-malformado, figura sem chamada no texto, orçamento acima de 20 páginas.
-Pendência: `[[VERIFICAR]]`/`[[CIT]]`/`[[DECIDIR]]` abertos, referência órfã, desvio de
-alvo de palavras. Exit 2 permite commit de rascunho, **não** permite submeter.
+**Bloqueante:** citação sem entrada em `refs.md`, referência sem `origem`, figura
+malformada ou não chamada, primeira pessoa, acima de 18 páginas.
+**Pendência:** `[[VERIFICAR]]`/`[[CIT]]`/`[[DECIDIR]]`, referência órfã, desvio de alvo,
+marcadores de estilo de IA, abaixo de 12 páginas.
 
 ## Decisões: pergunte, não adivinhe
 
-Use **`AskUserQuestion`** para tese, recorte, ordem de autoria, título, o que cortar,
-comentário ambíguo da orientadora, e conflito entre fontes. 2 a 4 opções concretas com a
-consequência real de cada uma, recomendada primeiro. Toda resposta vira entrada `D-<n>`
-em `LOG.md` — decisão que só existe no histórico da conversa se perde no próximo
-`/clear`. Detalhes em `.claude/rules/continuidade-e-decisoes.md`.
+Use **`AskUserQuestion`** para escolhas que são do autor. Toda resposta vira `D-<n>` em
+`LOG.md` — decisão que só existe na conversa se perde no próximo `/clear`.
 
 ## Estrutura
 
 ```
-ESTADO.md              # onde estamos AGORA (reescrito a cada sessão)
-LOG.md                 # histórico append-only: decisões, reviews, descartados
-PROMPT-GEMINI.md       # prompt para extrair o contexto do projeto no Gemini
-00-outline.md          # tese, contribuição sobre 2024, mapa de seções, alvos
-refs.md                # referências (formato machine-readable, campo `origem`)
-
-00-contexto/           # FONTE — imutável
-  contexto-projeto.md  # dump do Gemini
-  mapa-de-fatos.md     # fatos extraídos, com procedência (gerado na etapa 1)
-docs/                  # TCCs, artigo 2024, diretrizes do veículo (PDF/DOCX)
-api-repo/              # código da API, como evidência
-secoes/NN-nome.md      # o artigo, uma seção por arquivo
-figuras/               # imagens finais (fig-03-1.png etc.)
-scripts/gate.py        # verificação
-scripts/build.py       # monta artigo.md (numera figuras, gera referências)
-scripts/build.sh       # + pandoc -> .docx ABNT
-build/                 # saída (gitignored)
+ESTADO.md · LOG.md          # retomada entre sessões
+00-contexto/
+  contexto-projeto.md       # dump do Gemini (fonte, imutável)
+  mapa-de-fatos.md          # base factual com procedência ← consulte SEMPRE
+docs/                       # manuscrito 2024, relatórios de estágio, diretrizes
+api-repo/                   # código da API (evidência; .env NUNCA versionado)
+00-outline.md · refs.md · secoes/ · figuras/
+scripts/gate.py · build.py · build.sh
 ```
 
 ## Rules
 
-- `continuidade-e-decisoes.md` — retomada entre sessões, quando usar `AskUserQuestion`
-- `escrita-academica.md` — voz, parágrafo, o que enfraquece o texto
-- `fontes-e-citacoes.md` — formato de `refs.md`, autocitação dos TCCs, antifabricação
-- `figuras.md` — bloco de reserva de imagem e chamada `[[@FIG:id]]`
-- `orcamento-paginas.md` — teto de 20 páginas, modelo de estimativa, o que cortar
-- `abnt.md` — normas e onde são aplicadas (build, não no markdown)
-- `review-artigo.md` — checklist com veredito
+- `revista-principia.md` — normas do veículo, prevalecem sobre tudo
+- `voz-e-estilo.md` — perfil medido do grupo; como não soar como IA
+- `dados-e-privacidade.md` — o banco tem CPF e nomes reais
+- `fontes-e-citacoes.md` — NBR 10520/2023, o que não pode ser citado
+- `orcamento-paginas.md` · `figuras.md` · `escrita-academica.md`
+- `review-artigo.md` · `continuidade-e-decisoes.md`
 
 ## Pendências de ambiente
 
 - [ ] `pandoc` não instalado (`sudo apt install pandoc`) — só na etapa 7
-- [ ] `scripts/reference-abnt.docx` (template de estilos) ainda não criado
+- [ ] Modelo oficial `.docx` da Revista Principia ainda não baixado
