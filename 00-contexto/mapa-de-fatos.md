@@ -30,11 +30,9 @@
 
 - Gestão manual e descentralizada em Google Sheets; dificultava análise histórica e
   correlação evolutiva (dump §2).
-- **Conflito de fontes sobre o tempo manual:** o manuscrito de 2024 afirma **40 minutos
-  por aluno** (introdução e conclusão); o dump do Gemini afirma **≈1 hora** (informado
-  pelo autor). `[[VERIFICAR: qual valor usar — são medidas de escopos diferentes?
-  40 min = tabulação+gráficos; 1 h = ciclo completo incluindo certificação manual?]]`
-  Enquanto não resolvido, **usar 40 minutos**, que é o valor do texto escrito.
+- **Tempo do processo manual: 40 minutos por aluno** — valor decidido pelo autor
+  (D-7, 27/07/2026), coincidente com o manuscrito de 2024. A menção a "≈1 hora" no dump
+  do Gemini fica descartada. Usar 40 min em todo o artigo, sem ressalva.
 - Quem sofria: mentores do Capacitação 4.0 (dump §2).
 
 ## 3. Pessoas — autoria definida (D-3)
@@ -72,7 +70,17 @@ cadastro de notas e geração de gráficos radar + tabelas (manuscrito 2024, §4
 | Performance | `select_related`, `prefetch_related`, `bulk_create` | dump §5 |
 | Contêineres | Docker + Docker Compose | dump §5 |
 
-`[[VERIFICAR: gatilho exato do n8n (cron vs webhook) e periodicidade]]`
+**Gatilho do n8n:** os dois workflows exportados em `api-repo/automacao-deploy-main/`
+(`sheets_n8n.json` — "Automação capacitação", 8 nós; `graficos_n8n.json` — "gráficos",
+8 nós) usam **`manualTrigger`**, não cron nem webhook. Verificado na exportação em
+27/07/2026. Nós presentes: `googleSheets`, `httpRequest`, `set`, `splitInBatches`,
+`function`.
+
+⚠️ **Esses dois workflows são do ciclo de 2024.** O workflow de **certificação e
+recomendação** (ciclo 2025, contribuição central do artigo) **não está no repositório**.
+`[[VERIFICAR: exportar o JSON do workflow de certificados/recomendações do n8n —
+necessário para descrever o método com reprodutibilidade]]`
+
 `[[VERIFICAR: onde o n8n esteve hospedado em produção]]`
 
 ## 5. Regras de negócio
@@ -111,9 +119,29 @@ ou mais medições, que é exatamente o insumo longitudinal que a certificação
 censo do programa. O resultado defensável é *viabilidade demonstrada em operação*, não
 *escala*. Toda afirmação de volume deve vir acompanhada da data da consulta.
 
-`[[VERIFICAR: total de certificados emitidos e e-mails de recomendação enviados —
-não há tabela desses eventos no banco; a evidência provável está nos logs do n8n ou no
-Google Drive]]`
+### Certificados e e-mails — evidência fora do banco
+
+Confirmado pelo autor (27/07/2026): **esses eventos não são registrados no banco**. A
+automação do n8n gera o certificado, envia por e-mail e salva no Google Drive. A
+evidência disponível é:
+
+| Evidência | Onde | O que sustenta |
+|---|---|---|
+| **PDFs de certificados já gerados** | pasta do Google Drive do projeto | contagem de certificados emitidos, e datas pelos metadados dos arquivos |
+| Workflow de certificação | n8n (a exportar) | descrição do método, critério aplicado |
+
+**Extração a fazer:** contar os PDFs na pasta do Drive e obter a data do primeiro e do
+último. Isso produz o número de certificados emitidos com procedência auditável.
+`[[VERIFICAR: quantos PDFs há na pasta do Drive e qual o intervalo de datas?]]`
+
+**Limitação a declarar no artigo:** como a emissão não é persistida no banco, o número de
+certificados é apurado por contagem de artefatos no Drive, não por registro
+transacional. Isso é honesto e não enfraquece o resultado — mas precisa estar escrito,
+porque um avaliador vai perguntar de onde veio o número.
+
+O total de **e-mails enviados** não tem artefato equivalente; se não houver log
+exportável do n8n, o artigo deve tratar o envio como funcionalidade implementada e
+demonstrada, sem afirmar volume.
 
 ## 7. Produção acadêmica
 

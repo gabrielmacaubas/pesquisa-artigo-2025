@@ -10,7 +10,11 @@
 **Atualizado:** 27/07/2026
 **Próxima ação:** ler integralmente `docs/tcc_gabriel.pdf` e `docs/tcc_juliana.pdf`
 (relatórios de estágio), completar `00-contexto/mapa-de-fatos.md`, e então
-`/escrever-secao 03-metodo`
+`/escrever-secao 03-metodo`.
+
+**O autor precisa providenciar** (não bloqueiam o método, bloqueiam os resultados):
+exportar o JSON do workflow de certificação do n8n, e contar os PDFs de certificado na
+pasta do Google Drive com o intervalo de datas.
 
 ## O artigo
 
@@ -32,6 +36,8 @@
 | D-4 | Trabalhos-base são **relatórios de estágio**, não TCCs → regra dos 30% não se aplica |
 | D-5 | Parecer do CEP **não se aplica** (dados operacionais, não pesquisa com seres humanos) |
 | D-6 | Banco migrou Railway (fim de 2024) → Neon/Vercel (2025); faz parte da contribuição |
+| D-7 | Tempo do processo manual: **40 min/aluno** (descartado o "≈1 hora" do dump) |
+| D-8 | `refs.md` é levantado **depois** de método e resultados, antes do referencial |
 
 ## Decisões pendentes
 
@@ -61,9 +67,11 @@ TNR ≥18, o que inviabiliza screenshots de código; tabelas têm de ser editáv
 1. **Relatórios de estágio não lidos** — impede Método e Resultados
 2. **`refs.md` vazio** — nenhuma referência levantada; o referencial teórico precisa de
    busca ativa, priorizando 2019+ com DOI
-3. `[[VERIFICAR]]` aberto: total de certificados emitidos e e-mails enviados — não há
-   tabela desses eventos no banco; procurar em logs do n8n ou Google Drive
-4. `[[VERIFICAR]]` aberto: conflito 40 min (manuscrito 2024) vs 1 h (dump) no tempo manual
+3. **Workflow de certificação não exportado** — os JSONs em `api-repo/` são do ciclo
+   2024 (`manualTrigger`, 8 nós cada). O workflow de certificados/recomendações é a
+   contribuição central e precisa ser exportado do n8n para descrever o método
+4. **Contagem de certificados pendente** — não há registro no banco; a evidência são os
+   PDFs na pasta do Google Drive. Necessário: total de arquivos e intervalo de datas
 
 ## Ambiente
 

@@ -1,0 +1,500 @@
+{
+  "name": "Cadastra notas form novo v2",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "1bdb0c96-383a-489e-9c4f-2dc9ee0dae9d",
+      "name": "inicio",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -860,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://django-deployment-ten.vercel.app/login/",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{ \"username\": \"admin\", \"password\": \"123\" }",
+        "options": {}
+      },
+      "id": "44791488-af05-4b70-851c-1b1fdacae70f",
+      "name": "faz login na API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -680,
+        260
+      ],
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1DJcUS9PIon87WIt-lrkQ5wX5mB1EwO486qme2WmZ0Tk",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1DJcUS9PIon87WIt-lrkQ5wX5mB1EwO486qme2WmZ0Tk/edit#gid=0"
+        },
+        "options": {}
+      },
+      "id": "4c6d0d8f-3c68-4b19-a844-c31c6ef9d810",
+      "name": "lê toda a planilha",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.3,
+      "position": [
+        -200,
+        260
+      ],
+      "alwaysOutputData": true,
+      "notesInFlow": true,
+      "retryOnFail": true,
+      "executeOnce": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "aGPYIvihNom0L7j6",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "4828f4b2-d87f-4875-8ab8-49d65be06d97",
+      "name": "Loop",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        180,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"nome\": \"{{ $json[\"nome\"] }}\",\n  \"email\": \"{{ $json[\"email\"] }}\",\n  \"mentor\": \"{{ $json[\"mentor\"] }}\",\n  \"data_entrada\": \"{{ $json[\"data_entrada\"] }}\",\n  \"matricula\": \"{{ $json[\"matricula\"] }}\",\n  \"projeto\": \"{{ $json[\"projeto\"] }}\",\n  \"respostas\": { \"{{ Object.keys($json[\"respostas\"])[0] }}\": {{ Object.values($json[\"respostas\"])[0] }},\n  \"{{ Object.keys($json[\"respostas\"])[1] }}\": {{ Object.values($json[\"respostas\"])[1] }},\n  \"{{ Object.keys($json[\"respostas\"])[2] }}\": {{ Object.values($json[\"respostas\"])[2] }},\n  \"{{ Object.keys($json[\"respostas\"])[3] }}\": {{ Object.values($json[\"respostas\"])[3] }},\n  \"{{ Object.keys($json[\"respostas\"])[4] }}\": {{ Object.values($json[\"respostas\"])[4] }},\n  \"{{ Object.keys($json[\"respostas\"])[5] }}\": {{ Object.values($json[\"respostas\"])[5] }}\n  },\n  \"respostas_subsoft_skills\": \n    {{ $json[\"respostas_subsoft_skills\"].toJsonString() }}\n  ,\n  \"observacao\": \"{{ $json.observacao }}\"\n}",
+        "options": {}
+      },
+      "id": "66b2eb4d-decf-4126-b432-1ffee90a648e",
+      "name": "Organiza dados novamente",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        380,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "spreadsheet",
+        "title": "Notas Autoavaliação",
+        "sheetsUi": {
+          "sheetValues": [
+            {
+              "title": "Notas"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4ca0d815-4ad0-4039-b7ab-a990f61731fa",
+      "name": "Cria planilha",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.3,
+      "position": [
+        -460,
+        260
+      ],
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "aGPYIvihNom0L7j6",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $node[\"Cria planilha\"].data.spreadsheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $node[\"Cria planilha\"].data.sheets[0].properties.sheetId }}",
+          "mode": "id"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {
+            "ALUNO": "={{ $json.aluno }}",
+            "AUTOAVALIAÇÃO": "={{ $json.autoavaliacao }}",
+            "PENSAMENTO CRÍTICO E INOVAÇÃO": "={{ $json['pensamento crítico & inovação'] }}",
+            "APRENDIZAGEM ATIVA E ESTRATÉGIAS DE APRENDIZAGEM": "={{ $json['aprendizagem ativa & estratégias de aprendizagem'] }}",
+            "CRIATIVIDADE, ORIGINALIDADE E INICIATIVA": "={{ $json['criatividade, originalidade & iniciativa'] }}",
+            "RESOLUÇÃO DE PROBLEMAS COMPLEXOS": "={{ $json['resolução de problemas complexos'] }}",
+            "LIDERANÇA E INFLUÊNCIA SOCIAL": "={{ $json['liderança & influência social'] }}",
+            "EMPREENDEDORISMO": "={{ $json.empreendedorismo }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "ALUNO",
+              "displayName": "ALUNO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "AUTOAVALIAÇÃO",
+              "displayName": "AUTOAVALIAÇÃO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PENSAMENTO CRÍTICO E INOVAÇÃO",
+              "displayName": "PENSAMENTO CRÍTICO E INOVAÇÃO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "APRENDIZAGEM ATIVA E ESTRATÉGIAS DE APRENDIZAGEM",
+              "displayName": "APRENDIZAGEM ATIVA E ESTRATÉGIAS DE APRENDIZAGEM",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CRIATIVIDADE, ORIGINALIDADE E INICIATIVA",
+              "displayName": "CRIATIVIDADE, ORIGINALIDADE E INICIATIVA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "RESOLUÇÃO DE PROBLEMAS COMPLEXOS",
+              "displayName": "RESOLUÇÃO DE PROBLEMAS COMPLEXOS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LIDERANÇA E INFLUÊNCIA SOCIAL",
+              "displayName": "LIDERANÇA E INFLUÊNCIA SOCIAL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "EMPREENDEDORISMO",
+              "displayName": "EMPREENDEDORISMO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "aluno",
+              "displayName": "aluno",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "autoavaliacao",
+              "displayName": "autoavaliacao",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "pensamento crítico & inovação",
+              "displayName": "pensamento crítico & inovação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "aprendizagem ativa & estratégias de aprendizagem",
+              "displayName": "aprendizagem ativa & estratégias de aprendizagem",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "criatividade, originalidade & iniciativa",
+              "displayName": "criatividade, originalidade & iniciativa",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "resolução de problemas complexos",
+              "displayName": "resolução de problemas complexos",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "liderança & influência social",
+              "displayName": "liderança & influência social",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "empreendedorismo",
+              "displayName": "empreendedorismo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6751d38a-f40d-44ca-addd-5cb726ee1f77",
+      "name": "insere na planilha intermediaria",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.3,
+      "position": [
+        740,
+        0
+      ],
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "aGPYIvihNom0L7j6",
+          "name": "Google Sheets account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://django-deployment-ten.vercel.app/api/capacitacao/autoavaliacao_notas/",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "=token {{ $node[\"faz login na API\"].data.token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $node[\"Organiza dados novamente\"].data.toJsonString() }}",
+        "options": {}
+      },
+      "id": "6ae3eab1-a02d-49e7-a839-b46f2bcab3a3",
+      "name": "Envia para API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        580,
+        0
+      ],
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"nome\": \"{{ $json['Nome completo:'] }}\",\n  \"email\": \"{{ $json['Endereço de e-mail'] }}\",\n  \"mentor\": \"{{ $json['Nome do(a) Mentor(a) Técnico(a):'] }}\",\n  \"projeto\": \"{{ $json['Projeto ao qual está vinculado(a):'] }}\",\n  \"matricula\": \"{{ $json['Matrícula:'] }}\",\n  \"data_entrada\": \"{{ $json['Data em que entrou no projeto:'] }}\",\n  \"respostas\": {\n    \"PENSAMENTO CRÍTICO E INOVAÇÃO\": [\n      \"{{ $json['1.1 Descrever elementos de um processo, dando contextos de onde eles ocorrem.'] }}\",\n      \"{{ $json['1.2 Formular perguntas sobre situações desconhecidas, a partir de informações coletadas por meio da observação.'] }}\",\n      \"{{ $json['1.3 Determinar as melhores soluções para um problema complexo e justificar a escolha.'] }}\",\n      \"{{ $json['1.4 Analisar e explicar os recursos utilizados, as soluções aplicadas e as conclusões geradas por uma investigação.'] }}\",\n      \"{{ $json['1.5 Sintetizar informações de diferentes pontos de referência.'] }}\",\n      \"{{ $json['1.6 Criar uma maneira inovadora de resolver problemas comuns.'] }}\"\n    ],\n    \"APRENDIZAGEM ATIVA E ESTRATÉGIAS DE APRENDIZAGEM\": [\n      \"{{ $json['2.1 Gerar novas maneiras de pensar.'] }}\",\n      \"{{ $json['2.2 Compreender os problemas, fazendo perguntas esclarecedoras para uma tomada de decisão.'] }}\",\n      \"{{ $json['2.3 Propor soluções e conclusões embasadas, e avaliar sua eficácia.'] }}\",\n      \"{{ $json['2.4 Valorizar a pesquisa, a origem dos dados e a atualização constante.'] }}\"\n    ],\n    \"CRIATIVIDADE, ORIGINALIDADE E INICIATIVA\": [\n      \"{{ $json['3.1 Ter disposição para assumir responsabilidades e encarar desafios.'] }}\",\n      \"{{ $json['3.2 Experimentar suas próprias ideias e tomar decisões por conta própria.'] }}\",\n      \"{{ $json['3.3 Planejar seu trabalho sem nenhuma supervisão.'] }}\",\n      \"{{ $json['3.4 Apresentar ideias incomuns ou inteligentes sobre determinado assunto ou situação.'] }}\",\n      \"{{ $json['3.5 Desenvolver formas criativas de resolver um problema.'] }}\",\n      \"{{ $json['3.6 Estar aberto/a a novas experiências estéticas, culturais e intelectuais.'] }}\"\n    ],\n    \"RESOLUÇÃO DE PROBLEMAS COMPLEXOS\": [\n      \"{{ $json['4.1 Concretizar estratégias para organizar e analisar formas de resolução de problemas.'] }}\",\n      \"{{ $json['4.2 Desenvolver habilidades reflexivas, analíticas e de avaliação para resolver problemas e alcançar soluções.'] }}\",\n      \"{{ $json['4.3 Identificar e analisar a origem dos problemas, agindo nas causas e não somente nos sintomas para garantir que não sejam recorrentes.'] }}\"\n    ],\n    \"LIDERANÇA E INFLUÊNCIA SOCIAL\": [\n      \"{{ $json['5.1 Expressar opiniões divergentes de forma construtiva, de maneira franca e respeitosa, não se intimidando em posicionar-se.'] }}\",\n      \"{{ $json['5.2 Cultivar a escuta para elaborar uma boa comunicação na relação com outras pessoas.'] }}\",\n      \"{{ $json['5.3 Comunicar de forma objetiva, simples e clara, adequando a linguagem aos diferentes públicos e checando o entendimento das pessoas.'] }}\",\n      \"{{ $json['5.4 Demonstrar clareza sobre seus interesses, pontos fortes e pontos de melhoria.'] }}\",\n      \"{{ $json['5.5 Trabalhar de forma colaborativa em atividades que envolvem diferentes áreas e pessoas.'] }}\",\n      \"{{ $json['5.6 Estar à disposição e oferecer ajuda dentro ou até fora da sua área de atuação.'] }}\"\n    ],\n    \"EMPREENDEDORISMO\": [\n      \"{{ $json['6.1 Atuar em prol da realização de um propósito coletivo, considerando os impactos e as consequências das suas atitudes e ações na cadeia de processo da organização.'] }}\",\n      \"{{ $json['6.2 Antecipar problemas, agregando considerável valor para a área.'] }}\",\n      \"{{ $json['6.3 Contribuir de forma voluntária para projetos e atividades.'] }}\",\n      \"{{ $json['6.4 Agir de forma proativa às oportunidades e dificuldades, para aproveitá-las ou corrigi-las, buscando ajuda necessária e/ou orientações específicas para iniciar suas ações.'] }}\",\n      \"{{ $json['6.5 Enfrentar adversidades, resistir às frustrações e buscar estratégias construtivas para alcançar objetivos.'] }}\"\n    ]\n  },\n  \"respostas_subsoft_skills\": {\n    \"INTELIGÊNCIA EMOCIONAL\": {\n      \"AUTOCONHECIMENTO\": [\n        \"{{ $json[\"7.1.1 Reconhecer seu estado emocional.\"] }}\", \"{{ $json[\"7.1.2 Ter autoconfiança em suas habilidades.\"] }}\", \"{{ $json[\"7.1.3 Reconhecer como seu comportamento impacta outras pessoas.\"] }}\", \"{{ $json[\"7.1.4 Compreender como outras pessoas influenciam suas ações.\"] }}\"\n      ],\n      \"AUTORREGULAÇÃO\": [\n        \"{{ $json[\"7.2.1 Construir relações colaborativas no ambiente de trabalho e na vida pessoal.\"] }}\", \"{{ $json[\"7.2.2 Expressar ideias de maneira clara e eficiente.\"] }}\", \"{{ $json[\"7.2.3 Usar empatia para gerir interações com sucesso.\"] }}\", \"{{ $json[\"7.2.4 Utilizar diferentes estratégias para se acalmar.\"] }}\"\n      ],\n      \"PERCEPÇÃO SOCIAL\": [\n        \"{{ $json[\"7.3.1 Respeitar genuinamente o que o outro tem a compartilhar. Por meio do diálogo, receber opiniões diferentes em busca do melhor para o grupo.\"] }}\", \"{{ $json[\"7.3.2 Compreender e ler sinais verbais, não verbais, físicos ou não aparentes para interagir com os outros.\"] }}\", \"{{ $json[\"7.3.3 Escutar e se importar com o que está acontecendo com pessoas ao seu redor.\"] }}\", \"{{ $json[\"7.3.4 Demonstrar entendimento e compreensão de normas sociais e do ambiente de trabalho a partir da perspectiva do grupo.\"] }}\"\n      ],\n      \"HABILIDADES DE RELACIONAMENTO\": [\n        \"{{ $json[\"7.4.1 Resolver problemas e dar devolutivas de maneira construtiva.\"] }}\", \"{{ $json[\"7.4.2 Auxiliar as pessoas a se adaptarem em situações de mudanças, introduzindo-as no grupo e favorecendo a integração.\"] }}\", \"{{ $json[\"7.4.3 Ser capaz de se adaptar a diferentes grupos e ambientes, lidando com mudanças e situações novas.\"] }}\", \"{{ $json[\"7.4.4 Estar aberto(a) a feedback e buscar novos aprendizados para alavancar seu crescimento pessoal, desempenho profissional e do grupo.\"] }}\"\n      ]\n    }\n  },\n  \"observacao\": \"\"\n}\n",
+        "options": {}
+      },
+      "id": "542c72f1-1b64-4ca3-95ab-01a8e95b653a",
+      "name": "Organiza Dados",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        0,
+        0
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "inicio": {
+      "main": [
+        [
+          {
+            "node": "faz login na API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "faz login na API": {
+      "main": [
+        [
+          {
+            "node": "Cria planilha",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "lê toda a planilha": {
+      "main": [
+        [
+          {
+            "node": "Organiza Dados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Organiza dados novamente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Organiza dados novamente": {
+      "main": [
+        [
+          {
+            "node": "Envia para API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cria planilha": {
+      "main": [
+        [
+          {
+            "node": "lê toda a planilha",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "insere na planilha intermediaria": {
+      "main": [
+        [
+          {
+            "node": "Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envia para API": {
+      "main": [
+        [
+          {
+            "node": "insere na planilha intermediaria",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Organiza Dados": {
+      "main": [
+        [
+          {
+            "node": "Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4338b6c2-8665-4ddd-a22f-8702e79e890c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "26c4b5eb0d22e39f72046e94677ffa70b3d78a813d2230969336ea535f4b11b4"
+  },
+  "id": "tYhKrFzimTej82vq",
+  "tags": []
+}

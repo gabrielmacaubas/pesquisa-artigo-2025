@@ -1,0 +1,411 @@
+{
+  "name": "Certificados v2",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "24099f45-6efd-4411-a1f9-2a3424e8fe62",
+      "name": "When clicking \"Test workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://django-deployment-ten.vercel.app/api/capacitacao/discentes/",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "=token {{ $node[\"Faz login na API\"].data.token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9262bbe1-dcf0-4946-b751-f9e81f3f944f",
+      "name": "Get discentes",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2380,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "e4b61d6d-c721-40e2-a095-a2b58a42bf2e",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2560,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  const nome = item.json.nome;\n\n  const titleCase = nome\n    .toLocaleLowerCase('pt-BR')\n    .split(' ')\n    .map(palavra => palavra.charAt(0).toLocaleUpperCase('pt-BR') + palavra.slice(1))\n    .join(' ');\n\n  item.json.nomeFormatado = titleCase;\n  return item;\n});"
+      },
+      "id": "0cb9843c-02b1-40f0-b068-1e41eed7fecc",
+      "name": "Nome Formatado",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2780,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://www.googleapis.com/drive/v3/files/{{ $json.documentId }}/export?mimeType=application/pdf",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "id": "232e1d7d-b51a-4fd4-9ded-9bcdd5848ea6",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3380,
+        200
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "yjC0xnbelCkZ13Of",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "68559a82-48a1-4bcd-85ef-6c74cc10bf23",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        3720,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://django-deployment-ten.vercel.app/login/",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{ \"username\": \"admin\", \"password\": \"123\" }",
+        "options": {}
+      },
+      "id": "4eb96e36-d492-4fc8-beed-63a7eaacaaa7",
+      "name": "Faz login na API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2180,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "copy",
+        "fileId": {
+          "__rl": true,
+          "value": "1_L7DEg6o9ETqnFRuK3IhAC4jDWUWab0sLaARYndRCNc",
+          "mode": "id"
+        },
+        "options": {
+          "name": "={{ $json[\"nomeFormatado\"] }}",
+          "parents": [
+            "1Alsr5_nAs-FJJj_gw6JQ5s9N1ItZErHA"
+          ]
+        }
+      },
+      "id": "660005c5-349b-4249-8eee-a64b927ef981",
+      "name": "Cria os certificados",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 1,
+      "position": [
+        2960,
+        300
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "yjC0xnbelCkZ13Of",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "update",
+        "documentURL": "={{ $json.id }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "replaceAll",
+              "text": "{{nome}}",
+              "replaceText": "={{ $json.name }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{data}}",
+              "replaceText": "={{ new Date().toLocaleDateString('pt-BR') }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{nome_do_projeto}}",
+              "replaceText": "={{ $('Loop Over Items').item.json.projeto_nome }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{nome_do_mentor}}",
+              "replaceText": "={{ $('Loop Over Items').item.json.mentor_nome_completo }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{cpf}}",
+              "replaceText": "={{ $('Loop Over Items').item.json.cpf_mascarado }}"
+            }
+          ]
+        }
+      },
+      "id": "7e331be2-a1ee-44d4-9eb1-543610decb75",
+      "name": "Atualiza os certificados",
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 1,
+      "position": [
+        3160,
+        300
+      ],
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "iJmxPOWYDJB729ql",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "={{ $node[\"Nome Formatado\"].data.nomeFormatado }}.pdf",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1ewJ9YSGjXHvKR9jsYlByomOS8ViNSn3j",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "f09389bf-c961-4998-b15e-5df3f4396ab8",
+      "name": "Salva como PDF",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3540,
+        200
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "yjC0xnbelCkZ13Of",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "share",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.documentId }}",
+          "mode": "id"
+        },
+        "permissionsUi": {
+          "permissionsValues": {
+            "role": "reader",
+            "type": "anyone"
+          }
+        },
+        "options": {}
+      },
+      "id": "37a08a38-1270-451e-b79c-6ec5f11196d0",
+      "name": "Concede as permissões no Docx",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 1,
+      "position": [
+        3380,
+        380
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "yjC0xnbelCkZ13Of",
+          "name": "Google Drive account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking \"Test workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Faz login na API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get discentes": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Nome Formatado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Nome Formatado": {
+      "main": [
+        [
+          {
+            "node": "Cria os certificados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Salva como PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Faz login na API": {
+      "main": [
+        [
+          {
+            "node": "Get discentes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cria os certificados": {
+      "main": [
+        [
+          {
+            "node": "Atualiza os certificados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Atualiza os certificados": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Concede as permissões no Docx",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Salva como PDF": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Concede as permissões no Docx": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "6aec9345-6894-4d74-9409-3bc9ad3ada3c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "09d8d6170c6b3d979c899303cef80c4cf51d1249f71ce73bd670898812c121db"
+  },
+  "id": "tNIhvEJhYYxQvuqC",
+  "tags": []
+}

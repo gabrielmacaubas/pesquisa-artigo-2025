@@ -1,0 +1,931 @@
+{
+  "name": "graficos v2",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "9a909d7d-ce80-4188-8247-12fd3432cf45",
+      "name": "When clicking \"Test workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        460,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://django-deployment-ten.vercel.app/login/",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{ \"username\": \"admin\", \"password\": \"123\" }",
+        "options": {}
+      },
+      "id": "8548f82f-89b1-4a9d-88b9-00fc77518fd7",
+      "name": "faz login na API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        700,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://django-deployment-ten.vercel.app/api/capacitacao/discentes/",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "=token {{ $node[\"faz login na API\"].data.token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "903ae494-71a1-4ac1-98ac-f6c11c07b988",
+      "name": "Get discentes",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        900,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "667c3b51-0518-4522-8838-8814cd610978",
+      "name": "Merge2",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        2720,
+        1340
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "e95bc0d5-6f04-4b46-86bf-2a4aa6e58ede",
+      "name": "Merge1",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        2680,
+        680
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://django-deployment-ten.vercel.app/api/capacitacao/discentes_notas/{{ $json.id }}/",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "=token {{ $node[\"faz login na API\"].data.token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a8eea009-45be-4fab-bea8-e179ab2e34de",
+      "name": "Get notas do discente1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1280,
+        700
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "93041a1c-a2a5-4534-8beb-924ecb99cde1",
+      "name": "Loop Over Items1",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1060,
+        680
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "multiStep",
+        "dataPropertyName": "data1",
+        "operations": {
+          "operations": [
+            {
+              "operation": "resize",
+              "width": 760,
+              "resizeOption": "ignoreAspectRatio"
+            },
+            {
+              "operation": "border",
+              "borderWidth": 5,
+              "borderHeight": 5,
+              "borderColor": "#006666"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "97afbf45-5758-4ae5-802a-7b526e9644df",
+      "name": "Redimensionamento e borda",
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [
+        2100,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "multiStep",
+        "dataPropertyName": "data2",
+        "operations": {
+          "operations": [
+            {
+              "operation": "resize",
+              "width": 760,
+              "resizeOption": "ignoreAspectRatio"
+            },
+            {
+              "operation": "border",
+              "borderWidth": 5,
+              "borderHeight": 5,
+              "borderColor": "#006666"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5db88483-7f4d-4bc6-8fbb-b06db42f2959",
+      "name": "Redimensionamento e borda1",
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [
+        2120,
+        840
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const binaryData = items[0].binary;\nconst lastBinaryFile = binaryData['data']\nreturn [\n  {\n    binary: {\n      final_data: lastBinaryFile\n    },\n    json: items[0].json\n  }\n];"
+      },
+      "id": "fd91bb06-d430-4b4f-a9b5-7456266388c9",
+      "name": "Isola imagem",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3380,
+        680
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const binaryData = items[0].binary;\nconst lastBinaryFile = binaryData['data']\nreturn [\n  {\n    binary: {\n      final_data: lastBinaryFile\n    },\n    json: items[0].json\n  }\n];"
+      },
+      "id": "77f5731e-0ed9-4650-9152-35d12e588c4c",
+      "name": "Isola imagem1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3360,
+        1340
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://quickchart.io/chart?c={type:'radar',data:{labels:['PENSAMENTO CRÍTICO E INOVAÇÃO', 'APRENDIZAGEM ATIVA E ESTRATÉGIAS DE APRENDIZAGEM', 'CRIATIVIDADE, ORIGINALIDADE E INICIATIVA', 'RESOLUÇÃO DE PROBLEMAS COMPLEXOS', 'LIDERANÇA E INFLUÊNCIA SOCIAL', 'EMPREENDEDORISMO', 'INTELIGÊNCIA EMOCIONAL'],datasets:[{{ $json.data }}]}, options: { maintainAspectRatio: false, responsive: true, title: { display: true, text: \"{{ $json.nome }}\", align: \"start\" }, scale: { pointLabels: { fontSize: 8 }, ticks: { stepSize: 1, beginAtZero: true, min: 0, max: 4 } }, plugins: { backgroundColor: 'blue' } },}&backgroundColor=white",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "data1"
+            }
+          }
+        }
+      },
+      "id": "60dc0c0a-c5f2-4cd3-8c61-2bcf5e9b01d4",
+      "name": "Gera gráficos1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1900,
+        480
+      ],
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "url": "=https://quickchart.io/chart?c={type:'radar',data:{labels:['AUTOCONHECIMENTO', 'AUTORREGULAÇÃO', 'PERCEPÇÃO SOCIAL', 'HABILIDADES DE RELACIONAMENTO'],datasets:[{{ $json.data }}]}, options: { maintainAspectRatio: false, responsive: true, title: { display: true, text: \"{{ $json.nome }}\", align: \"start\" }, scale: { pointLabels: { fontSize: 8 }, ticks: { stepSize: 1, beginAtZero: true, min: 0, max: 4 } }, plugins: { backgroundColor: 'blue' } },}&backgroundColor=white",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "data3"
+            }
+          }
+        }
+      },
+      "id": "dc0b5707-97d8-4e56-84e2-defed462682b",
+      "name": "Gera gráficos2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1920,
+        1200
+      ],
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "outputKey": "final_data",
+        "pdfName": "={{ $json.nome }} - Inteligência Emocional"
+      },
+      "id": "e121229c-37c8-46ce-806c-7ddb73b75bad",
+      "name": "PDFKit",
+      "type": "n8n-nodes-pdfkit.pdfKit",
+      "typeVersion": 1,
+      "position": [
+        3600,
+        1340
+      ]
+    },
+    {
+      "parameters": {
+        "outputKey": "final_data",
+        "pdfName": "={{ $json.nome }} - SoftSkills"
+      },
+      "id": "93c945f2-ff58-4c04-a444-239c0e504581",
+      "name": "PDFKit2",
+      "type": "n8n-nodes-pdfkit.pdfKit",
+      "typeVersion": 1,
+      "position": [
+        3600,
+        680
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "multiStep",
+        "operations": {
+          "operations": [
+            {
+              "operation": "composite",
+              "dataPropertyNameComposite": "data1",
+              "operator": "In"
+            },
+            {
+              "operation": "composite",
+              "dataPropertyNameComposite": "data2",
+              "operator": "In",
+              "positionY": 510
+            }
+          ]
+        },
+        "options": {
+          "fileName": "final_data"
+        }
+      },
+      "id": "6c6aca1c-033e-434f-88c7-8721978d4ff1",
+      "name": "junta imagens",
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [
+        3180,
+        680
+      ],
+      "retryOnFail": false,
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "width": 770,
+        "height": 1025,
+        "options": {}
+      },
+      "id": "af474b26-54dc-48b1-9413-cca869fa7ec3",
+      "name": "cria imagem",
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [
+        2940,
+        680
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.quickchart.io/v1/table?data={\"title\":\"Data de Entrada: {{ $json.data_entrada }} \",\"columns\":[{{ $json.colunas }}],\"dataSource\":{{ $json.notas.toJsonString() }} }",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "data4"
+            }
+          }
+        }
+      },
+      "id": "fb7e91fd-8838-4f32-8ead-2f72743760c0",
+      "name": "Gera tabela2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1920,
+        1480
+      ],
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "maxTries": 5
+    },
+    {
+      "parameters": {
+        "operation": "multiStep",
+        "dataPropertyName": "data3",
+        "operations": {
+          "operations": [
+            {
+              "operation": "resize",
+              "width": 850,
+              "resizeOption": "ignoreAspectRatio"
+            },
+            {
+              "operation": "border",
+              "borderWidth": 5,
+              "borderHeight": 5,
+              "borderColor": "#006666"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0e8df8fb-fcf3-443f-afb1-a9cd283a67ed",
+      "name": "Redimensionamento e borda2",
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [
+        2140,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "multiStep",
+        "dataPropertyName": "data4",
+        "operations": {
+          "operations": [
+            {
+              "operation": "resize",
+              "width": 850,
+              "height": 510,
+              "resizeOption": "ignoreAspectRatio"
+            },
+            {
+              "operation": "border",
+              "borderWidth": 5,
+              "borderHeight": 5,
+              "borderColor": "#006666"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fa8030fc-a515-4531-a1b6-96fb9380f1e1",
+      "name": "Redimensionamento e borda3",
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        1480
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "multiStep",
+        "operations": {
+          "operations": [
+            {
+              "operation": "composite",
+              "dataPropertyNameComposite": "data3",
+              "operator": "In"
+            },
+            {
+              "operation": "composite",
+              "dataPropertyNameComposite": "data4",
+              "operator": "In",
+              "positionY": 510
+            }
+          ]
+        },
+        "options": {
+          "fileName": "final_data"
+        }
+      },
+      "id": "c9c94174-6448-4540-9a3e-550c3cf4674a",
+      "name": "junta imagens1",
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [
+        3160,
+        1340
+      ],
+      "retryOnFail": false,
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "width": 850,
+        "height": 1040,
+        "options": {}
+      },
+      "id": "e085463e-f5b2-401b-b428-119f5c60dfc1",
+      "name": "cria imagem1",
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [
+        2940,
+        1340
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.quickchart.io/v1/table?data={\"title\":\"Data de Entrada: {{ $json.data_entrada }} \",\"columns\":[{{ $json.colunas }}],\"dataSource\":{{ $json.notas.toJsonString() }} }",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "data2"
+            }
+          }
+        }
+      },
+      "id": "e63b9aad-1af6-4662-aaa9-79a03cdad523",
+      "name": "Gera tabela1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1920,
+        840
+      ],
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "functionCode": "const avaliacoes = $node['Get notas do discente1'].json.autoavaliacoes;\nlet resultado = '';\nfor (let i = 0, len = avaliacoes.length; i < len; ++i) {\n  let av = \"{label:'A\"+avaliacoes[i].unidade+' - '+avaliacoes[i].cadastrado_em+\"',data:[\"\n  for (let e = 0, len = avaliacoes[i].notas.length; e < len; ++e) {\n    if (e == avaliacoes[i].notas.length-1) {\n      av += avaliacoes[i].notas[e].nota + ''\n    } else {\n      av += avaliacoes[i].notas[e].nota + ', '\n    }\n  }\n  if (i == avaliacoes.length-1) {\n    av += \"], borderDash: [2, 2], fill: false}\"\n  } else {\n    av += \"], borderDash: [2, 2], fill: false},\"\n  }\n  resultado += av\n}\n\nreturn {\n  json: {\n    nome: items[0].json.nome,\n    data: resultado\n  }\n};"
+      },
+      "name": "Process Data1",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1720,
+        480
+      ],
+      "id": "3a46f24e-2f17-4232-99ba-cc8ac287f735"
+    },
+    {
+      "parameters": {
+        "functionCode": "const avaliacoes = $node['Get notas do discente1'].json.autoavaliacoes;\nlet resultado = '';\nfor (let i = 0, len = avaliacoes.length; i < len; ++i) {\n  let av = \"{label:'A\"+avaliacoes[i].unidade+' - '+avaliacoes[i].cadastrado_em+\"',data:[\"\n  for (let e = 0, len = avaliacoes[i].notas_sub_softskill.length; e < len; ++e) {\n    if (e == avaliacoes[i].notas_sub_softskill.length-1) {\n      av += avaliacoes[i].notas_sub_softskill[e].nota + ''\n    } else {\n      av += avaliacoes[i].notas_sub_softskill[e].nota + ', '\n    }\n  }\n  if (i == avaliacoes.length-1) {\n    av += \"], borderDash: [2, 2], fill: false}\"\n  } else {\n    av += \"], borderDash: [2, 2], fill: false},\"\n  }\n  resultado += av\n}\n\nreturn {\n  json: {\n    nome: items[0].json.nome,\n    data: resultado\n  }\n};"
+      },
+      "name": "Process Data3",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1720,
+        1200
+      ],
+      "id": "60984379-1882-47fe-846c-5448e7ba1160"
+    },
+    {
+      "parameters": {
+        "functionCode": "function converteNota(nota) {\n  nota = parseFloat(nota);\n  if (nota >= 0 && nota <= 1) {\n    return 'Abaixo do Básico';\n  } else if (nota <= 2) {\n    return 'Básico';\n  } else if (nota <= 3) {\n    return 'Adequado';\n  } else {\n    return 'Avançado';\n  }    \n}\n\nconst avaliacoes = $node['Get notas do discente1'].json.autoavaliacoes;\nlet colunas = '{\"width\":300, \"title\": \"SUBSOFT SKILLS\", \"dataIndex\":\"softskills\"},';\nlet autoavacao_unidade = 0;\n\nfor (let i = 0, len = avaliacoes.length; i < len; ++i) {\n  autoavacao_unidade = avaliacoes[i].unidade;\n  let av = '\"|\",\"|\", {\"title\":\"A' + autoavacao_unidade + '\", \"dataIndex\":\"col' + autoavacao_unidade + '\", \"align\": \"right\"}';\n  if (i == avaliacoes.length - 1) {\n    av += \"\";\n  } else {\n    av += \",\";\n  }\n  colunas += av;\n}\n\nconst notasPorSoftskill = {};\nconst data = $node['Get notas do discente1'].json.autoavaliacoes.forEach(autoavaliacao => {\n  autoavaliacao.notas_sub_softskill.forEach(notaObj => {\n    const softskill = notaObj.softskill;\n    const nota = notaObj.nota;\n    if (!notasPorSoftskill[softskill]) {\n      notasPorSoftskill[softskill] = [];\n    }\n    notasPorSoftskill[softskill].push(nota);\n  });\n});\n\nconst result = Object.keys(notasPorSoftskill).map(softskill => {\n  const notas = notasPorSoftskill[softskill];\n  const colunas = { softskills: softskill };\n  notas.forEach((nota, index) => {\n    colunas[`col${index + 1}`] = converteNota(nota);\n  });\n  return colunas;\n});\n\nfinalResult = [];\nfor (let object in result) {\n  finalResult.push('-');\n  finalResult.push('-');\n  finalResult.push(result[object]);\n}\n\nreturn {\n  json: {\n    nome: items[0].json.nome,\n    data_entrada: items[0].json.data_entrada,\n    colunas: colunas,\n    notas: finalResult\n  }\n};\n"
+      },
+      "name": "Process Data4",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1700,
+        1480
+      ],
+      "id": "f7e8d39f-336b-4a0b-9899-1aa6a3bad3dd"
+    },
+    {
+      "parameters": {
+        "functionCode": "function converteNota(nota) {\n  nota = parseFloat(nota);\n  if (nota >= 0 && nota <= 1) {\n    return 'Abaixo do Básico';\n  } else if (nota <= 2) {\n    return 'Básico';\n  } else if (nota <= 3) {\n    return 'Adequado';\n  } else {\n    return 'Avançado';\n  }    \n}\n\nconst avaliacoes = $node['Get notas do discente1'].json.autoavaliacoes;\nlet colunas = '{\"width\":350, \"title\": \"SOFT SKILLS\", \"dataIndex\":\"softskills\"},';\nlet autoavacao_unidade = 0;\n\nfor (let i = 0, len = avaliacoes.length; i < len; ++i) {\n  autoavacao_unidade = avaliacoes[i].unidade;\n  let av = '\"|\",\"|\", {\"title\":\"A'+autoavacao_unidade+'\", \"dataIndex\":\"col'+autoavacao_unidade+'\", \"align\": \"right\"}'\n  if (i == avaliacoes.length-1) {\n    av += \"\"\n  } else {\n    av += \",\"\n  }\n  colunas += av\n}\n\nconst notasPorSoftskill = {};\nconst data = $node['Get notas do discente1'].json.autoavaliacoes.forEach(autoavaliacao => {\n  autoavaliacao.notas.forEach(notaObj => {\n    const softskill = notaObj.softskill;\n    const nota = notaObj.nota;\n    if (!notasPorSoftskill[softskill]) {\n      notasPorSoftskill[softskill] = [];\n    }\n    notasPorSoftskill[softskill].push(nota);\n  });\n});\n\nconst result = Object.keys(notasPorSoftskill).map(softskill => {\n  const notas = notasPorSoftskill[softskill];\n  const colunas = { softskills: softskill };\n  notas.forEach((nota, index) => {\n    colunas[`col${index + 1}`] = converteNota(nota);\n  });\n  return colunas;\n});\n\nfinalResult = [];\nfor (object in result) {\n  finalResult.push('-');\n  finalResult.push('-');\n  finalResult.push(result[object]);\n}\n\n\nreturn {\n  json: {\n    nome: items[0].json.nome,\n    data_entrada: items[0].json.data_entrada,\n    colunas: colunas,\n    notas: finalResult\n  }\n};"
+      },
+      "name": "Process Data2",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1720,
+        840
+      ],
+      "id": "e4365036-8a85-403f-bb46-d6d3e7f7d8d8"
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "final_data",
+        "name": "={{ $items()[0].binary.final_data.fileName }}",
+        "driveId": {
+          "__rl": true,
+          "value": "https://drive.google.com/drive/folders/1VlI-M7Iz03yKbp_NSxpgkTPKqR4ZOewf",
+          "mode": "url"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "id": "b01ea393-4255-48e8-99f5-e1b4acf191b3",
+      "name": "Google Drive1",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        4260,
+        1500
+      ],
+      "alwaysOutputData": false,
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "O854kEtaZaF2mFgZ",
+          "name": "Google Drive account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking \"Test workflow\"": {
+      "main": [
+        [
+          {
+            "node": "faz login na API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "faz login na API": {
+      "main": [
+        [
+          {
+            "node": "Get discentes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get discentes": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "cria imagem1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "cria imagem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get notas do discente1": {
+      "main": [
+        [
+          {
+            "node": "Process Data4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Process Data3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Process Data1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Process Data2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Get notas do discente1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redimensionamento e borda": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redimensionamento e borda1": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Isola imagem": {
+      "main": [
+        [
+          {
+            "node": "PDFKit2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Isola imagem1": {
+      "main": [
+        [
+          {
+            "node": "PDFKit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gera gráficos1": {
+      "main": [
+        [
+          {
+            "node": "Redimensionamento e borda",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gera gráficos2": {
+      "main": [
+        [
+          {
+            "node": "Redimensionamento e borda2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFKit": {
+      "main": [
+        [
+          {
+            "node": "Google Drive1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFKit2": {
+      "main": [
+        [
+          {
+            "node": "Google Drive1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "junta imagens": {
+      "main": [
+        [
+          {
+            "node": "Isola imagem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "cria imagem": {
+      "main": [
+        [
+          {
+            "node": "junta imagens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gera tabela2": {
+      "main": [
+        [
+          {
+            "node": "Redimensionamento e borda3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redimensionamento e borda2": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redimensionamento e borda3": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "junta imagens1": {
+      "main": [
+        [
+          {
+            "node": "Isola imagem1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "cria imagem1": {
+      "main": [
+        [
+          {
+            "node": "junta imagens1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gera tabela1": {
+      "main": [
+        [
+          {
+            "node": "Redimensionamento e borda1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Data1": {
+      "main": [
+        [
+          {
+            "node": "Gera gráficos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Data3": {
+      "main": [
+        [
+          {
+            "node": "Gera gráficos2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Data4": {
+      "main": [
+        [
+          {
+            "node": "Gera tabela2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Data2": {
+      "main": [
+        [
+          {
+            "node": "Gera tabela1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "8d272418-beea-4881-ac6e-25021b295826",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0d5b43104db548113e20f7676a381187d345232bbf82b9544ee77a27f5654bd8"
+  },
+  "id": "GNMlPk0WxtbQZZDC",
+  "tags": []
+}

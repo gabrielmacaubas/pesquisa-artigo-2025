@@ -1,0 +1,947 @@
+{
+  "name": "Gera recomendações",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4e96d795-2528-4b6c-a797-4ee441fb2404",
+              "name": "competencias",
+              "value": "=[\n  \"Pensamento crítico e inovação\",\n  \"Aprendizagem ativa e estratégias de aprendizagem\",\n  \"Empreendedorismo\",\n  \"Criatividade, originalidade e iniciativa\",\n  \"Liderança e influência social\",\n  \"Resolução de problemas complexos\",\n  \"Inteligência emocional: autorregulação\",\n  \"Inteligência emocional: percepção social\",\n  \"Inteligência emocional: autoconhecimento\",\n  \"Inteligência emocional: habilidades de relacionamento\"\n]\n",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "bd087b0e-72b9-43b5-9d5a-0c839a29f827",
+      "name": "Definir competências",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        48,
+        -864
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Un0d44117KdCQBQfVpfrQVWNrndvuyPS-yVot4OYTzw",
+          "mode": "list",
+          "cachedResultName": "Recomendacao",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Un0d44117KdCQBQfVpfrQVWNrndvuyPS-yVot4OYTzw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Un0d44117KdCQBQfVpfrQVWNrndvuyPS-yVot4OYTzw/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Competências",
+              "lookupValue": "={{ $json[\"competencias\"] }}"
+            }
+          ]
+        },
+        "options": {
+          "returnAllMatches": "returnAllMatches"
+        }
+      },
+      "id": "e2d14221-b686-4766-a0e7-1fdc8c6fd94e",
+      "name": "Ler planilha de recomendações",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.3,
+      "position": [
+        400,
+        -864
+      ],
+      "alwaysOutputData": false,
+      "executeOnce": false,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "f2KalyOOA8xstsjz",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://django-deployment-ten.vercel.app/login/",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{ \"username\": \"admin\", \"password\": \"123\" }",
+        "options": {}
+      },
+      "id": "1a09bc20-136a-4c7a-8138-d7a5c72b7f46",
+      "name": "Fazer login na API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        832,
+        -864
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "url": "=https://django-deployment-ten.vercel.app/api/capacitacao/discentes/",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "=token {{ $node[\"Fazer login na API\"].data.token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1c8c3d8d-b6aa-41ed-8503-e44da0c1bdf3",
+      "name": "Buscar discentes",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -160,
+        -608
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "url": "=https://django-deployment-ten.vercel.app/api/capacitacao/discentes_notas/{{ $json.id }}/",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "=token {{ $node[\"Fazer login na API\"].data.token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "66fdb790-f2e3-4171-8451-fa5195f1a27b",
+      "name": "Buscar notas dos discentes",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        288,
+        -608
+      ]
+    },
+    {
+      "parameters": {
+        "html": "<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>Recomendações de Melhorias</title>\n  <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap\" rel=\"stylesheet\">\n  <style>\n    @page {\n      size: A4 portrait;\n    }\n\n    .page-break {\n      page-break-after: always;\n      break-after: page;\n    }\n\n    body {\n      font-family: 'Poppins', sans-serif;\n      margin: 0;\n      background-color: #ffffff;\n      color: #222;\n    }\n\n    .banner img {\n      width: 100%;\n      height: auto;\n      display: block;\n    }\n\n    .container {\n      padding: 30px 40px;        \n      max-width: 800px;          \n      margin: 20px auto;         \n    }\n\n    .info-block {\n      display: flex;\n      align-items: center;\n      margin-bottom: 10px;\n    }\n\n    .label {\n      background-color: #2c057f;\n      color: white;\n      padding: 10px 15px;\n      font-weight: bold;\n      border-top-left-radius: 8px;\n      border-bottom-left-radius: 8px;\n      min-width: 120px;\n    }\n\n    .value {\n      background-color: #f4f4f4;\n      padding: 10px 15px;\n      flex: 1;\n      border-top-right-radius: 8px;\n      border-bottom-right-radius: 8px;\n    }\n\n    .recommend-title {\n      background-color: #C5FFBC;\n      color: #FF15A8;\n      font-weight: bold;\n      padding: 10px 15px;\n      border-top-left-radius: 8px;\n      border-top-right-radius: 8px;\n      margin-top: 30px;\n    }\n\n    .recommend-content {\n      background-color: #e0ffe9;\n      padding: 15px;\n      border-bottom-left-radius: 8px;\n      border-bottom-right-radius: 8px;\n    }\n\n    .observation-title {\n      background-color: #fceabe;\n      color: #d4b338;\n      font-weight: bold;\n      padding: 10px 15px;\n      border-top-left-radius: 8px;\n      border-top-right-radius: 8px;\n      margin-top: 30px;\n    }\n\n    .observation-content {\n      background-color: #fff7e6;\n      padding: 15px;\n      border-bottom-left-radius: 8px;\n      border-bottom-right-radius: 8px;\n    }\n  </style>\n</head>\n<body>\n\n  <div class=\"banner\">\n    <img src=\"https://jardsousa.github.io/img/foton8n.jpg\" alt=\"Imagem\" />\n  </div>\n\n  <div class=\"container\">\n\n    <div class=\"info-block\">\n      <div class=\"label\">Aluno</div>\n      <div class=\"value\">{{ $('Loop de recomendações').item.json.Aluno }}</div>\n    </div>\n    \n    <div class=\"info-block\">\n      <div class=\"label\">Unidade</div>\n      <div class=\"value\">{{ $('Loop de recomendações').item.json.Unidade }}</div>\n\n      <div class=\"label\" style=\"margin-left: 20px;\">Nota</div>\n      <div class=\"value\">{{ $('Loop de recomendações').item.json.Nota }}</div>\n    </div>\n\n    <div class=\"info-block\">\n      <div class=\"label\">Competência</div>\n      <div class=\"value\">{{ $('Loop de recomendações').item.json.Competência }}</div>\n    </div>\n   \n\n    <div class=\"recommend-title\">Recomendações</div>\n    <div class=\"recommend-content\">\n      {{ $('Loop de recomendações').item.json.Recomendações }}\n    </div>\n\n    <div class=\"observation-title\">Observações</div>\n    <div class=\"observation-content\">\n      {{ $('Loop de recomendações').item.json.MotivoRecomendacao }}\n    </div>\n\n  </div>\n\n  <div class=\"page-break\"></div>\n\n</body>\n</html>\n"
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        304,
+        -352
+      ],
+      "id": "05457294-142e-466d-8215-c49408ce3163",
+      "name": "Montar template de recomendações",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "88c47b99-d7c1-4f03-bfd7-92f4e0fa8b8e",
+              "name": "nome_arquivo_html",
+              "value": "=Recomendacao_{{ $('Loop de recomendações').item.json.Aluno }}_{{ $('Loop de recomendações').item.json.Competência }}_{{ $('Loop de recomendações').item.json.Unidade }}.html\n",
+              "type": "string"
+            },
+            {
+              "id": "bc1e4344-b745-4c5e-9684-d675d4a6b291",
+              "name": "html",
+              "value": "={{ $json.html }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        480,
+        -352
+      ],
+      "id": "01cdc8b4-0a6c-4c08-8c69-2358db7fc7da",
+      "name": "Renomear template"
+    },
+    {
+      "parameters": {
+        "jsCode": "const parts = items.map((it) => Buffer\n  .from(it.binary.data.data, 'base64')\n  .toString('utf8')\n);\n\n\nconst merged = parts.join('\\n<!-- ==== separador ==== -->\\n');\n\n\nconst html = `<!doctype html><html><head><meta charset=\"utf-8\"><title>Recomendações </title></head><body>\n${merged}\n</body></html>`;\n\nreturn [{\n  binary: {\n    data: {\n      data: Buffer.from(html, 'utf8').toString('base64'),\n      mimeType: 'text/html',\n      fileName: 'index.html',\n    }\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        304,
+        -80
+      ],
+      "id": "7d5f6454-3679-406b-8aec-4b233bdfcf23",
+      "name": "Mesclar arquivos"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const item = $input.item;\n\nconst nomeArquivo = 'Recomendacoes_' +  $('Analisar notas').first().json.Aluno   + '.pdf';\n\nitem.binary['data'].fileName = nomeArquivo;\nitem.binary['data'].mimeType = 'application/pdf';\n\nreturn item;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        -80
+      ],
+      "id": "03b8aad8-9f20-4423-bae3-20dac86a3d66",
+      "name": "Renomear PDF"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Buscar discentes').first().json.mentor_email_ifpb }}",
+        "subject": "=Recomendações para o aluno {{ $('Analisar notas').first().json.Aluno }}",
+        "message": "=<div style=\"font-family: 'Poppins', Arial, sans-serif; background-color: #f5f5f5; padding: 20px;\">\n  <div style=\"max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.1);\">\n\n    <!-- Banner -->\n    <img src=\"https://jardsousa.github.io/img/foton8n.jpg\" alt=\"Banner\" style=\"width: 100%; display: block;\">\n\n    <!-- Conteúdo -->\n    <div style=\"padding: 20px;\">\n      <p style=\"font-size: 16px; color: #333;\">\n        Prezado(a) mentor(a),\n      </p>\n\n      <p style=\"font-size: 15px; color: #333; line-height: 1.5;\">\n        Segue em anexo o relatório com orientações personalizadas para o(a) aluno(a)\n        <strong style=\"color: #1a1a1a;\">{{ $('Analisar notas').first().json.Aluno }}</strong>, elaborado a partir das autoavaliações realizadas ao longo do percurso formativo.\n      </p>\n\n      <p style=\"font-size: 15px; color: #333;\">\n        Agradecemos sua dedicação e acompanhamento no processo de capacitação dos discentes.\n      </p>\n\n      <p style=\"font-size: 15px; color: #333;\">\n        Atenciosamente,<br>\n        <strong style=\"color: #1a1a1a;\">Equipe Capacitação 4.0</strong>\n      </p>\n    </div>\n\n    <!-- Rodapé -->\n    <div style=\"background-color: #FF15A8; color: #ffffff; text-align: center; padding: 10px 20px; font-size: 12px; margin-top: 20px;\">\n      Este e-mail foi gerado automaticamente pelo <strong>n8n</strong>\n    </div>\n\n  </div>\n</div>\n",
+        "options": {
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {}
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1008,
+        -80
+      ],
+      "id": "360bb2f6-ef15-4512-916e-35e0335179da",
+      "name": "Enviar e-mail",
+      "webhookId": "5cffe63d-1909-41f7-a121-9bd9bd85de79",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "EYRG2rhyqBwRq2Le",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const limiteNota = 2.0;\nconst resultados = [];\nconst recomendacoesPorCompetencia = {};\n\n// pega as recomendações vindas do node Google Sheets (ajuste o nome do node se for diferente)\nconst recomendacoes = $items(\"Ler planilha de recomendações\");\nif (!recomendacoes || recomendacoes.length === 0) {\n  throw new Error(\"Nenhuma recomendação foi retornada do Google Sheets.\");\n}\n\n// agrupa recomendações por competência (minúsculas)\nrecomendacoes.forEach((recomendacao) => {\n  const competencia = recomendacao.json?.[\"Competências\"]?.toLowerCase?.();\n  const texto = recomendacao.json?.[\"Recomendações\"];\n  if (!competencia || !texto) return;\n\n  if (!recomendacoesPorCompetencia[competencia]) {\n    recomendacoesPorCompetencia[competencia] = [];\n  }\n  recomendacoesPorCompetencia[competencia].push(texto);\n});\n\n$input.all().forEach((item) => {\n  const aluno = item.json?.nome ?? \"Aluno(a)\";\n  const autoavaliacoes = Array.isArray(item.json?.autoavaliacoes) ? item.json.autoavaliacoes : [];\n  if (autoavaliacoes.length === 0) return;\n\n  // controla repetição de recomendações por competência PARA ESSE ALUNO\n  const recomendacoesUsadas = {};\n\n  function sorteiaRecomendacaoSemRepeticao(competencia) {\n    const key = competencia.toLowerCase();\n    const lista = recomendacoesPorCompetencia[key];\n    if (!lista || lista.length === 0) {\n      return \"Não há recomendações disponíveis para esta competência.\";\n    }\n\n    if (!recomendacoesUsadas[key]) {\n      recomendacoesUsadas[key] = new Set();\n    }\n\n    const usadas = recomendacoesUsadas[key];\n    const disponiveis = lista.filter((rec) => !usadas.has(rec));\n\n    if (disponiveis.length === 0) {\n      return \"Todas as recomendações já foram utilizadas para essa competência.\";\n    }\n\n    const sorteada = disponiveis[Math.floor(Math.random() * disponiveis.length)];\n    usadas.add(sorteada);\n    return sorteada;\n  }\n\n  // ordena por unidade\n  autoavaliacoes.sort((a, b) => parseInt(a?.unidade ?? 0, 10) - parseInt(b?.unidade ?? 0, 10));\n\n  autoavaliacoes.forEach((avaliacao, index) => {\n    const unidade = avaliacao?.unidade ?? \"\";\n\n    // notas da unidade atual\n    const notasPrincipais = Array.isArray(avaliacao?.notas) ? avaliacao.notas : [];\n    const notasSub = Array.isArray(avaliacao?.notas_sub_softskill) ? avaliacao.notas_sub_softskill : [];\n\n    const todasNotas = [\n      // todas as principais, exceto \"inteligência emocional\"\n      ...notasPrincipais.filter(\n        (n) => (n?.softskill ?? \"\").toLowerCase() !== \"inteligência emocional\"\n      ),\n      // sub-softskills de inteligência emocional, renomeadas como \"Inteligência Emocional: X\"\n      ...notasSub.map((notaSub) => {\n        const principal = notasPrincipais.find(\n          (n) => (n?.softskill ?? \"\").toLowerCase() === \"inteligência emocional\"\n        );\n        return principal\n          ? { ...notaSub, softskill: `${principal.softskill}: ${notaSub.softskill}` }\n          : notaSub;\n      }),\n    ];\n\n    todasNotas.forEach((notaObj) => {\n      const competencia = (notaObj?.softskill ?? \"\").toLowerCase();\n      const notaAtual = parseFloat(notaObj?.nota ?? NaN);\n\n      if (!competencia || Number.isNaN(notaAtual)) return;\n\n      let deveRecomendar = false;\n      let motivo = \"limite\"; // \"limite\" (abaixo de 2.5) ou \"queda\" (piorou em relação à unidade anterior)\n\n      // compara com unidade anterior, se existir\n      if (index > 0) {\n        const anterior = autoavaliacoes[index - 1];\n\n        const notasAntPrincipais = Array.isArray(anterior?.notas) ? anterior.notas : [];\n        const notasAntSub = Array.isArray(anterior?.notas_sub_softskill) ? anterior.notas_sub_softskill : [];\n\n        const notasAnt = [\n          ...notasAntPrincipais.filter(\n            (n) => (n?.softskill ?? \"\").toLowerCase() !== \"inteligência emocional\"\n          ),\n          ...notasAntSub.map((notaSub) => {\n            const principalAnt = notasAntPrincipais.find(\n              (n) => (n?.softskill ?? \"\").toLowerCase() === \"inteligência emocional\"\n            );\n            return principalAnt\n              ? { ...notaSub, softskill: `${principalAnt.softskill}: ${notaSub.softskill}` }\n              : notaSub;\n          }),\n        ];\n\n        const notaAntObj = notasAnt.find(\n          (n) => (n?.softskill ?? \"\").toLowerCase() === competencia\n        );\n        if (notaAntObj) {\n          const notaAnt = parseFloat(notaAntObj?.nota ?? NaN);\n          if (!Number.isNaN(notaAnt) && notaAtual < notaAnt) {\n            deveRecomendar = true;\n            motivo = \"queda\";\n          }\n        }\n      }\n\n      if (notaAtual < limiteNota || deveRecomendar) {\n        const textoMotivo =\n          motivo === \"queda\"\n            ? \"Recomendação por queda de desempenho\"\n            : \"Recomendação por desempenho abaixo da média\";\n\n        resultados.push({\n          Aluno: aluno,\n          Unidade: unidade,\n          Competência: competencia,\n          Nota: notaAtual,\n          Recomendações: sorteiaRecomendacaoSemRepeticao(competencia),\n          MotivoRecomendacao: textoMotivo,\n        });\n      }\n    });\n  });\n});\n\n// saída: um item por recomendação\nreturn resultados.map((res) => ({ json: res }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        544,
+        -608
+      ],
+      "id": "466732e9-9c02-41d6-91c0-a80bc000fd0b",
+      "name": "Analisar notas",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "content": "3.2.1 Inicio do Fluxo",
+        "height": 240,
+        "width": 220
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -288,
+        -912
+      ],
+      "typeVersion": 1,
+      "id": "5169da3a-a869-4aa3-9752-f93e924a52a1",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "3.2.2 Definição das Competências e Obtenção das Recomendações",
+        "height": 240,
+        "width": 580,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -16,
+        -912
+      ],
+      "typeVersion": 1,
+      "id": "c3ef9b03-cc39-4933-81f8-daa31fd50feb",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "3.2.3 Autenticação na API",
+        "height": 240,
+        "width": 580,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        608,
+        -912
+      ],
+      "typeVersion": 1,
+      "id": "819d1761-0616-4c59-ab4a-dae6dccee228",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "3.2.4 Coleta dos Dados dos Discentes",
+        "height": 240,
+        "width": 720,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -288,
+        -640
+      ],
+      "typeVersion": 1,
+      "id": "c5a2b5a4-6f2e-4ae6-8741-00cc9292fb1e",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "3.2.6 Montagem do Template Visual dos Relatórios Recomendações",
+        "height": 240,
+        "width": 1460,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -288,
+        -384
+      ],
+      "typeVersion": 1,
+      "id": "ad91b9b8-290f-4c64-a3d3-efd590668e7b",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "3.2.7 Consolidação e Conversão dos Relatórios em PDF\n",
+        "height": 240,
+        "width": 1100,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -288,
+        -128
+      ],
+      "typeVersion": 1,
+      "id": "5a169221-17d2-4984-9b82-c1ce9705a31e",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "3.2.8 Envio dos Relatórios de Recomendação\n",
+        "height": 240,
+        "width": 320,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        864,
+        -128
+      ],
+      "typeVersion": 1,
+      "id": "3ca75c9c-1e20-44f8-9277-f509cbc7ecf2",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "3.2.5 Análise de Desempenho e Geração de Recomendações",
+        "height": 240,
+        "width": 700,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        480,
+        -640
+      ],
+      "typeVersion": 1,
+      "id": "e4c47bcf-74b3-4262-ae52-d5554c417373",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "3.2.9 Finalização do Fluxo",
+        "height": 240,
+        "width": 1460,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -288,
+        144
+      ],
+      "typeVersion": 1,
+      "id": "88a67d68-7d20-4487-addd-d96b9c67509f",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "competencias",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        224,
+        -864
+      ],
+      "id": "1c0a485c-402d-4c25-a732-6cf0edd8370b",
+      "name": "Dividir lista de competências"
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "html",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        672,
+        -352
+      ],
+      "id": "a43b43f1-3f38-4efd-ba7f-08f9482ef1dd",
+      "name": "Converter template"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "=/htmls/{{ $('Renomear template').item.json.nome_arquivo_html }}",
+        "options": {
+          "append": false
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        848,
+        -352
+      ],
+      "id": "985b84cf-2189-4364-8653-814937bd515b",
+      "name": "Salvar arquivo"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ed81e49d-b51f-4c72-ab60-e236d371fa51",
+              "leftValue": "={{ $json }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        720,
+        -608
+      ],
+      "id": "c0b62e96-bb68-4d27-92b3-bf2bdc834023",
+      "name": "Sem recomendações"
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": "={{ $('Loop de recomendações').context[\"done\"] }}"
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        48,
+        -352
+      ],
+      "id": "df6ac27e-5434-4494-974a-5d83006b87fe",
+      "name": "Loop de recomendações"
+    },
+    {
+      "parameters": {
+        "fileSelector": "=/htmls/{{ $('Renomear template').item.json.nome_arquivo_html }}",
+        "options": {
+          "fileExtension": "html",
+          "fileName": "index.html",
+          "mimeType": "text/html"
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        128,
+        -80
+      ],
+      "id": "e1ee9eec-26f7-4152-9353-c099c3d1561f",
+      "name": "Ler arquivos"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://gotenberg:3000/forms/chromium/convert/html",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "files",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "=data"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        480,
+        -80
+      ],
+      "id": "b8ada9f4-0200-4b69-90af-819b9eb96efb",
+      "name": "Converter arquivo"
+    },
+    {
+      "parameters": {
+        "command": "sh -lc \"rm -f /htmls/*\"\n"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        368,
+        176
+      ],
+      "id": "589abc15-3249-445d-a699-14dcb24d8897",
+      "name": "Excluir arquivos"
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        912,
+        -608
+      ],
+      "id": "55a912ee-998a-4d2d-b082-fe4a9b271841",
+      "name": "Tempo de controle de ciclo - 01",
+      "webhookId": "6e2dccb0-4cd9-44c2-a32e-1914c78c621a",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "bba35e21-1c44-4963-a207-f57f9616250e",
+      "name": "Loop dos discentes",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        32,
+        -608
+      ],
+      "alwaysOutputData": false,
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1024,
+        -352
+      ],
+      "id": "66211c09-2d48-47e9-88c7-20cdfa4bbee5",
+      "name": "Tempo de controle de ciclo - 02",
+      "webhookId": "62dbdbfd-e3ac-4715-b300-3d0433c4e89c"
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        544,
+        176
+      ],
+      "id": "dfa2992d-5b67-4033-bdd1-050f776017fe",
+      "name": "Tempo de controle de ciclo - 03",
+      "webhookId": "e1c6b90f-fc89-49a1-8276-bac81ed46a9d"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "gerar-recomendacoes",
+        "options": {
+          "responseData": "Processamento concluido com sucesso"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -224,
+        -864
+      ],
+      "id": "bb92f872-2144-483b-88fb-863a9a9ddf46",
+      "name": "Receber requisição do Site",
+      "webhookId": "95d9b2b4-9c6a-46c4-a7de-b07d0a1318e7"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        -1232
+      ],
+      "id": "aef970b3-44b6-42e4-91d6-2221271ee2f1",
+      "name": "When clicking ‘Execute workflow’"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Definir competências": {
+      "main": [
+        [
+          {
+            "node": "Dividir lista de competências",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ler planilha de recomendações": {
+      "main": [
+        [
+          {
+            "node": "Fazer login na API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fazer login na API": {
+      "main": [
+        [
+          {
+            "node": "Buscar discentes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar discentes": {
+      "main": [
+        [
+          {
+            "node": "Loop dos discentes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar notas dos discentes": {
+      "main": [
+        [
+          {
+            "node": "Analisar notas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Montar template de recomendações": {
+      "main": [
+        [
+          {
+            "node": "Renomear template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Renomear template": {
+      "main": [
+        [
+          {
+            "node": "Converter template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mesclar arquivos": {
+      "main": [
+        [
+          {
+            "node": "Converter arquivo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Renomear PDF": {
+      "main": [
+        [
+          {
+            "node": "Enviar e-mail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar e-mail": {
+      "main": [
+        [
+          {
+            "node": "Excluir arquivos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analisar notas": {
+      "main": [
+        [
+          {
+            "node": "Sem recomendações",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dividir lista de competências": {
+      "main": [
+        [
+          {
+            "node": "Ler planilha de recomendações",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Converter template": {
+      "main": [
+        [
+          {
+            "node": "Salvar arquivo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Salvar arquivo": {
+      "main": [
+        [
+          {
+            "node": "Tempo de controle de ciclo - 02",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sem recomendações": {
+      "main": [
+        [
+          {
+            "node": "Tempo de controle de ciclo - 01",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop de recomendações",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop de recomendações": {
+      "main": [
+        [
+          {
+            "node": "Ler arquivos",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Montar template de recomendações",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ler arquivos": {
+      "main": [
+        [
+          {
+            "node": "Mesclar arquivos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Converter arquivo": {
+      "main": [
+        [
+          {
+            "node": "Renomear PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Excluir arquivos": {
+      "main": [
+        [
+          {
+            "node": "Tempo de controle de ciclo - 03",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tempo de controle de ciclo - 01": {
+      "main": [
+        [
+          {
+            "node": "Loop dos discentes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop dos discentes": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Buscar notas dos discentes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tempo de controle de ciclo - 02": {
+      "main": [
+        [
+          {
+            "node": "Loop de recomendações",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tempo de controle de ciclo - 03": {
+      "main": [
+        [
+          {
+            "node": "Loop dos discentes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        []
+      ]
+    },
+    "Receber requisição do Site": {
+      "main": [
+        [
+          {
+            "node": "Definir competências",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a6c6b6c7-4971-48c4-8311-ac319194c312",
+  "meta": {
+    "instanceId": "7278eeda37b3f146af1cd12bc7dfe8ce3f6f433501a0d7ac49c94e605ddb4b10"
+  },
+  "id": "ccvBphC3g06wzhvM",
+  "tags": []
+}

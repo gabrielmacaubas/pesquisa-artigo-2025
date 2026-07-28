@@ -110,6 +110,26 @@ Registro das escolhas feitas via `AskUserQuestion` ou explicitamente na conversa
 - **Impacto:** deixa de ser detalhe de infraestrutura e passa a compor a contribuição
   incremental descrita no Método.
 
+### D-7 — Tempo manual: 40 minutos por aluno (2026-07-27)
+- **Questão:** conflito entre 40 min (manuscrito 2024) e ≈1 h (dump do Gemini).
+- **Escolha do autor:** 40 min.
+- **Impacto:** valor único em todo o artigo, sem ressalva. Base do cálculo de ganho.
+
+### D-8 — Ordem de levantamento bibliográfico (2026-07-27)
+- **Questão:** preencher `refs.md` antes de escrever, ou depois?
+- **Escolha:** depois de método e resultados, antes do referencial teórico.
+- **Motivo:** levantar literatura antes de o argumento estabilizar produz referencial
+  inflado — cita-se o que se coletou, não o que a afirmação exige. Método é
+  autoevidente e quase não precisa de citação.
+- **Exceção:** referências já em mãos entram em `refs.md` a qualquer momento.
+
+### D-9 — Evidência de certificados vem do Google Drive (2026-07-27)
+- **Fato:** a emissão não é persistida no banco. O n8n gera o PDF, envia por e-mail e
+  salva no Drive.
+- **Impacto:** o número de certificados é apurado por contagem de artefatos na pasta do
+  Drive, e essa origem deve ser **declarada no artigo**. Volume de e-mails enviados fica
+  sem evidência — tratar o envio como funcionalidade demonstrada, sem afirmar número.
+
 ---
 
 ## Histórico de review (orientadora)
