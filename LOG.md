@@ -43,7 +43,22 @@
 - **Realinhado:** janela de páginas 20 → **12 a 18**; modelo de estimativa 380 → **700
   palavras/página** (TNR 11, espaçamento simples); citações para **NBR 10520/2023**
   (`(Silva, 2020)`, sem caixa alta).
-- **Próximo:** ler os relatórios de estágio; depois `/escrever-secao 03-metodo`.
+- **Segunda metade da sessão:** autor forneceu `api-repo/n8n_files/` (4 workflows) e as
+  16 referências dos relatórios de estágio.
+- **Correções factuais a partir dos workflows:** (a) certificados **não** são enviados
+  por e-mail — `Certificados_v3.json` gera via template do Google Docs, converte em PDF e
+  salva no Drive, sem nó de e-mail; o Gmail está no fluxo de recomendações;
+  (b) `Gera recomendações` tem gatilho **webhook** além do manual; nenhum workflow usa
+  cron; (c) são **10 competências** avaliadas (6 autônomas + inteligência emocional em 4
+  sub), o que reconcilia 7+4 do banco e as 105/60 notas.
+- **Regra de recomendação extraída do código:** `limiteNota = 2.0`; dispara por nota
+  abaixo de 2,0 **ou** por queda em relação à unidade anterior. Depende de histórico
+  persistido — é a evidência direta da tese. Texto sorteado de banco em Sheets, sem
+  repetição por discente (limitação a declarar).
+- **Gate:** regex de citação estendida para autores institucionais
+  (`(Django Software Foundation, 2026)`). 16 referências carregam sem bloqueio.
+- **Próximo:** ler os relatórios de estágio integralmente e localizar a regra de 2/3 no
+  `api-repo/`; depois `/escrever-secao 03-metodo`.
 
 ---
 
