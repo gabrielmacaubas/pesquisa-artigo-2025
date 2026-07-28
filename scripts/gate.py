@@ -62,7 +62,9 @@ RE_REF_CHAVE = re.compile(r'^##\s*\[([^\],]+),\s*(\d{4}[a-z]?)\]', re.M)
 RE_REF_CAMPO = re.compile(r'^-\s*\*\*(\w+):\*\*\s*(.*)$', re.M)
 
 # citação entre parênteses: (SILVA, 2020) (SILVA; COSTA, 2020) (SILVA et al., 2020)
-_NOME = r'[A-ZÁÂÃÉÊÍÓÔÕÚÇ][A-Za-zÀ-ÿ]+(?:\s+(?:Junior|J\u00fanior|Neto|Filho|Sobrinho|de|da|dos))*'
+# nome de autor pessoal (Silva, Costa Junior) ou institucional (Django Software Foundation)
+_NOME = (r'[A-ZÁÂÃÉÊÍÓÔÕÚÇ][A-Za-zÀ-ÿ.]+'
+         r'(?:\s+(?:de|da|do|dos|das)?\s*[A-ZÁÂÃÉÊÍÓÔÕÚÇ][A-Za-zÀ-ÿ.]+){0,3}')
 RE_CIT_PAREN = re.compile(r'\((' + _NOME + r'(?:\s*;\s*' + _NOME + r')*)'
                           r'(?:\s+et\s+al\.)?,\s*(\d{4}[a-z]?)'
                           r'(?:,\s*p\.\s*[\d\u2013\-]+)?\)')

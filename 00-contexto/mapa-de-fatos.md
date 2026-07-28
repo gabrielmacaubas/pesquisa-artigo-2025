@@ -76,21 +76,94 @@ cadastro de notas e geração de gráficos radar + tabelas (manuscrito 2024, §4
 27/07/2026. Nós presentes: `googleSheets`, `httpRequest`, `set`, `splitInBatches`,
 `function`.
 
-⚠️ **Esses dois workflows são do ciclo de 2024.** O workflow de **certificação e
-recomendação** (ciclo 2025, contribuição central do artigo) **não está no repositório**.
-`[[VERIFICAR: exportar o JSON do workflow de certificados/recomendações do n8n —
-necessário para descrever o método com reprodutibilidade]]`
+### Workflows n8n — exportações em `api-repo/n8n_files/` (fornecidas em 27/07/2026)
+
+| Arquivo | Nome no n8n | Nós | Data | Ciclo |
+|---|---|---|---|---|
+| `graficos_v2.json` | graficos v2 | 28 | nov/2024 | 2024 |
+| `Cadastra_notas_form_novo_v2.json` | Cadastra notas form novo v2 | 9 | mar/2025 | 2025 |
+| `Certificados_v3.json` | Certificados v2 | 11 | jul/2025 | **2025** |
+| `Gera recomendações.json` | Gera recomendações | 34 | set/2025 | **2025** |
+
+**Gatilhos:** `Cadastra notas`, `graficos` e `Certificados` usam `manualTrigger`.
+`Gera recomendações` tem **`webhook`** ("Receber requisição do Site") **e** `manualTrigger`
+— é o único disparável externamente. Não há nó de cron em nenhum deles: a execução é
+sob demanda, não periódica. *Verificado nas exportações em 27/07/2026.*
+
+**Certificação — `Certificados_v3.json` (11 nós):**
+`manualTrigger` → `Get discentes` (HTTP) → `Loop Over Items` → `Nome Formatado` (code) →
+`HTTP Request` → `Merge` → `Faz login na API` → **`googleDrive` (cria)** →
+**`googleDocs` (preenche o template)** → **`googleDrive` (salva como PDF)** →
+`googleDrive` (concede permissões).
+
+⚠️ **Não há nó de e-mail neste workflow.** O certificado é gerado a partir de um template
+do Google Docs, convertido em PDF e salvo no Drive com permissões — não é enviado por
+e-mail. O envio por e-mail pertence ao fluxo de recomendações. Corrigir qualquer
+afirmação em contrário (o dump §5 sugeria envio conjunto).
+
+**Recomendação — `Gera recomendações.json` (34 nós):** o maior e mais complexo.
+Banco de recomendações em Google Sheets → `Buscar discentes` e `Buscar notas` na API →
+`Analisar notas` (code, regra abaixo) → `Montar template` (HTML) → `convertToFile` →
+`Converter arquivo` (HTTP, para PDF) → `Mesclar arquivos` → **`gmail` (Enviar e-mail)**.
+Usa `wait` em três pontos para controle de ciclo e `if` ("Sem recomendações") para pular
+discentes sem apontamento.
 
 `[[VERIFICAR: onde o n8n esteve hospedado em produção]]`
 
 ## 5. Regras de negócio
 
-- Matriz EMBRAPII: **7 soft skills macro** e **4 sub-soft skills** — *confirmado no banco*
-  (7 e 4 registros).
-- Escala 0–4 → 4 níveis: 0–1 Abaixo do básico · 1–2 Básico · 2–3 Adequado · 3–4 Avançado
-  (dump §6, §12).
-- **Regra de certificação:** evolução de nível em ao menos **2/3 das competências
-  avaliadas** (dump §6).
+### As 10 competências avaliadas
+O nó `Definir competências` (`Gera recomendações.json`) lista **10 itens**, o que
+reconcilia a contagem do banco (7 soft skills + 4 sub-soft skills): são **6 competências
+autônomas** mais **inteligência emocional desdobrada em 4 sub-competências**.
+
+1. Pensamento crítico e inovação
+2. Aprendizagem ativa e estratégias de aprendizagem
+3. Empreendedorismo
+4. Criatividade, originalidade e iniciativa
+5. Liderança e influência social
+6. Resolução de problemas complexos
+7. Inteligência emocional: autorregulação
+8. Inteligência emocional: percepção social
+9. Inteligência emocional: autoconhecimento
+10. Inteligência emocional: habilidades de relacionamento
+
+Confere com o banco: 105 notas de soft skill (105 ÷ 7 = 15) e 60 de sub-soft skill
+(60 ÷ 4 = 15) — 15 medições de cada. *Verificado em 27/07/2026.*
+
+No código, `inteligência emocional` é excluída das notas principais e substituída pelas
+quatro sub-competências renomeadas como `Inteligência Emocional: X` — o achatamento é o
+que produz os 10 itens comparáveis.
+
+### Escala
+0–4 → quatro níveis: 0–1 Abaixo do básico · 1–2 Básico · 2–3 Adequado · 3–4 Avançado
+(dump §6, §12).
+
+### Regra de recomendação — extraída do código (`Analisar notas`)
+Constante `limiteNota = 2.0`. Para cada competência de cada unidade, a recomendação é
+disparada quando **qualquer** condição ocorre:
+
+| Gatilho | Condição | Rótulo gravado |
+|---|---|---|
+| Desempenho | `nota < 2,0` | "Recomendação por desempenho abaixo da média" |
+| Queda | `nota < nota da unidade anterior` | "Recomendação por queda de desempenho" |
+
+As autoavaliações são ordenadas por `unidade` antes da comparação, e a comparação só
+ocorre a partir da segunda unidade — o que torna o histórico persistido pré-requisito da
+regra, e é exatamente o argumento da tese.
+
+O texto da recomendação é **sorteado aleatoriamente** de um banco em Google Sheets,
+agrupado por competência, **sem repetição para o mesmo discente**. Esgotado o banco,
+grava "Todas as recomendações já foram utilizadas para essa competência".
+
+⚠️ Dois pontos a tratar no artigo: (a) o comentário do código menciona "abaixo de 2.5"
+enquanto a constante é `2.0` — **o valor real é 2,0**; (b) a seleção aleatória é uma
+**limitação a declarar**: a recomendação é sorteada, não adaptada ao perfil do discente.
+
+### Regra de certificação
+Evolução de nível em ao menos **2/3 das competências avaliadas** (dump §6).
+`[[VERIFICAR: essa regra está implementada no endpoint /discentes_aptos_certificacao/ ou
+é aplicada manualmente? Certificados_v3.json não contém a lógica de 2/3]]`
 
 ## 6. Snapshot do banco de produção — consulta em 27/07/2026
 
