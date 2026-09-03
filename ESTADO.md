@@ -6,17 +6,19 @@
 
 ## Situação atual
 
-**Etapa:** 2 concluída (argumento aprovado) · ingestão quase completa
-**Atualizado:** 27/07/2026 (fim da sessão 2)
-**Próxima ação:** ler integralmente `docs/tcc_gabriel.pdf` e `docs/tcc_juliana.pdf`
-(relatórios de estágio), completar `00-contexto/mapa-de-fatos.md`, e então
-`/escrever-secao 03-metodo`.
+**Etapa:** 3 em andamento — `03-metodo` escrita em rascunho
+**Atualizado:** 03/09/2026 (retomada; corrigido na sessão 4)
+**Próxima ação:** `/escrever-secao 04-resultados` — sem bloqueios pendentes.
+
+⚠️ **A sessão 3 (27/07/2026) terminou sem `/encerrar-sessao`.** O trabalho está no disco
+mas **não commitado**: `secoes/03-metodo.md` (novo), `00-contexto/mapa-de-fatos.md` e
+`scripts/gate.py` (modificados). Commitar antes de seguir.
 
 **O autor precisa providenciar:**
-1. Contagem dos PDFs de certificado na pasta do Google Drive + intervalo de datas
-   (bloqueia `04-resultados`)
-2. Onde o n8n rodava em produção (uma frase no método, mas é limitação declarada)
-3. `pandoc` instalado e modelo `.docx` oficial da Principia baixado (bloqueia só o build)
+1. `pandoc` instalado e modelo `.docx` oficial da Principia baixado (bloqueia só o build)
+
+Nada mais bloqueia a escrita: D-10, D-11 e D-12 (03/09/2026) fecharam as três pendências
+que restavam.
 
 ## O artigo
 
@@ -38,14 +40,16 @@
 | D-4 | Trabalhos-base são **relatórios de estágio**, não TCCs → regra dos 30% não se aplica |
 | D-5 | Parecer do CEP **não se aplica** (dados operacionais, não pesquisa com seres humanos) |
 | D-6 | Banco migrou Railway (fim de 2024) → Neon/Vercel (2025); faz parte da contribuição |
-| D-7 | Tempo do processo manual: **40 min/aluno** (descartado o "≈1 hora" do dump) |
+| D-7 | Tempo do processo manual: **40 min/aluno** |
 | D-8 | `refs.md` é levantado **depois** de método e resultados, antes do referencial |
 | D-9 | Certificados não têm registro no banco; evidência = PDFs no Google Drive |
+| D-10 | Certificação descrita como implementada, **não acoplada** ao fluxo de emissão |
+| D-11 | **Sem número de certificados** — emissão é funcionalidade demonstrada, sem volume |
+| D-12 | D-7 reconfirmado: 40 min, com procedência do "≈1 h" corrigida |
 
 ## Decisões pendentes
 
 - [ ] Título em português e inglês
-- [ ] Quais figuras produzir (depende de `03-metodo` escrita)
 - [ ] Se as duas vagas restantes de autoria serão usadas
 
 ## Seções
@@ -55,34 +59,46 @@
 | 00-resumo | não iniciada | 0 / 550 |
 | 01-introducao | não iniciada | 0 / 1.100 |
 | 02-referencial | não iniciada | 0 / 1.600 |
-| 03-metodo | **próxima** | 0 / 2.200 |
-| 04-resultados | não iniciada | 0 / 2.800 |
+| 03-metodo | **rascunho** (não commitado) | 1.989 / 2.200 |
+| 04-resultados | **próxima** | 0 / 2.800 |
 | 05-conclusao | não iniciada | 0 / 700 |
 | 06-declaracoes | não iniciada | 0 / 100 |
 
+Estimativa atual: **7,2 páginas** de 12 a 18 (só a seção 3 escrita).
+
 ## Figuras
 
-Nenhuma declarada — dependem das seções. ⚠️ A revista exige 300 dpi e texto interno em
-TNR ≥18, o que inviabiliza screenshots de código; tabelas têm de ser editáveis.
+Três declaradas em `03-metodo`, todas com `status: criar` — nenhuma produzida ainda:
 
-## Resolvido na sessão 2
+| ID | O que é |
+|---|---|
+| `TAB:03-1` | Quadro editável das 10 competências avaliadas |
+| `FIG:03-1` | Diagrama de arquitetura (n8n + API + banco + Google Workspace) |
+| `FIG:03-2` | DER das 7 entidades do domínio |
 
-- ✅ Workflows n8n de 2025 disponíveis em `api-repo/n8n_files/` (4 arquivos) — regras de
-  recomendação e certificação extraídas para `mapa-de-fatos.md` §5
-- ✅ `refs.md` com as 16 referências dos relatórios de estágio
-- ✅ Snapshot agregado do banco Neon
-- ✅ Gatilhos do n8n, as 10 competências, e o limiar de nota 2,0
+⚠️ A revista exige 300 dpi e texto interno em TNR ≥18, o que inviabiliza screenshots de
+código; tabelas têm de ser editáveis.
+
+## Resolvido na sessão 3
+
+- ✅ **Relatórios de estágio lidos integralmente** — fatos em `mapa-de-fatos.md` §14
+- ✅ **Regra de 2/3 localizada no código** — `Discente.aptosCertificacao()` em
+  `api-repo/.../models/discente.py:31-160`. A descrição anterior estava **incompleta**:
+  o salto exigido é de **dois níveis** (`+2`), a referência é a **menor medição** (não a
+  primeira unidade), e há filtros de permanência (365 dias), cobertura (≥3 competências)
+  e piso (1,0). Corrigido em `mapa-de-fatos.md` §5
+- ✅ Hospedagem do n8n: **contêiner Docker auto-hospedado** (resolve parcialmente um
+  `[[VERIFICAR]]` antigo)
+- ✅ `03-metodo` escrita: 1.989 palavras, 4 citações, 0 bloqueantes no gate
+- ✅ Dois defeitos do `gate.py` corrigidos (ver `LOG.md` sessão 3)
 
 ## Bloqueios
 
-1. **Relatórios de estágio não lidos integralmente** — `docs/tcc_gabriel.pdf` e
-   `docs/tcc_juliana.pdf`. Primeira coisa a fazer em `/escrever-secao 03-metodo`
-2. **Regra de 2/3 não localizada no código** — não está em `Certificados_v3.json`.
-   Verificar `api-repo/` (provável: endpoint `/discentes_aptos_certificacao/`). Se for
-   aplicada manualmente, muda a descrição do método
-3. **Contagem de certificados** — depende do autor (PDFs no Drive)
-4. **Referencial sem literatura revisada por pares** sobre automação em educação,
+1. **Referencial sem literatura revisada por pares** sobre automação em educação,
    low-code em ensino e avaliação de soft skills. Busca dirigida após `04-resultados`
+   (D-8). `refs.md` tem 16 entradas, todas dos relatórios de estágio, 12 ainda órfãs
+
+Nenhum bloqueio para `04-resultados`.
 
 ## Ambiente
 

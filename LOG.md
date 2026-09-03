@@ -60,6 +60,49 @@
 - **Próximo:** ler os relatórios de estágio integralmente e localizar a regra de 2/3 no
   `api-repo/`; depois `/escrever-secao 03-metodo`.
 
+### 2026-07-27 — Sessão 3: seção 3 (Método) escrita
+
+- **Bloqueios da sessão 2 resolvidos, ambos mudaram o conteúdo:**
+  - **Relatórios de estágio lidos integralmente** (34 e 29 páginas, via `pdftotext`).
+    Fatos em `mapa-de-fatos.md` §14.
+  - **Regra de 2/3 localizada no código:** `Discente.aptosCertificacao()` em
+    `api-repo/automacao-deploy-main/capacitacao/models/discente.py:31-160`, exposta em
+    `/discentes_aptos_certificacao/`. Está na API, não é aplicada manualmente.
+- **Correção factual importante:** a descrição usada até então ("evolução de nível em ao
+  menos 2/3 das competências") estava **incompleta**. O algoritmo real encadeia quatro
+  filtros; o salto exigido é de **dois níveis** (`+2` na escala 0–4), não de um; e a
+  referência de comparação é a **menor medição**, não a primeira unidade — ou seja, o
+  critério mede amplitude, não evolução cronológica. Corrigido em `mapa-de-fatos.md` §5.
+- **Achado que condiciona o argumento:** `Certificados_v3.json` chama
+  `GET /api/capacitacao/discentes/`, **não** o endpoint da regra. Confirmado pelo relatório
+  de Juliana: são **certificados de participação**, emitidos para todos os discentes em
+  loop. A camada de decisão está implementada e exposta, mas seu acoplamento à emissão não
+  tem evidência. Virou D-10.
+- **Resolvido:** hospedagem do n8n é **contêiner Docker auto-hospedado** (resolve
+  parcialmente o `[[VERIFICAR]]` sobre onde o n8n rodava).
+- **Escrito:** `secoes/03-metodo.md`, 1.989 palavras (alvo 2.200), 6 subseções, pseudocódigo
+  da regra de certificação, 3 figuras declaradas (`TAB:03-1`, `FIG:03-1`, `FIG:03-2`).
+  Quatro citações, todas já em `refs.md`; nenhuma referência nova. Gate: **0 bloqueantes**.
+- **Dois defeitos do `gate.py` corrigidos**, ambos falhavam em silêncio:
+  1. `checar_estilo` dividia parágrafos por `\n`. Com quebra de linha fixa nenhuma linha
+     passa de 25 palavras, então reportava `0,0 pal/parágrafo` e **pulava a checagem**.
+     Agora divide por linha em branco.
+  2. O regex de citação não aceitava dígitos no nome do autor, então `(N8n, 2025)` não
+     casava: não era cobrada como citação nem contada como usada.
+- **⚠️ A sessão terminou sem `/encerrar-sessao`** — o trabalho ficou não commitado.
+
+### 2026-09-03 — Sessão 4: retomada após um mês
+
+- **Contexto:** o autor voltou sem lembrar do fluxo de comandos. Rodado `/situacao`.
+- **`ESTADO.md` estava desatualizado** — dizia que `03-metodo` era a próxima seção e tinha
+  0 palavras, quando o arquivo já existia com 1.989. Corrigido.
+- **Três decisões do autor registradas:** D-10, D-11 e D-12 (abaixo).
+- **Aplicado:** removido o `[[DECIDIR]]` de `03-metodo.md` (D-10 confirmou a redação
+  atual); `mapa-de-fatos.md` §5 e §6 atualizados com D-10 e D-11; cabeçalho do mapa
+  corrigido (dizia que os relatórios não tinham sido lidos); §2 corrigida quanto à
+  procedência do "≈1 hora".
+- **Próximo:** `/escrever-secao 04-resultados`.
+
 ---
 
 ## Decisões do autor
@@ -144,6 +187,46 @@ Registro das escolhas feitas via `AskUserQuestion` ou explicitamente na conversa
 - **Impacto:** o número de certificados é apurado por contagem de artefatos na pasta do
   Drive, e essa origem deve ser **declarada no artigo**. Volume de e-mails enviados fica
   sem evidência — tratar o envio como funcionalidade demonstrada, sem afirmar número.
+
+### D-10 — Certificação: manter a redação fiel à evidência (2026-09-03)
+- **Questão:** `Certificados_v3.json` consome `/api/capacitacao/discentes/`, não
+  `/discentes_aptos_certificacao/`. A regra de 2/3 está implementada na API, mas o fluxo de
+  emissão exportado não a consome — os documentos são certificados de **participação**.
+- **Opções:** (a) manter a redação atual, fiel à evidência; (b) conferir antes se há versão
+  posterior do workflow que já use o endpoint; (c) corrigir o workflow e redescrever.
+- **Escolha:** (a) manter a redação atual.
+- **Motivo:** é o que a evidência disponível sustenta, e sobrevive à revisão. As outras duas
+  opções ou atrasam a seção ou deslocam a evidência para set/2026, fora da operação de 2025
+  que o artigo relata.
+- **Impacto:** `[[DECIDIR]]` removido de `secoes/03-metodo.md`. A seção 3 descreve a camada
+  de decisão como implementada e exposta como serviço, e declara que o acoplamento à emissão
+  não está demonstrado. **Nenhuma seção pode afirmar que os certificados são emitidos pela
+  regra de 2/3.** A conclusão deve retomar isso como limitação e como trabalho futuro.
+
+### D-11 — Certificados: sem número, só funcionalidade demonstrada (2026-09-03)
+- **Questão:** a emissão não é persistida no banco (D-9); a contagem viria dos PDFs no Drive.
+- **Opções:** (a) autor levanta a contagem antes da escrita; (b) escrever com `[[VERIFICAR]]`
+  aberto; (c) tratar como funcionalidade demonstrada, sem afirmar volume.
+- **Escolha:** (c) sem número.
+- **Motivo:** desbloqueia `04-resultados` imediatamente e é defensável. O volume não é o
+  argumento do artigo — a tese é sobre a existência das camadas de decisão e intervenção
+  sobre persistência estruturada, não sobre escala.
+- **Impacto:** a contagem dos PDFs sai da lista de pendências do autor e **deixa de bloquear
+  `04-resultados`**. Nenhuma seção traz quantidade de certificados emitidos nem de e-mails
+  enviados. O resultado defensável continua sendo *viabilidade demonstrada*, não escala.
+
+### D-12 — Tempo manual: 40 min reconfirmado, com procedência corrigida (2026-09-03)
+- **Questão:** descobriu-se que o "≈1 hora" não vinha do dump do Gemini, mas das
+  Considerações Finais do relatório de estágio do Gabriel. O conflito é entre dois
+  documentos do próprio grupo, não entre fonte primária e resumo — o que enfraquecia a base
+  de D-7.
+- **Opções:** (a) manter 40 min; (b) adotar 1 h; (c) declarar o intervalo de 40 min a 1 h.
+- **Escolha:** (a) manter 40 min.
+- **Motivo:** é o valor do manuscrito de 2024, documento mais próximo de uma publicação e
+  onde o cálculo de ganho foi feito. Preserva coerência com o ciclo anterior. Como relatório
+  de estágio não é citável, a divergência não fica visível ao avaliador.
+- **Impacto:** D-7 confirmado. `mapa-de-fatos.md` §2 corrigido quanto à procedência.
+  Usar 40 min em `04-resultados` e no resumo, sem ressalva.
 
 ---
 

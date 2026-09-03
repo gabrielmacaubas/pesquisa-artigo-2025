@@ -63,8 +63,10 @@ RE_REF_CAMPO = re.compile(r'^-\s*\*\*(\w+):\*\*\s*(.*)$', re.M)
 
 # citação entre parênteses: (SILVA, 2020) (SILVA; COSTA, 2020) (SILVA et al., 2020)
 # nome de autor pessoal (Silva, Costa Junior) ou institucional (Django Software Foundation)
-_NOME = (r'[A-ZÁÂÃÉÊÍÓÔÕÚÇ][A-Za-zÀ-ÿ.]+'
-         r'(?:\s+(?:de|da|do|dos|das)?\s*[A-ZÁÂÃÉÊÍÓÔÕÚÇ][A-Za-zÀ-ÿ.]+){0,3}')
+# dígitos são aceitos no nome: sem isso, autores como (N8n, 2025) não casam e a
+# citação escapa da verificação em silêncio, em vez de ser cobrada.
+_NOME = (r'[A-ZÁÂÃÉÊÍÓÔÕÚÇ][A-Za-zÀ-ÿ0-9.]+'
+         r'(?:\s+(?:de|da|do|dos|das)?\s*[A-ZÁÂÃÉÊÍÓÔÕÚÇ][A-Za-zÀ-ÿ0-9.]+){0,3}')
 RE_CIT_PAREN = re.compile(r'\((' + _NOME + r'(?:\s*;\s*' + _NOME + r')*)'
                           r'(?:\s+et\s+al\.)?,\s*(\d{4}[a-z]?)'
                           r'(?:,\s*p\.\s*[\d\u2013\-]+)?\)')
@@ -311,7 +313,9 @@ def checar_estilo(secoes):
         corpo = re.sub(r'^#{1,6}\s.*$', '', corpo, flags=re.M)
 
         frases = [f for f in re.split(r'(?<=[.!?])\s+', corpo) if len(f.split()) > 3]
-        paras = [p for p in corpo.split('\n') if len(p.split()) > 25]
+        # parágrafo = bloco separado por linha em branco. Dividir por '\n' faria
+        # qualquer arquivo com quebra de linha fixa reportar 0,0 e pular a checagem.
+        paras = [p for p in re.split(r'\n\s*\n', corpo) if len(p.split()) > 25]
         if not frases:
             continue
         mf = sum(len(f.split()) for f in frases) / float(len(frases))

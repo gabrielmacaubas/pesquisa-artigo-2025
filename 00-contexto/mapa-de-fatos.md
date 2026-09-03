@@ -7,9 +7,9 @@
 > **Todo número escrito no artigo tem de estar aqui, com procedência.** Se não está,
 > vira `[[VERIFICAR]]` — nunca um valor plausível.
 >
-> ⚠️ **Pendente:** `docs/tcc_gabriel.pdf` e `docs/tcc_juliana.pdf` (que são **relatórios
-> de estágio**, não TCCs — ver D-4) ainda **não foram lidos integralmente**. O dump do
-> Gemini os resume, mas resumo não é fonte primária. Ler antes de Método e Resultados.
+> ✅ `docs/tcc_gabriel.pdf` e `docs/tcc_juliana.pdf` (que são **relatórios de estágio**,
+> não TCCs — ver D-4) foram **lidos integralmente em 27/07/2026**. Os fatos extraídos
+> estão em §14. Não são citáveis, mas valem como fonte factual do trabalho próprio.
 
 ---
 
@@ -30,9 +30,13 @@
 
 - Gestão manual e descentralizada em Google Sheets; dificultava análise histórica e
   correlação evolutiva (dump §2).
-- **Tempo do processo manual: 40 minutos por aluno** — valor decidido pelo autor
-  (D-7, 27/07/2026), coincidente com o manuscrito de 2024. A menção a "≈1 hora" no dump
-  do Gemini fica descartada. Usar 40 min em todo o artigo, sem ressalva.
+- **Tempo do processo manual: 40 minutos por aluno** — valor do manuscrito de 2024,
+  decidido em D-7 (27/07/2026) e **reconfirmado em D-12 (03/09/2026)**. Usar 40 min em
+  todo o artigo, sem ressalva.
+  ⚠️ Correção de procedência: o "≈1 hora" **não** vem do dump do Gemini — está nas
+  Considerações Finais do relatório de estágio do Gabriel (§14). O conflito é entre dois
+  documentos do próprio grupo, e o autor optou pelo valor do manuscrito. Como relatório
+  de estágio não é citável, a divergência não fica visível ao avaliador.
 - Quem sofria: mentores do Capacitação 4.0 (dump §2).
 
 ## 3. Pessoas — autoria definida (D-3)
@@ -160,10 +164,52 @@ grava "Todas as recomendações já foram utilizadas para essa competência".
 enquanto a constante é `2.0` — **o valor real é 2,0**; (b) a seleção aleatória é uma
 **limitação a declarar**: a recomendação é sorteada, não adaptada ao perfil do discente.
 
-### Regra de certificação
-Evolução de nível em ao menos **2/3 das competências avaliadas** (dump §6).
-`[[VERIFICAR: essa regra está implementada no endpoint /discentes_aptos_certificacao/ ou
-é aplicada manualmente? Certificados_v3.json não contém a lógica de 2/3]]`
+### Regra de certificação — extraída do código em 27/07/2026 (bloqueio resolvido)
+
+**Localização:** `Discente.aptosCertificacao()`, em
+`api-repo/automacao-deploy-main/capacitacao/models/discente.py` (linhas 31–160), exposta
+pelo `DiscenteAptosCertificacaoViewSet` na rota `/discentes_aptos_certificacao/`. A regra
+**está implementada na API**, não é aplicada manualmente.
+
+A descrição usada até aqui ("evolução de nível em ao menos 2/3 das competências") era
+**incompleta**. O algoritmo real encadeia quatro filtros, e o critério de 2/3 aparece em
+**dois níveis** — dentro de cada competência e depois entre competências:
+
+| # | Filtro | Condição exata no código |
+|---|---|---|
+| 1 | Permanência | ≥ 365 dias desde a `data_entrada` do vínculo mais recente com projeto |
+| 2 | Cobertura | avaliado em **ao menos 3** soft skills distintas |
+| 3 | Piso | nenhuma competência com nota (ou média das sub) **abaixo de 1,0** |
+| 4 | Evolução | por competência, ordena-se as medições; tomando a **menor** como referência, conta-se quantas das restantes atingem `referência + 2` **ou** o valor máximo 4. A competência é aprovada se essa contagem ≥ `round(nº de medições restantes × 2/3)` |
+| 5 | Agregação | o discente é apto se as competências aprovadas ≥ `round(total de competências × 2/3)` |
+
+Três precisões que o artigo tem de respeitar:
+
+- O salto exigido é de **dois níveis** (`+2` na escala 0–4), não de um. Escrever "evolução
+  de nível" subdescreve o critério.
+- A referência é a **menor medição** (`sorted()` ordena por valor, não por unidade), não a
+  primeira unidade cronologicamente. O critério mede, portanto, **amplitude entre a pior
+  medição e as demais**, não evolução estritamente temporal. Descrever como "evolução ao
+  longo das unidades" seria impreciso. *Verificado no código em 27/07/2026.*
+- Sub-soft skills são agregadas por média dentro da soft skill mãe antes da comparação.
+
+### ⚠️ O workflow de certificação não consome o endpoint da regra
+
+`Certificados_v3.json` chama `GET /api/capacitacao/discentes/` (listagem geral), **não**
+`/discentes_aptos_certificacao/`. *Verificado na exportação em 27/07/2026.*
+
+Confirmado pelo relatório de estágio de Juliana: o fluxo emite **certificados de
+participação** para todos os discentes retornados pela API, iterando em loop, sem filtro
+de aptidão.
+
+**Consequência para o artigo:** a camada de decisão está **implementada e exposta como
+serviço**, mas a versão exportada do fluxo de emissão não a consome. O artigo deve
+descrever as duas coisas com precisão e declarar isso como limitação — afirmar que os
+certificados são emitidos pela regra de 2/3 seria falso perante a evidência disponível.
+**Resolvido por D-10 (03/09/2026):** mantida a redação fiel à evidência. A seção 3
+descreve a camada de decisão como implementada e exposta como serviço, e declara que
+seu acoplamento ao fluxo de emissão não está demonstrado. Não afirmar, em nenhuma
+seção, que os certificados são emitidos pela regra de 2/3.
 
 ## 6. Snapshot do banco de produção — consulta em 27/07/2026
 
@@ -203,9 +249,10 @@ evidência disponível é:
 | **PDFs de certificados já gerados** | pasta do Google Drive do projeto | contagem de certificados emitidos, e datas pelos metadados dos arquivos |
 | Workflow de certificação | n8n (a exportar) | descrição do método, critério aplicado |
 
-**Extração a fazer:** contar os PDFs na pasta do Drive e obter a data do primeiro e do
-último. Isso produz o número de certificados emitidos com procedência auditável.
-`[[VERIFICAR: quantos PDFs há na pasta do Drive e qual o intervalo de datas?]]`
+**Resolvido por D-11 (03/09/2026):** o número de certificados **não será usado no
+artigo**. A emissão é tratada como funcionalidade implementada e demonstrada, sem
+afirmação de volume. A contagem dos PDFs no Drive fica cancelada como tarefa, e nenhuma
+seção deve trazer quantidade de certificados ou de e-mails enviados.
 
 **Limitação a declarar no artigo:** como a emissão não é persistida no banco, o número de
 certificados é apurado por contagem de artefatos no Drive, não por registro
@@ -303,6 +350,70 @@ Da apresentação de 2024: gráficos radar reais e planilha formatada.
 ⚠️ A Principia exige figuras com **≥300 dpi** e **texto interno em Times New Roman ≥18**;
 tabelas e quadros **editáveis, nunca imagem**. Screenshot de código provavelmente não
 passa — preferir pseudocódigo, que a revista recomenda explicitamente.
+
+## 14. Relatórios de estágio — leitura integral em 27/07/2026
+
+Bloqueio da sessão 2 resolvido. Ambos lidos por extração de texto (`pdftotext -layout`):
+`tcc_gabriel.pdf` (34 páginas) e `tcc_juliana.pdf` (29 páginas). **Não são citáveis**
+(D-4); servem como fonte factual sobre o trabalho próprio.
+
+### Do relatório de Gabriel (backend/API)
+
+| Fato | Valor | Onde |
+|---|---|---|
+| Período do estágio | 01/03/2024 a 31/12/2025 | folha de rosto |
+| Orientação | Dra. Heremita Brasileiro Lira | folha de rosto |
+| Fonte dos requisitos | Manual do Programa Capacitação 4.0, da EMBRAPII | §3.2 |
+| Matriz de competências | 7 soft skills e 4 sub-soft skills | §3.2 |
+| Critério de certificação (enunciado) | "evolução de nível em pelo menos dois terços das competências avaliadas" | §3.2 |
+| DRF | versão 3.15 | §2.2 |
+| Otimização de consultas | `select_related`, `prefetch_related` contra N+1; `bulk_create` em transação única | §3.4 |
+| Documentação da API | padrão OpenAPI, interface interativa; testes com Insomnia | §3.5 |
+| Metodologia de gestão | Scrum, ciclos iterativos e reuniões periódicas | §3.1 |
+| Equipe | 11 integrantes: 4 professores pesquisadores (coordenação/orientação), 2 mestrandos, 2 professores mentores de soft skills, 4 discentes de graduação | §3.1 |
+| Deploy | Vercel, integração contínua a partir do repositório `automacao-deploy`; `vercel.json` + `build.sh` | §3.7 |
+
+⚠️ **Duas inconsistências internas do próprio relatório**, a não reproduzir no artigo:
+
+1. **Versão do Python:** o texto de §3.7 diz que o Dockerfile define Python 3.9 e, dois
+   parágrafos adiante, que a imagem base é Python 3.12. `[[VERIFICAR: qual versão do
+   Python está no Dockerfile de produção?]]`
+2. **Soma da equipe:** os grupos descritos somam 12 pessoas, mas o texto afirma 11. Usar
+   "11 integrantes" (valor afirmado, coerente com o dump) e não detalhar a composição.
+
+⚠️ **Origem do conflito de tempo manual resolvida:** o "aproximadamente uma hora por
+aluno" vem das Considerações Finais **deste relatório**, não do dump do Gemini. O conflito
+é, portanto, entre dois documentos do próprio grupo (relatório = 1 h; manuscrito de 2024 =
+40 min). **D-7 mantém 40 min.** Registrado para que a decisão seja revisitada com a
+informação correta, se o autor quiser.
+
+### Do relatório de Juliana (certificação em n8n)
+
+| Fato | Valor | Onde |
+|---|---|---|
+| Período do estágio | 01/10/2024 a 31/01/2025 | folha de rosto |
+| Orientação | Dr. Francisco Petrônio Alencar de Medeiros | folha de rosto |
+| **Hospedagem do n8n** | **contêiner Docker, auto-hospedado**, a partir da imagem oficial | §2.3.1, §3.2 |
+| Endpoints consumidos | `POST /api/token/` (JWT) e `GET /api/discentes/`; token guardado em variável de fluxo e reusado | §3.4 |
+| Objeto emitido | **certificado de participação**, para todos os discentes retornados | §3, §3.5 |
+| Template | modelo do Google Docs no Drive, com variáveis do tipo `{{nome}}` | §3.5 |
+| Normalização | nome vinha em minúsculas e é convertido para capitalização por palavra | §3.5 |
+| Saída | DOCX e PDF, em pastas separadas no Drive; permissão de edição concedida aos orientadores no DOCX | §3.3, §3.5 |
+| Origem do template | EMBRAPII, 2024 (fonte declarada nas Figuras 4 e 5) | §3.5 |
+| Gestão | Kanban no Trello e reuniões semanais, no lugar das diárias | §3.1 |
+
+**As quatro automações, como a própria equipe as enumera** (§3) — útil para descrever a
+arquitetura sem inventar nomenclatura:
+
+1. Leitura das respostas, cálculo na API e cadastro das notas
+2. Geração dos gráficos e armazenamento no Drive
+3. Identificação de discentes com desempenho insatisfatório e envio de recomendações
+4. Emissão automatizada dos certificados de participação
+
+⚠️ **Resolve parcialmente** `[[VERIFICAR: onde o n8n esteve hospedado em produção]]`: o
+relatório documenta contêiner Docker auto-hospedado no ambiente de desenvolvimento. Não há
+evidência de um servidor institucional dedicado em produção — o artigo deve dizer
+"auto-hospedado em contêiner Docker" e nada além disso.
 
 ## 13. Vocabulário
 
