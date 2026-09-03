@@ -10,10 +10,6 @@
 **Atualizado:** 03/09/2026 (retomada; corrigido na sessão 4)
 **Próxima ação:** `/escrever-secao 04-resultados` — sem bloqueios pendentes.
 
-⚠️ **A sessão 3 (27/07/2026) terminou sem `/encerrar-sessao`.** O trabalho está no disco
-mas **não commitado**: `secoes/03-metodo.md` (novo), `00-contexto/mapa-de-fatos.md` e
-`scripts/gate.py` (modificados). Commitar antes de seguir.
-
 **O autor precisa providenciar:**
 1. `pandoc` instalado e modelo `.docx` oficial da Principia baixado (bloqueia só o build)
 
@@ -59,7 +55,7 @@ que restavam.
 | 00-resumo | não iniciada | 0 / 550 |
 | 01-introducao | não iniciada | 0 / 1.100 |
 | 02-referencial | não iniciada | 0 / 1.600 |
-| 03-metodo | **rascunho** (não commitado) | 1.989 / 2.200 |
+| 03-metodo | **rascunho** | 1.989 / 2.200 |
 | 04-resultados | **próxima** | 0 / 2.800 |
 | 05-conclusao | não iniciada | 0 / 700 |
 | 06-declaracoes | não iniciada | 0 / 100 |
