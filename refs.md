@@ -13,24 +13,6 @@
 
 ---
 
-## [Bendoraitis, 2020]
-- **tipo:** livro
-- **autores:** BENDORAITIS, Aidas
-- **titulo:** Django 3 Web Development Cookbook: solutions to develop, deploy, and manage your Python web applications
-- **veiculo:** 4. ed. Birmingham: Packt Publishing
-- **ano:** 2020
-- **origem:** referência dos relatórios de estágio, fornecida pelo autor em 27/07/2026
-
-## [Django REST Framework, 2026]
-- **tipo:** documentacao
-- **autores:** DJANGO REST FRAMEWORK
-- **titulo:** Django REST framework documentation
-- **veiculo:** documentação oficial
-- **ano:** 2026
-- **doi_url:** https://www.django-rest-framework.org/
-- **acesso_em:** 01 fev. 2026
-- **origem:** referência dos relatórios de estágio, fornecida pelo autor em 27/07/2026
-
 ## [Django Software Foundation, 2026]
 - **tipo:** documentacao
 - **autores:** DJANGO SOFTWARE FOUNDATION
@@ -73,16 +55,6 @@
 - **ano:** 2010
 - **origem:** referência dos relatórios de estágio, fornecida pelo autor em 27/07/2026
 
-## [Kanban University, 2025]
-- **tipo:** site
-- **autores:** KANBAN UNIVERSITY
-- **titulo:** Kanban University – official Kanban site
-- **veiculo:** site oficial
-- **ano:** 2025
-- **doi_url:** https://kanban.university/
-- **acesso_em:** 12 set. 2025
-- **origem:** referência do relatório de estágio, fornecida pelo autor em 27/07/2026
-
 ## [Merkel, 2014]
 - **tipo:** artigo
 - **autores:** MERKEL, Dirk
@@ -90,14 +62,6 @@
 - **veiculo:** Linux Journal, n. 239, p. 2
 - **ano:** 2014
 - **origem:** referência dos relatórios de estágio, fornecida pelo autor em 27/07/2026
-
-## [Muniz, 2021]
-- **tipo:** livro
-- **autores:** MUNIZ, Antonio et al.
-- **titulo:** Jornada Kanban na prática: unindo teoria e prática para acelerar o aprendizado para quem está iniciando
-- **veiculo:** 1. ed. Rio de Janeiro: Brasport
-- **ano:** 2021
-- **origem:** referência do relatório de estágio, fornecida pelo autor em 27/07/2026
 
 ## [N8n, 2025]
 - **tipo:** documentacao
@@ -109,32 +73,6 @@
 - **acesso_em:** 30 jun. 2025
 - **origem:** referência dos relatórios de estágio, fornecida pelo autor em 27/07/2026
 
-## [Pahl, 2015]
-- **tipo:** artigo
-- **autores:** PAHL, Claus
-- **titulo:** Containerization and the PaaS cloud
-- **veiculo:** IEEE Cloud Computing, v. 2, n. 3, p. 24-31
-- **ano:** 2015
-- **origem:** referência dos relatórios de estágio, fornecida pelo autor em 27/07/2026. `[[VERIFICAR: localizar e conferir o DOI antes de submeter]]`
-
-## [PMI, 2017]
-- **tipo:** livro
-- **autores:** PROJECT MANAGEMENT INSTITUTE
-- **titulo:** Um guia do conhecimento em gerenciamento de projetos (Guia PMBOK)
-- **veiculo:** 6. ed. Pennsylvania: PMI
-- **ano:** 2017
-- **origem:** referência do relatório de estágio, fornecida pelo autor em 27/07/2026
-
-## [Scrum, 2025]
-- **tipo:** site
-- **autores:** SCRUM.ORG
-- **titulo:** Scrum guides – the official Scrum guide
-- **veiculo:** site oficial
-- **ano:** 2025
-- **doi_url:** https://scrumguides.org/
-- **acesso_em:** 12 set. 2025
-- **origem:** referência dos relatórios de estágio, fornecida pelo autor em 27/07/2026
-
 ## [Silberschatz, 2020]
 - **tipo:** livro
 - **autores:** SILBERSCHATZ, Abraham; KORTH, Henry F.; SUDARSHAN, S.
@@ -142,16 +80,6 @@
 - **veiculo:** 7. ed. Rio de Janeiro: Elsevier
 - **ano:** 2020
 - **origem:** referência dos relatórios de estágio, fornecida pelo autor em 27/07/2026
-
-## [Trello, 2025]
-- **tipo:** documentacao
-- **autores:** TRELLO
-- **titulo:** Trello documentation
-- **veiculo:** documentação oficial
-- **ano:** 2025
-- **doi_url:** https://trello.com/guide
-- **acesso_em:** 30 jun. 2025
-- **origem:** referência do relatório de estágio, fornecida pelo autor em 27/07/2026
 
 ## [Afzaal, 2021]
 - **tipo:** artigo
@@ -225,38 +153,44 @@
 
 ---
 
-## Análise de lacunas do referencial
+## Estado do referencial
 
-Estas 16 referências sustentam a **camada técnica** (Django, DRF, Docker, bancos de dados,
-REST, n8n) e a **gestão de projetos** (PMBOK, Scrum, Kanban, Trello). É o esperado num
-relatório de estágio. Para periódico, faltam duas coisas.
+**15 entradas, todas efetivamente citadas no texto.** A Revista Principia só aceita na
+lista as fontes citadas, e o gate cruza os dois sentidos a cada execução.
 
-### 1. Literatura revisada por pares sobre o objeto do artigo
+### Depuração das órfãs — D-17 (03/09/2026)
 
-Não há nenhuma referência sobre **automação de processos em contextos educacionais**,
-**low-code em instituições de ensino** ou **avaliação de competências socioemocionais** —
-justamente os temas que a tese toca. Referencial construído só sobre documentação de
-ferramenta é a fragilidade que um avaliador aponta primeiro.
+Oito entradas foram **removidas** nesta data por nunca terem sido citadas: Bendoraitis
+(2020), Django REST Framework (2026), Kanban University (2025), Muniz (2021), Pahl (2015),
+PMI (2017), Scrum (2025) e Trello (2025). Eram referências de stack e de metodologia de
+gestão, herdadas dos relatórios de estágio, cujo terreno natural seria a Introdução ou o
+Método — mas nenhuma seção escrita as usou, e citá-las só para justificar a permanência
+seria citação decorativa. A remoção atende à exigência da revista e libera ~1,6 página de
+um orçamento que estava em 19,1 contra o máximo de 18.
 
-✅ **Resolvido em 03/09/2026 (sessão 7).** Foram acrescentadas **7 referências revisadas
-por pares**, todas de 2019 em diante e todas com DOI, verificadas uma a uma (Crossref ou
-texto integral) antes de entrar aqui: Afzaal (2021), Ajimati (2025), Al-Sa'di (2023),
-Bazhenova (2019), Bhardwaj (2025), Munir (2022) e Susnjak (2022). Cobrem automação de
-processos em instituições de ensino, adoção de baixo código, separação entre modelo de
-processo e modelo de decisão, papel das soft skills na prática profissional, instrumentos de
-autoavaliação e devolutiva acionável em análise da aprendizagem. Todas são citadas em
-`secoes/02-referencial.md` ou `secoes/04-resultados.md`.
+Se alguma delas voltar a ser necessária, os dados completos estão no histórico do Git
+(commit anterior a esta depuração) e nos relatórios de estágio em `docs/`.
 
-### 2. Aderência à janela de sete anos
+### Cobertura temática
+
+As 7 referências revisadas por pares acrescentadas na sessão 7 — Afzaal (2021), Ajimati
+(2025), Al-Sa'di (2023), Bazhenova (2019), Bhardwaj (2025), Munir (2022) e Susnjak (2022) —
+fecharam a lacuna apontada desde a sessão 2. Todas de 2019 em diante, todas com DOI,
+verificadas uma a uma no Crossref ou no texto integral antes de entrar aqui. Cobrem
+automação de processos em instituições de ensino, adoção de baixo código, separação entre
+modelo de processo e modelo de decisão, papel das soft skills na prática profissional,
+instrumentos de autoavaliação e devolutiva acionável em análise da aprendizagem.
+
+### Aderência à janela de sete anos
 
 | Dentro (≥2019) | Fora |
 |---|---|
-| Bendoraitis 2020 · Silberschatz 2020 · Embrapii 2021 · Muniz 2021 · Django 2026 · DRF 2026 · n8n 2025 · Scrum 2025 · Kanban 2025 · Trello 2025 · Bazhenova 2019 · Afzaal 2021 · Munir 2022 · Susnjak 2022 · Al-Sa'di 2023 · Ajimati 2025 · Bhardwaj 2025 | Fielding 2000 · Groover 2010 · Merkel 2014 · Pahl 2015 · PMI 2017 · Elmasri 2018 |
+| Silberschatz 2020 · Embrapii 2021 · Django 2026 · n8n 2025 · Bazhenova 2019 · Afzaal 2021 · Munir 2022 · Susnjak 2022 · Al-Sa'di 2023 · Ajimati 2025 · Bhardwaj 2025 | Fielding 2000 · Groover 2010 · Merkel 2014 · Elmasri 2018 |
 
-Com 17 entradas dentro da janela contra 6 fora, a proporção está confortável.
-As seis fora da janela são obras fundacionais (Fielding define REST; Merkel define Docker)
-e a citação se justifica. Não precisam sair, mas não devem dominar — com o acréscimo do
-item 1, a proporção fica confortável.
+Onze entradas dentro da janela contra quatro fora. As quatro fora são obras fundacionais —
+Fielding define REST, Merkel define Docker, Groover define automação e Elmasri é o texto de
+referência em bancos de dados — e a citação de cada uma se justifica pelo conceito que
+sustenta.
 
 > Nota: o manuscrito de 2024 cita `Groover, 2008` (original em inglês); aqui consta a
 > tradução de 2010. Usar uma única forma nos dois textos.

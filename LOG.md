@@ -474,3 +474,92 @@ uma skill própria de verificação de fontes quando o volume de citações for 
 - **Pendente:** 12 pendências, nenhuma bloqueante — 8 órfãs, 2 `[[VERIFICAR]]` em
   `04-resultados`, 1 tríade em `03-metodo.md:183`, 1 aviso de orçamento.
 - **Próximo:** `/escrever-secao 05-conclusao`, no alvo de 700 e sem folga.
+
+### 2026-09-03 — Sessão 8 (continuação): oito decisões do autor
+
+O autor pediu que todas as pendências em aberto fossem apresentadas de uma vez. Foram duas
+rodadas de `AskUserQuestion`: quatro decisões de escrita e quatro factuais. Todas aplicadas
+na mesma sessão. **O gate saiu de 12 pendências para exit 0 — LIMPO.**
+
+#### D-17 — Remover as 8 referências órfãs
+
+`refs.md` passou de 23 para **15 entradas**. Saíram Bendoraitis (2020), Django REST
+Framework (2026), Kanban University (2025), Muniz (2021), Pahl (2015), PMI (2017), Scrum
+(2025) e Trello (2025) — todas de stack e de metodologia de gestão, herdadas dos relatórios
+de estágio, nenhuma citada em seção alguma.
+
+**Motivo:** a revista exige que só constem na lista as fontes efetivamente citadas, então a
+remoção é conformidade antes de ser economia. A alternativa (citá-las no Método) foi
+descartada porque seria citação decorativa — o tipo de coisa que um avaliador identifica.
+**Impacto:** o orçamento caiu de **17,2 para 15,6 páginas**, o que sozinho resolveu o
+estouro projetado de ~19,1 contra o máximo de 18. A seção "Análise de lacunas" de `refs.md`
+foi reescrita como "Estado do referencial", com a proporção da janela de sete anos
+recalculada: 11 dentro contra 4 fora, todas as de fora fundacionais. Os dados das removidas
+seguem recuperáveis no histórico do Git.
+
+#### D-18 — Título definido
+
+- **PT:** Automação de certificação e recomendação pedagógica em programa de capacitação
+  profissional: da geração de indicadores à camada de decisão
+- **EN:** Automating certification and pedagogical recommendation in a professional training
+  program: from indicator generation to the decision layer
+
+**Motivo:** nomeia as duas camadas entregues e põe o incremento sobre o ciclo anterior no
+próprio título. Descartadas uma versão mais argumentativa (persistência como condição) e
+uma que trazia o nome do programa, esta última por estreitar a leitura para relato de caso
+local. Respeita o limite de 50 palavras, a inicial maiúscula única e a ausência de ponto
+final, e não identifica instituição. Encerra o `[[DECIDIR]]` mais antigo do projeto.
+
+#### D-19 — Autoria mantida em 4
+
+As duas vagas restantes do limite de 6 não serão usadas. D-3 fica como está, e os demais 7
+integrantes seguem creditados em Agradecimentos. Como a revista não aceita acrescentar autor
+depois da submissão, a autoria está agora fechada.
+
+#### D-20 — Sem data-limite de submissão
+
+A revista opera em fluxo contínuo. O `[[VERIFICAR]]` sobre prazo, aberto desde a sessão 2,
+foi encerrado. O ritmo de uma seção por sessão está preservado.
+
+#### D-21 — A correção da API (D-15) não entra na conclusão
+
+**Motivo:** os defeitos foram corrigidos após o ciclo de 2025, e o artigo relata o sistema
+como ele operou naquele período. Mencionar a correção misturaria dois recortes temporais.
+**Consequência a observar ao escrever `05-conclusao`:** não citar o `except` que mascarava
+falha nem a rota de exclusão total, em nenhuma forma, nem como trabalho futuro.
+
+#### D-22 — Instância Neon desativada; contagem de aptos não será apurada
+
+O banco não resolveu por DNS em 03/09/2026 porque a instância **foi apagada**. O
+`[[VERIFICAR]]` de `04-resultados` sobre quantos discentes `/discentes_aptos_certificacao/`
+retorna foi substituído por texto que declara a desativação e reancora a afirmação: o que a
+base sustenta é a **computabilidade** da regra, evidenciada pelos 49 pares
+competência × discente com duas ou mais medições, não o número de discentes que a
+satisfariam em uma data. Nenhuma consulta ao banco é mais possível — `/consultar-banco` está
+encerrado como recurso, e o snapshot de 27/07/2026 passa a ser a única base numérica.
+
+#### D-23 — Os tempos reportados já incluem inicialização a frio
+
+As medições de 2–3 s (registro de notas) e 12–15 s (gráfico e envio) foram cronometradas em
+uso corrente, sem isolar a primeira requisição após inatividade. A subseção 4.4 passa a
+dizer isso explicitamente. **É um resultado mais forte, não mais fraco:** os números
+descrevem o comportamento percebido pelo operador e não o melhor caso com a função
+previamente ativa.
+
+#### D-24 — O n8n rodava em máquina pessoal de desenvolvimento
+
+Resolve o `[[VERIFICAR]]` do mapa de fatos §4, aberto desde a sessão 2. O contêiner Docker
+com a imagem oficial era executado na estação de trabalho de um integrante, não em servidor
+institucional nem contratado. É coerente com o `manualTrigger` de três dos quatro workflows.
+**Declarado como limitação** em 4.6: a continuidade da operação fica atrelada ao vínculo
+desse integrante com o projeto.
+
+#### Também nesta sessão
+
+- **Tríade de `03-metodo.md:183` desfeita.** A enumeração de dados pessoais foi reescrita em
+  dois pares ("o nome e o número de inscrição no cadastro de pessoas físicas, bem como a
+  matrícula e o endereço de correio eletrônico institucional"), preservando os quatro campos.
+- **Gate: exit 0, LIMPO.** Zero bloqueantes e zero pendências pela primeira vez no projeto.
+  Orçamento em **15,8 páginas**, com as três seções restantes projetando ~17,7 — dentro do
+  teto de 18, sem necessidade de corte.
+- **Próximo:** `/escrever-secao 05-conclusao`, alvo 700, observando D-21.

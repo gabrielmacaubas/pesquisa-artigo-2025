@@ -234,9 +234,10 @@ dispõe de evidência transacional.
 
 ### 3.6 Tratamento dos dados e procedimentos éticos
 
-A base de produção armazena dados pessoais dos participantes, entre eles nome, número de
-inscrição no cadastro de pessoas físicas, matrícula e endereços de correio eletrônico
-institucionais, associados a avaliações de competências socioemocionais. Os dados
+A base de produção armazena dados pessoais dos participantes associados a avaliações de
+competências socioemocionais. Constam desse conjunto o nome e o número de inscrição no
+cadastro de pessoas físicas, bem como a matrícula e o endereço de correio eletrônico
+institucional. Os dados
 analisados neste trabalho são operacionais do programa de capacitação, produzidos como
 registro ordinário de sua governança, e não foram coletados para finalidade de pesquisa com
 seres humanos.

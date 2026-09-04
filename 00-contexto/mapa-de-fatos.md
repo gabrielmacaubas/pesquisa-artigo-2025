@@ -112,7 +112,11 @@ Banco de recomendações em Google Sheets → `Buscar discentes` e `Buscar notas
 Usa `wait` em três pontos para controle de ciclo e `if` ("Sem recomendações") para pular
 discentes sem apontamento.
 
-`[[VERIFICAR: onde o n8n esteve hospedado em produção]]`
+**Hospedagem do n8n — resolvido por D-24 (03/09/2026):** contêiner Docker a partir da
+imagem oficial, executado na **máquina pessoal de desenvolvimento** de um integrante da
+equipe, e não em servidor institucional ou contratado. Informado pelo autor. É coerente com
+o `manualTrigger` de três dos quatro workflows, e é **limitação a declarar**: a operação da
+automação dependia de uma estação de trabalho que não é serviço mantido pela instituição.
 
 ## 5. Regras de negócio
 

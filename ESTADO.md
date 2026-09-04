@@ -6,7 +6,7 @@
 
 ## Situação atual
 
-**Etapa:** 3 — escrita. Quatro das sete seções em rascunho.
+**Etapa:** 3 — escrita. Quatro das sete seções em rascunho. **Gate LIMPO (exit 0).**
 **Atualizado:** 03/09/2026 (sessão 8)
 **Próxima ação:** `/escrever-secao 05-conclusao` (alvo 700). Tudo de que ela depende já
 existe: introdução, método e resultados escritos. A conclusão retoma o objetivo declarado
@@ -14,17 +14,17 @@ na introdução, sintetiza o que a evidência sustenta e declara os desdobrament
 afirmar nada que a seção 4 não sustente**, em especial sobre acoplamento da certificação
 (D-10) e sobre escala.
 
-⚠️ **Escrever no alvo, sem folga.** O orçamento está em 17,2 páginas e a projeção final é
-de ~19 — o aperto é no teto (ver Orçamento).
+⚠️ **Observar D-21 ao escrever:** a conclusão **não** menciona a correção da API (D-15),
+nem como trabalho futuro. O ciclo relatado é o de 2025, e a correção é posterior.
 
-**O autor precisa providenciar:** nada para a próxima seção. Três itens dependem dele, e
-nenhum bloqueia (ver Bloqueios e Decisões pendentes).
+**O autor precisa providenciar:** nada. Não há decisão em aberto nem bloqueio — as oito
+pendências que restavam foram resolvidas em 03/09/2026 (D-17 a D-24).
 
 ## O artigo
 
 - **Veículo:** Revista Principia — artigo original · **12 a 18 páginas** (alvo 16)
-- **Título:** `[[DECIDIR]]` (PT e EN, máx. 50 palavras)
-- **Prazo:** `[[VERIFICAR: há data-limite de submissão?]]`
+- **Título (D-18):** "Automação de certificação e recomendação pedagógica em programa de capacitação profissional: da geração de indicadores à camada de decisão" · EN: "Automating certification and pedagogical recommendation in a professional training program: from indicator generation to the decision layer"
+- **Prazo:** fluxo contínuo, sem data-limite (D-20)
 - **Tese:** aprovada — automação do ciclo formativo exige camada de decisão
   (certificação) e de intervenção (recomendação) sobre persistência estruturada
 - **Contribuição sobre 2024:** o ciclo anterior automatizou indicadores; este entrega as
@@ -51,14 +51,21 @@ nenhum bloqueia (ver Bloqueios e Decisões pendentes).
 | D-13 · D-14 | Vale o código, não o relatório: sem `bulk_create`/`select_related`; base serviu também de ambiente de teste |
 | D-15 | Corrigir os dois defeitos da API (`except` mascarando falha; rota de exclusão total) |
 | D-16 | Ressalva sobre a base **enxugada ao mínimo**, mantida em uma frase |
+| D-17 | **8 referências órfãs removidas** de `refs.md` (23 → 15); só constam fontes citadas |
+| D-18 | **Título definido**, PT e EN (ver acima) |
+| D-19 | **Autoria fechada em 4** — as duas vagas restantes não serão usadas |
+| D-20 | Revista em **fluxo contínuo**, sem data-limite |
+| D-21 | A correção da API (D-15) **não entra na conclusão** — recorte temporal do artigo é 2025 |
+| D-22 | **Instância Neon apagada**; contagem de aptos não será apurada, argumento reancorado nos 49 pares |
+| D-23 | Os tempos reportados (2–3 s · 12–15 s) **já incluem inicialização a frio** |
+| D-24 | n8n rodava em **máquina pessoal** de um integrante — declarado como limitação em 4.6 |
 
 ## Decisões pendentes
 
-- [ ] Título em português e inglês
-- [ ] Se as duas vagas restantes de autoria serão usadas
-- [ ] Se a conclusão menciona a correção da API como trabalho posterior ao ciclo relatado
-- [ ] **Destino das 8 referências órfãs** — a Introdução não as absorveu (ver abaixo)
-- [ ] **Onde cortar para caber em 18 páginas** — decisão de escopo, não de redação
+**Nenhuma.** As cinco que constavam aqui foram resolvidas em 03/09/2026: título (D-18),
+autoria (D-19), menção à correção da API (D-21), destino das órfãs (D-17) e corte de páginas
+(resolvido por D-17, que sozinho eliminou o excesso).
+
 
 ## Seções
 
@@ -67,61 +74,37 @@ nenhum bloqueia (ver Bloqueios e Decisões pendentes).
 | 00-resumo | não iniciada | 0 / 550 | escrever **por último** |
 | 01-introducao | rascunho | 1.085 / 1.100 | nenhuma |
 | 02-referencial | rascunho | 1.561 / 1.600 | nenhuma |
-| 03-metodo | rascunho | 1.994 / 2.200 | 1 tríade (linha 183) |
-| 04-resultados | rascunho | 2.631 / 2.800 | 2 `[[VERIFICAR]]` |
+| 03-metodo | rascunho | 2.002 / 2.200 | nenhuma |
+| 04-resultados | rascunho | 2.786 / 2.800 | nenhuma |
 | 05-conclusao | **próxima** | 0 / 700 | — |
 | 06-declaracoes | não iniciada | 0 / 100 | — |
 
-Gate: **0 bloqueantes**, 12 pendências. Total de texto: **7.271 palavras**.
+Gate: **LIMPO — exit 0**, zero bloqueantes e zero pendências, pela primeira vez no projeto.
+Total de texto: **7.434 palavras**.
 
 Estilo, todas as seções dentro do perfil do grupo (21–30 pal/frase, 60–105 por parágrafo):
-introdução 27,1 · referencial 29,3 · método 22,4 · resultados 27,7.
+introdução 27,1 · referencial 29,3 · método 22,2 · resultados 27,9.
 
 ### Lacunas remanescentes
 
-| Arquivo:linha | Marcador | Pergunta | Quem resolve |
-|---|---|---|---|
-| 04-resultados:123 | `[[VERIFICAR]]` | quantos discentes `/discentes_aptos_certificacao/` retorna, e em que data? | consulta ao banco |
-| 04-resultados:195 | `[[VERIFICAR]]` | há medição de tempo de inicialização a frio? | autor |
-| 03-metodo:183 | tríade | "físicas, matrícula e endereços" — reescrever para dois itens | redação |
+**Nenhuma.** Os dois `[[VERIFICAR]]` de `04-resultados` foram fechados por D-22 e D-23, e a
+tríade de `03-metodo` foi reescrita em dois pares. Não há `[[VERIFICAR]]`, `[[CIT]]` nem
+`[[DECIDIR]]` em nenhuma seção.
 
-Ambos os `[[VERIFICAR]]` são acréscimos, não bloqueios.
-
-## ⚠️ Orçamento — o aperto é no teto
+## Orçamento — resolvido
 
 | | Páginas |
 |---|---|
-| Estimativa do gate hoje (4 seções + 6 figuras + 23 refs) | **17,2** |
+| Estimativa do gate hoje (4 seções + 6 figuras + 15 refs) | **15,8** |
 | Falta escrever: conclusão 700 + declarações 100 + resumo/abstract 550 | +1,9 |
-| **Projeção final** | **≈19,1** |
+| **Projeção final** | **≈17,7** |
 
-O máximo da revista é **18**. Serão necessárias ~1,1 página de corte, e a regra de
-`orcamento-paginas.md` diz onde: detalhe de implementação vira pseudocódigo, referencial
-que não sustenta a contribuição sai, figuras redundantes se fundem. **Nunca cortar**
-limitações, origem dos dados ou a discussão à luz da literatura.
+Dentro da janela de 12 a 18. **A remoção das 8 órfãs (D-17) sozinha resolveu o estouro**,
+que na sessão anterior projetava ~19,1. Não é necessário cortar figuras nem conteúdo.
 
-Duas fontes de folga já identificadas, ambas decisão do autor:
-1. **As 6 figuras custam 2,2 páginas.** `FIG:04-1` (autoavaliações por unidade) mostra o
-   mesmo fenômeno que uma linha de `TAB:04-1`; fundi-las libera ~0,3 página.
-2. **As 8 referências órfãs custam ~1,6 página** se permanecerem na lista. Removê-las
-   resolve mais da metade do excesso — e a revista **exige** que só constem fontes
-   citadas, então removê-las não é só economia, é conformidade.
-
-## Referências órfãs (8) — a Introdução não as absorveu
-
-`Bendoraitis 2020` · `Django REST Framework 2026` · `Kanban University 2025` ·
-`Muniz 2021` · `Pahl 2015` · `PMI 2017` · `Scrum 2025` · `Trello 2025`.
-
-A sessão 7 previu que a Introdução as citaria. **Não aconteceu, e por decisão de redação:**
-são referências de stack (Django, DRF, Docker/PaaS, Trello) e de gestão de projetos (PMBOK,
-Scrum, Kanban), e nenhuma tem terreno legítimo num texto de problema, lacuna e objetivo.
-Forçá-las ali seria citação decorativa, exatamente o que um avaliador identifica.
-
-Restam duas saídas, e a escolha é do autor:
-- **Citar no Método**, onde cabem de fato — a equipe trabalhou com Scrum (mapa §14) e a
-  stack é descrita em 3.2. Custa palavras numa seção que está 206 abaixo do alvo.
-- **Remover de `refs.md`** — libera ~1,6 página do orçamento estourado e atende à exigência
-  da revista. É a saída que o orçamento recomenda.
+A folga é de ~0,3 página, então vale a regra de sempre: escrever as três seções restantes no
+alvo. Se a revisão da orientadora fizer o texto crescer, a primeira fonte de folga é fundir
+`FIG:04-1` em `TAB:04-1`, que mostram o mesmo fenômeno (~0,3 página).
 
 ## Figuras — 6 declaradas, **nenhuma produzida**
 
@@ -137,11 +120,12 @@ Restam duas saídas, e a escolha é do autor:
 No PDF elas aparecem como blocos "IMAGEM AUSENTE" com a descrição do que produzir.
 ⚠️ 300 dpi e texto interno em TNR ≥18. As três `TAB` são markdown editável, nunca imagem.
 
-## Referências — 23 entradas
+## Referências — 15 entradas, todas citadas
 
-17 dentro da janela de sete anos contra 6 fora (obras fundacionais). As 7 revisadas por
-pares acrescentadas na sessão 7 fecharam a lacuna do referencial. Ver a ressalva das 8
-órfãs acima.
+Zero órfãs (D-17 removeu as 8). Onze dentro da janela de sete anos contra quatro fora, todas
+as de fora fundacionais: Fielding define REST, Merkel define Docker, Groover define
+automação e Elmasri é o texto de referência em bancos de dados. As 7 revisadas por pares
+acrescentadas na sessão 7 sustentam o referencial.
 
 ## Build — funcionando de ponta a ponta
 
@@ -159,15 +143,15 @@ bash scripts/build.sh --md   # só o markdown consolidado
 
 ## Bloqueios
 
-Nenhum bloqueia a escrita. Três itens dependem do autor:
+**Nenhum bloqueia a escrita.** Um item mudou de natureza e vale registrar:
 
-1. **Banco Neon inacessível em 03/09/2026** (host não resolveu por DNS). Enquanto não
-   voltar, o `[[VERIFICAR]]` da linha 123 de `04-resultados` fica aberto. Confirmar se a
-   instância ainda existe antes de prometer consulta.
-2. **API corrigida (D-15) ainda não validada em ambiente com Django.** Falta o autor rodar
-   `manage.py check` e os testes, e publicar.
-3. **Decisão de corte para caber em 18 páginas** — pode esperar até `06-declaracoes`, mas
-   não até o resumo.
+- **O banco Neon foi apagado (D-22).** Não é mais um bloqueio a resolver, é uma condição
+  permanente: **nenhuma consulta nova é possível**. `/consultar-banco` está encerrado como
+  recurso, e o snapshot agregado de 27/07/2026, registrado no mapa de fatos §6, é a única
+  base numérica do artigo. Qualquer número novo teria de vir de outra fonte com procedência.
+- **A API corrigida (D-15) segue sem validação em ambiente com Django.** Deixou de importar
+  para o artigo, porque D-21 a manteve fora do texto. Continua sendo trabalho de engenharia
+  a fazer, se o autor quiser publicar a correção.
 
 ## Ambiente
 

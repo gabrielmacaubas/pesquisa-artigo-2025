@@ -119,8 +119,11 @@ executável.
 A verificação da aptidão propriamente dita não pôde ser reportada. O filtro de permanência
 mínima de 365 dias opera sobre a data de entrada do vínculo mais recente do discente com um
 projeto, e os cadastros analisados concentram-se no primeiro trimestre de 2025, de forma que
-o resultado do endpoint depende da data em que ele é consultado.
-[[VERIFICAR: quantos discentes o endpoint /discentes_aptos_certificacao/ retorna hoje, e em que data a consulta foi feita?]]
+o resultado do endpoint depende da data em que ele é consultado. A instância de banco
+utilizada no ciclo foi posteriormente desativada, de modo que a contagem de discentes
+retornada pelo endpoint não pôde ser apurada nem reproduzida. O que a base sustenta é a
+computabilidade da regra, evidenciada pelos 49 pares competência × discente com duas ou mais
+medições, e não o número de discentes que a satisfariam em uma data determinada.
 
 ### 4.3 Comportamento observado das camadas de decisão e de intervenção
 
@@ -191,8 +194,10 @@ A migração da persistência para a plataforma sem servidor introduziu latênci
 inicialização a frio nas primeiras requisições após período de inatividade, característica
 esperada desse modelo de execução. Como os fluxos são disparados sob demanda e não em
 regime contínuo, essa latência incide com frequência apreciável no início de cada sessão de
-trabalho.
-[[VERIFICAR: há medição do tempo de inicialização a frio nas primeiras requisições após inatividade?]]
+trabalho. Os tempos reportados nesta subseção foram cronometrados em condições correntes de
+uso, sem que a primeira requisição após inatividade fosse isolada das demais, e portanto já
+incorporam a inicialização a frio quando ela ocorreu. Os valores descrevem, assim, o
+comportamento percebido pelo operador, e não o melhor caso com a função previamente ativa.
 
 ### 4.5 Discussão
 
@@ -284,4 +289,7 @@ apuração dos artefatos emitidos dependeria de contagem de arquivos em serviço
 armazenamento, não de registro transacional. Somam-se a isso a ausência de agendamento
 periódico nos fluxos, que mantém a periodicidade do ciclo sob controle humano, e a latência
 decorrente da hospedagem da interface e do banco em região geograficamente distante dos
-usuários, para a qual a equipe apontou a hospedagem institucional local como mitigação.
+usuários, para a qual a equipe apontou a hospedagem institucional local como mitigação. O
+orquestrador, por sua vez, foi executado em contêiner instalado em estação de trabalho de um
+integrante da equipe, e não em serviço mantido pela instituição, condição que limita a
+continuidade da operação para além do período do vínculo desse integrante.
