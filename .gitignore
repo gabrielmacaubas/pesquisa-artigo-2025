@@ -1,5 +1,4 @@
-# Saída gerada
-build/
+# Saída gerada — build/ é versionado a pedido do autor (03/09/2026)
 *.docx.bak
 ~$*
 
