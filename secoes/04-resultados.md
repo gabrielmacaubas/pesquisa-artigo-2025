@@ -218,7 +218,10 @@ medição como referência e impor permanência mínima de um ano são decisões
 implícitas enquanto o critério era aplicado por leitura de planilha, e que se tornaram
 auditáveis ao serem codificadas. Esse ganho de explicitação é independente do ganho de
 tempo, e provavelmente o mais relevante para a governança do programa, ainda que o presente
-recorte não permita quantificá-lo. [[CIT]]
+recorte não permita quantificá-lo. A separação entre a lógica de decisão e o fluxo que a
+executa é tratada na literatura de gestão de processos como condição para que o critério
+possa ser inspecionado e alterado sem que o processo precise ser reconstruído (Bazhenova
+et al., 2019).
 
 A divisão de responsabilidades entre orquestração e interface é o que torna o arranjo
 transferível para outro programa formativo. Os fluxos de automação não contêm regra de
@@ -227,15 +230,21 @@ agregação das subcompetências e os dois critérios de disparo residem na inte
 um contrato documentado em padrão aberto (Fielding, 2000). Substituir a matriz de
 competências ou o limiar de disparo é alteração localizada, que não exige reconstruir os
 fluxos; substituir a ferramenta de orquestração, do mesmo modo, não afeta as regras. Essa
-propriedade não foi testada em segundo contexto e permanece como expectativa de projeto.
-[[CIT]]
+propriedade não foi testada em segundo contexto e permanece como expectativa de projeto,
+ainda que a revisão sobre adoção de plataformas de baixo código registre que manter a regra
+de negócio fora da ferramenta de orquestração é o que reduz a dependência do fornecedor e
+preserva a possibilidade de migração (Ajimati; Carroll; Maher, 2025).
 
 A camada de intervenção, por sua vez, alcança personalização de nível de competência, não de
 nível individual. O sistema identifica corretamente qual competência motivou o apontamento e
 distingue desempenho baixo estável de trajetória de queda, mas o texto entregue é sorteado
 de um banco de práticas organizado por competência. Trata-se de devolutiva dirigida, e não
 adaptativa, distinção que precisa acompanhar qualquer leitura dos resultados desta camada.
-[[CIT]]
+O limite corresponde ao que a literatura de análise da aprendizagem atribui aos painéis de
+natureza descritiva, cuja orientação não decorre de modelo ajustado ao percurso individual
+(Susnjak; Ramaswami; Mathrani, 2022), e que os trabalhos de recomendação explicável
+procuram superar por meio da vinculação entre a orientação entregue e os fatores
+identificados como responsáveis pelo desempenho de cada discente (Afzaal et al., 2021).
 
 A integridade referencial por proteção, adotada em todas as chaves estrangeiras, mostrou-se
 compatível com a operação e não produziu bloqueio que exigisse contorno durante o ciclo. A

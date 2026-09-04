@@ -389,3 +389,47 @@ Rejeitado: o nicho pt-BR/ABNT tem material genérico de baixa qualidade, e uma s
 terceiro que instrua "gere as referências" contradiz frontalmente a regra central deste
 projeto. Skills já disponíveis (`pdf`, `dataviz`, `xlsx`) cobrem o necessário. Reavaliar
 uma skill própria de verificação de fontes quando o volume de citações for conhecido.
+
+### 2026-09-03 — Sessão 7: referencial teórico escrito; lacuna bibliográfica fechada
+
+- **Levantamento bibliográfico feito primeiro** (D-8), como o roteiro da sessão 6 mandava.
+  Sete referências revisadas por pares acrescentadas a `refs.md`, todas ≥2019 e todas com
+  DOI. **Nenhuma escrita de memória:** cada título, lista de autores, veículo e DOI foi
+  conferido na API do Crossref ou no texto integral antes de entrar, e o campo `origem`
+  registra qual das duas vias. Descartadas várias ocorrências de busca sobre n8n publicadas
+  em periódicos de baixa credibilidade — melhor sete boas do que dez com peso morto.
+
+  | Chave | Veículo | Sustenta |
+  |---|---|---|
+  | Bhardwaj, 2025 | Discover Sustainability | RPA em ensino superior para em tarefa administrativa |
+  | Ajimati, 2025 | Journal of Systems and Software | revisão sistemática de adoção low-code/no-code |
+  | Bazhenova, 2019 | Information Systems | separação entre modelo de processo e modelo de decisão |
+  | Munir, 2022 | Industry and Higher Education | soft skills na prática de engenharia |
+  | Al-Sa'di, 2023 | Administrative Sciences | instrumento de autoavaliação e suas fragilidades |
+  | Susnjak, 2022 | Int. J. Educ. Technol. High. Educ. | painéis descritivos não geram ação |
+  | Afzaal, 2021 | Frontiers in Artificial Intelligence | recomendação vinculada à causa |
+
+- **Escrito:** `secoes/02-referencial.md`, 1.561 palavras (alvo 1.600), quatro subseções com
+  texto introdutório antes da 2.1. O encadeamento do referencial foi montado para desembocar
+  na tese: automatiza-se o que produz documento e não o que produz decisão (2.1); a regra de
+  negócio precisa viver fora do fluxo para ser auditável (2.2); a autoavaliação isolada não
+  sustenta decisão, o que empurra para a comparação entre medições sucessivas (2.3); e o
+  painel descritivo não produz ação (2.4). Estilo: 29,3 pal/frase, 91,8 pal/parágrafo.
+- **Os três `[[CIT]]` de `04-resultados` fechados** (linhas 221, 231 e 238), com Bazhenova,
+  Ajimati e a dupla Susnjak/Afzaal. A seção perdeu os marcadores e ganhou ~200 palavras.
+- **Dois defeitos do `gate.py` corrigidos**, ambos falhando do lado perigoso — deixando
+  citação passar sem verificação, e não cobrando à toa:
+  1. `_NOME` não aceitava hífen nem apóstrofo, então `(Al-Sa'di et al., 2023)` não casava e
+     escapava em silêncio. É o terceiro defeito dessa mesma família (sessão 3 achou dois).
+  2. O regex narrativo não consumia a cadeia intermediária de autores: em
+     `Ajimati, Carroll e Maher (2025)` o match começava em `Carroll`, e o gate cobrava
+     entrada em `refs.md` em nome do segundo autor. Falso bloqueante.
+- **Achado de orçamento que muda o planejamento:** com 15,6 páginas estimadas e ~2.450
+  palavras de alvo ainda por escrever, a projeção final é de **~19 páginas**. O aperto
+  deixou de ser no piso e passou a ser **no teto**. As próximas seções têm de ficar no alvo,
+  sem folga.
+- **Pendente:** 11 pendências, nenhuma bloqueante. Oito referências órfãs (stack e gestão de
+  projetos), que ou passam a ser citadas na Introdução ou saem de `refs.md`; dois
+  `[[VERIFICAR]]` em `04-resultados`; uma tríade em `03-metodo.md:183`.
+- **Nenhuma decisão nova do autor** nesta sessão — D-8 foi cumprida, não alterada.
+- **Próximo:** `/escrever-secao 01-introducao`.

@@ -65,15 +65,22 @@ RE_REF_CAMPO = re.compile(r'^-\s*\*\*(\w+):\*\*\s*(.*)$', re.M)
 # nome de autor pessoal (Silva, Costa Junior) ou institucional (Django Software Foundation)
 # dígitos são aceitos no nome: sem isso, autores como (N8n, 2025) não casam e a
 # citação escapa da verificação em silêncio, em vez de ser cobrada.
-_NOME = (r'[A-ZÁÂÃÉÊÍÓÔÕÚÇ][A-Za-zÀ-ÿ0-9.]+'
-         r'(?:\s+(?:de|da|do|dos|das)?\s*[A-ZÁÂÃÉÊÍÓÔÕÚÇ][A-Za-zÀ-ÿ0-9.]+){0,3}')
+# hífen e apóstrofo fazem parte de sobrenomes reais (Al-Sa'di, Costa-Lima): sem eles
+# a citação não casa e escapa da verificação em silêncio.
+_NOME = (r"[A-ZÁÂÃÉÊÍÓÔÕÚÇ][A-Za-zÀ-ÿ0-9.\-'’]+"
+         r"(?:\s+(?:de|da|do|dos|das)?\s*[A-ZÁÂÃÉÊÍÓÔÕÚÇ][A-Za-zÀ-ÿ0-9.\-'’]+){0,3}")
 RE_CIT_PAREN = re.compile(r'\((' + _NOME + r'(?:\s*;\s*' + _NOME + r')*)'
                           r'(?:\s+et\s+al\.)?,\s*(\d{4}[a-z]?)'
                           r'(?:,\s*p\.\s*[\d\u2013\-]+)?\)')
-# citação narrativa: Silva (2020) / Silva e Costa (2020) / Silva et al. (2020)
-RE_CIT_NARR = re.compile(r'\b([A-ZÁÂÃÉÊÍÓÔÕÚÇ][a-zçãéêíóôõáâú]+)'
-                         r'(?:\s+(?:e|et\s+al\.)\s*[A-ZÁÂÃÉÊÍÓÔÕÚÇ]?[a-zçãéêíóôõáâú]*)?'
-                         r'\s*\((\d{4}[a-z]?)\)')
+# citação narrativa: Silva (2020) / Silva e Costa (2020) / Silva, Costa e Lima (2020)
+# / Silva et al. (2020). A cadeia intermediária precisa ser consumida pelo mesmo match:
+# sem ela, "Silva, Costa e Lima (2020)" casa a partir de "Costa", e o gate cobra uma
+# entrada em nome do segundo autor.
+_NOME_NARR = r"[A-ZÁÂÃÉÊÍÓÔÕÚÇ][A-Za-zÀ-ÿ\-'’]+"
+RE_CIT_NARR = re.compile(r"\b(" + _NOME_NARR + r")"
+                         r"(?:\s*,\s*" + _NOME_NARR + r")*"
+                         r"(?:\s+(?:e|et\s+al\.)\s*(?:" + _NOME_NARR + r")?)?"
+                         r"\s*\((\d{4}[a-z]?)\)")
 
 RE_FIG_BLOCO = re.compile(r'\[\[(FIG|TAB):([\w\-]+)\s*\n(.*?)\]\]', re.S)
 RE_FIG_REF = re.compile(r'\[\[@(FIG|TAB):([\w\-]+)\]\]')

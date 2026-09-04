@@ -153,6 +153,76 @@
 - **acesso_em:** 30 jun. 2025
 - **origem:** referência do relatório de estágio, fornecida pelo autor em 27/07/2026
 
+## [Afzaal, 2021]
+- **tipo:** artigo
+- **autores:** AFZAAL, Muhammad; NOURI, Jalal; ZIA, Aayesha; PAPAPETROU, Panagiotis; FORS, Uno; WU, Yongchao; LI, Xiu; WEEGAR, Rebecka
+- **titulo:** Explainable AI for data-driven feedback and intelligent action recommendations to support students self-regulation
+- **veiculo:** Frontiers in Artificial Intelligence, v. 4, art. 723447
+- **ano:** 2021
+- **doi_url:** https://doi.org/10.3389/frai.2021.723447
+- **acesso_em:** 03 set. 2026
+- **origem:** WebFetch do texto integral em frontiersin.org em 03/09/2026
+
+## [Ajimati, 2025]
+- **tipo:** artigo
+- **autores:** AJIMATI, Matthew Oladeji; CARROLL, Noel; MAHER, Mary
+- **titulo:** Adoption of low-code and no-code development: a systematic literature review and future research agenda
+- **veiculo:** Journal of Systems and Software, v. 222, art. 112300
+- **ano:** 2025
+- **doi_url:** https://doi.org/10.1016/j.jss.2024.112300
+- **acesso_em:** 03 set. 2026
+- **origem:** metadados verificados na API do Crossref (api.crossref.org) em 03/09/2026
+
+## [Al-Sa'di, 2023]
+- **tipo:** artigo
+- **autores:** AL-SA'DI, Ahmed; YAMJAL, Parina; AHMAD, Esraa; PANJABI, Richa; ALLOTT MCPHEE, Cam; GULER, Olkan
+- **titulo:** Assessing educators' soft skills: developing a self-assessment instrument
+- **veiculo:** Administrative Sciences, v. 13, n. 9, art. 208
+- **ano:** 2023
+- **doi_url:** https://doi.org/10.3390/admsci13090208
+- **acesso_em:** 03 set. 2026
+- **origem:** metadados e resumo verificados na API do Crossref (api.crossref.org) em 03/09/2026
+
+## [Bazhenova, 2019]
+- **tipo:** artigo
+- **autores:** BAZHENOVA, Ekaterina; ZERBATO, Francesca; OLIBONI, Barbara; WESKE, Mathias
+- **titulo:** From BPMN process models to DMN decision models
+- **veiculo:** Information Systems, v. 83, p. 69-88
+- **ano:** 2019
+- **doi_url:** https://doi.org/10.1016/j.is.2019.02.001
+- **acesso_em:** 03 set. 2026
+- **origem:** metadados verificados na API do Crossref (api.crossref.org) em 03/09/2026
+
+## [Bhardwaj, 2025]
+- **tipo:** artigo
+- **autores:** BHARDWAJ, Vivek; KUMAR, Mukesh
+- **titulo:** Transforming higher education with robotic process automation: enhancing efficiency, innovation, and student-centered learning
+- **veiculo:** Discover Sustainability, v. 6, n. 1, art. 356
+- **ano:** 2025
+- **doi_url:** https://doi.org/10.1007/s43621-025-01198-6
+- **acesso_em:** 03 set. 2026
+- **origem:** metadados verificados na API do Crossref (api.crossref.org) em 03/09/2026
+
+## [Munir, 2022]
+- **tipo:** artigo
+- **autores:** MUNIR, Fouzia
+- **titulo:** More than technical experts: engineering professionals' perspectives on the role of soft skills in their practice
+- **veiculo:** Industry and Higher Education, v. 36, n. 3, p. 294-305
+- **ano:** 2022
+- **doi_url:** https://doi.org/10.1177/09504222211034725
+- **acesso_em:** 03 set. 2026
+- **origem:** metadados e resumo verificados na API do Crossref (api.crossref.org) em 03/09/2026
+
+## [Susnjak, 2022]
+- **tipo:** artigo
+- **autores:** SUSNJAK, Teo; RAMASWAMI, Gomathy Suganya; MATHRANI, Anuradha
+- **titulo:** Learning analytics dashboard: a tool for providing actionable insights to learners
+- **veiculo:** International Journal of Educational Technology in Higher Education, v. 19, n. 1, art. 12
+- **ano:** 2022
+- **doi_url:** https://doi.org/10.1186/s41239-021-00313-7
+- **acesso_em:** 03 set. 2026
+- **origem:** WebFetch do texto integral em pmc.ncbi.nlm.nih.gov (PMC8853217) em 03/09/2026
+
 ---
 
 ## Análise de lacunas do referencial
@@ -168,16 +238,22 @@ Não há nenhuma referência sobre **automação de processos em contextos educa
 justamente os temas que a tese toca. Referencial construído só sobre documentação de
 ferramenta é a fragilidade que um avaliador aponta primeiro.
 
-**A levantar** (busca dirigida, depois de método e resultados — D-8): 6 a 10 referências
-revisadas por pares, priorizando 2019+, sobre automação de fluxos acadêmico-administrativos,
-plataformas low-code/no-code e mensuração de soft skills em programas de formação.
+✅ **Resolvido em 03/09/2026 (sessão 7).** Foram acrescentadas **7 referências revisadas
+por pares**, todas de 2019 em diante e todas com DOI, verificadas uma a uma (Crossref ou
+texto integral) antes de entrar aqui: Afzaal (2021), Ajimati (2025), Al-Sa'di (2023),
+Bazhenova (2019), Bhardwaj (2025), Munir (2022) e Susnjak (2022). Cobrem automação de
+processos em instituições de ensino, adoção de baixo código, separação entre modelo de
+processo e modelo de decisão, papel das soft skills na prática profissional, instrumentos de
+autoavaliação e devolutiva acionável em análise da aprendizagem. Todas são citadas em
+`secoes/02-referencial.md` ou `secoes/04-resultados.md`.
 
 ### 2. Aderência à janela de sete anos
 
 | Dentro (≥2019) | Fora |
 |---|---|
-| Bendoraitis 2020 · Silberschatz 2020 · Embrapii 2021 · Muniz 2021 · Django 2026 · DRF 2026 · n8n 2025 · Scrum 2025 · Kanban 2025 · Trello 2025 | Fielding 2000 · Groover 2010 · Merkel 2014 · Pahl 2015 · PMI 2017 · Elmasri 2018 |
+| Bendoraitis 2020 · Silberschatz 2020 · Embrapii 2021 · Muniz 2021 · Django 2026 · DRF 2026 · n8n 2025 · Scrum 2025 · Kanban 2025 · Trello 2025 · Bazhenova 2019 · Afzaal 2021 · Munir 2022 · Susnjak 2022 · Al-Sa'di 2023 · Ajimati 2025 · Bhardwaj 2025 | Fielding 2000 · Groover 2010 · Merkel 2014 · Pahl 2015 · PMI 2017 · Elmasri 2018 |
 
+Com 17 entradas dentro da janela contra 6 fora, a proporção está confortável.
 As seis fora da janela são obras fundacionais (Fielding define REST; Merkel define Docker)
 e a citação se justifica. Não precisam sair, mas não devem dominar — com o acréscimo do
 item 1, a proporção fica confortável.
