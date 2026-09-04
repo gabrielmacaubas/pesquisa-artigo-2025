@@ -55,7 +55,7 @@ def render_figura(tipo, ident, campos, numero):
     rotulo = ROTULO[tipo]
     legenda = campos.get('legenda', '')
     # normaliza "Figura 3 — ..." para o número real
-    legenda = re.sub(r'^(Figura|Tabela)\s*\d*\s*[—-]\s*', '', legenda).strip()
+    legenda = re.sub(r'^(Figura|Tabela|Quadro)\s*\d*\s*[—-]\s*', '', legenda).strip()
     arquivo = campos.get('arquivo', '')
     caminho = os.path.join(RAIZ, arquivo)
     partes = ['', '**%s %d — %s**' % (rotulo, numero, legenda), '']

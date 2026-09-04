@@ -37,7 +37,7 @@ A matriz de competências e a escala de avaliação não foram definidas por est
 elas seguem o manual de operação do programa (Embrapii, 2021), que estabelece sete
 competências socioemocionais macro e quatro subcompetências vinculadas à inteligência
 emocional. No processamento, a competência inteligência emocional é substituída por suas
-quatro subcompetências, o que produz o conjunto de dez itens comparáveis apresentado no
+quatro subcompetências, o que produz o conjunto de dez itens comparáveis apresentado na
 [[@TAB:03-1]]. Esse achatamento é o que torna as medições homogêneas entre si e viabiliza
 tanto a comparação longitudinal quanto as regras descritas nas subseções 3.4 e 3.5.
 
@@ -69,7 +69,7 @@ implementados como interface de programação de aplicações em Django 4.2 com 
 Framework 3.15, sobre banco de dados PostgreSQL. A escolha por concentrar as regras de
 negócio na interface, e não nos fluxos, responde a uma limitação identificada no ciclo
 anterior do projeto. O cálculo dos indicadores vivia então disperso entre planilhas e nós
-de automação, o que impedia auditar por que um determinado valor havia sido produzido. O
+de automação, o que impedia auditar por que um determinado valor havia sido produzido. A
 [[@FIG:03-1]] apresenta a disposição dos componentes.
 
 [[FIG:03-1
@@ -110,7 +110,7 @@ a frio nas primeiras requisições após período de inatividade.
 
 ### 3.3 Modelo de dados e rastreabilidade histórica
 
-O modelo relacional organiza-se em torno de sete entidades, apresentadas no [[@FIG:03-2]].
+O modelo relacional organiza-se em torno de sete entidades, apresentadas na [[@FIG:03-2]].
 Discente e mentor concentram a identificação institucional dos participantes. A entidade
 projeto classifica a iniciativa entre real e espelho e vincula-a a um mentor responsável. A
 entidade associativa entre discente e projeto registra o tipo de vínculo e a data de

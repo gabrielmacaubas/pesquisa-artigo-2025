@@ -32,7 +32,7 @@ vinculados a três projetos sob acompanhamento de dois mentores. Foram contabili
 de setembro de 2025 e distribuídas em nove unidades avaliativas. A tabela de notas reúne
 165 registros, dos quais 105 vinculados a competências macro e 60 a subcompetências de
 inteligência emocional. As notas ocupam integralmente a escala prevista, de 0,00 a 4,00,
-com média de 2,47, valor situado na faixa qualitativa adequada. O [[@TAB:04-1]] consolida o
+com média de 2,47, valor situado na faixa qualitativa adequada. A [[@TAB:04-1]] consolida o
 conjunto.
 
 [[TAB:04-1
@@ -156,7 +156,7 @@ organização do material para o mentor. No ciclo anterior do projeto, a execuç
 do mesmo conjunto de etapas passou a demandar cerca de 12 segundos por discente, redução
 superior a 99% do tempo empregado, e produziu mais de 160 relatórios de perfil. No ciclo de
 2025, o registro das notas de uma autoavaliação completa passou a ocorrer em 2 a 3 segundos,
-e a geração do gráfico com o consequente armazenamento em nuvem, em 12 a 15 segundos. O
+e a geração do gráfico com o consequente armazenamento em nuvem, em 12 a 15 segundos. A
 [[@TAB:04-2]] reúne as medições.
 
 [[TAB:04-2
