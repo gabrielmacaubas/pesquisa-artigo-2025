@@ -563,3 +563,37 @@ desse integrante com o projeto.
   Orçamento em **15,8 páginas**, com as três seções restantes projetando ~17,7 — dentro do
   teto de 18, sem necessidade de corte.
 - **Próximo:** `/escrever-secao 05-conclusao`, alvo 700, observando D-21.
+
+### 2026-09-03 — Sessão 8 (continuação): publicação no GitHub
+
+#### D-25 — Repositório público na conta pessoal, sem depuração prévia
+
+O autor decidiu publicar o repositório como **público**, na conta pessoal do GitHub, com o
+nome `pesquisa-artigo-2025`, **mantendo os arquivos como estão**. A auditoria feita antes do
+push foi apresentada item a item e a decisão foi reafirmada com a informação completa.
+
+**O que foi apresentado e aceito conscientemente:**
+
+| # | Exposição | Onde |
+|---|---|---|
+| 1 | `SECRET_KEY` do Django em claro | `api-repo/automacao-deploy-main/core/settings.py:17`, presente desde o commit inicial `d59daa7` e portanto em todo o histórico |
+| 2 | IDs de pastas do Drive e de duas planilhas de notas | os 4 JSON de workflow em `api-repo/` |
+| 3 | Hostname da instância Neon | `00-contexto/mapa-de-fatos.md:70` — risco baixo, a instância foi apagada (D-22) |
+| 4 | URL de produção da API e suas rotas | JSON dos workflows |
+
+**Verificação que motivou a segunda consulta ao autor:** o nó `Concede as permissões no
+Docx`, em `Certificados_v3.json`, compartilha cada certificado com
+`{"role": "reader", "type": "anyone"}`. Os certificados trazem nome de discente. Com os IDs
+das pastas publicados, o conjunto fica legível por qualquer pessoa. Foi apresentado como
+exposição de **dado pessoal de terceiros**, distinta das demais, e a decisão de publicar
+assim mesmo foi mantida.
+
+**Consequências a tratar fora deste repositório, se o autor quiser reduzir o risco:**
+- **Rotacionar a `SECRET_KEY`.** Purgar o arquivo hoje não bastaria: o valor está nas 19
+  revisões do histórico, e o histórico vai junto no push.
+- Trocar a permissão dos certificados no Drive de "qualquer pessoa com o link" para restrita.
+  Isso quebra a entrega dos certificados já emitidos, e por isso não é decisão trivial.
+
+**Também nesta etapa:** `build/` deixou de ser ignorado pelo Git a pedido do autor, e os três
+artefatos foram regenerados antes de entrar. Criado o `README.md`, que explica o projeto, o
+gate, a calibração de voz e aponta `build/` como a versão atual do artigo.
