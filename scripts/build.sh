@@ -51,6 +51,18 @@ else
 fi
 
 pandoc "${ARGS[@]}"
+python3 scripts/formato_principia.py
+
+if command -v soffice >/dev/null 2>&1; then
+  echo
+  echo "── pdf ──────────────────────────────────"
+  soffice --headless --convert-to pdf --outdir build build/artigo.docx >/dev/null 2>&1
+  if [ -f build/artigo.pdf ]; then
+    PAGS=$(pdfinfo build/artigo.pdf 2>/dev/null | awk '/^Pages:/{print $2}')
+    echo "Pronto: build/artigo.pdf${PAGS:+  ($PAGS páginas reais)}"
+  fi
+fi
+
 echo "Pronto: build/artigo.docx"
 echo
 echo "Próximo passo: subir no Google Docs (Arquivo > Abrir > Upload) e conferir"
