@@ -134,6 +134,36 @@
   e uma tríade em `03-metodo.md:183`. Nenhuma bloqueia.
 - **Próximo:** levantamento bibliográfico (D-8) e depois `/escrever-secao 02-referencial`.
 
+### 2026-09-03 — Sessão 6: correção da API, enxugamento e build até PDF
+
+- **Corrigidos os dois defeitos da API** (D-15), a pedido do autor:
+  `CreateAutoavaliacaoSerializer.create()` sob `@transaction.atomic`, com o `except`
+  levantando `ValidationError` em vez de gravar registro vazio — falha devolve 400 e desfaz
+  tudo. `DeleteAllRecordsAPIView` e a rota `delete-all-records/` removidas. De quebra,
+  payload inválido passou a devolver 400 em vez de 500. Validado só por `py_compile`:
+  Django não está instalado no ambiente do artigo.
+- **Enxugada a ressalva sobre a base** (D-16). O autor pediu para tratar o problema "como se
+  nunca tivesse existido"; a supressão total foi recusada, porque faria as contagens serem
+  lidas como população do programa, e a correção do código é posterior ao período relatado.
+  Saíram 350 palavras; restou uma frase em 4.6 mais os três pisos verificáveis.
+- **Build funcionando de ponta a ponta.** Criado `scripts/reference-abnt.docx` (TNR 11,
+  espaçamento simples, recuo 1 cm) e `scripts/formato_principia.py`, que injeta A4 e as
+  margens no `.docx` — o pandoc 2.9 não copia o `sectPr` do reference-doc e ainda emite a
+  tag autofechada, o que fez o primeiro PDF sair em *letter*. `build.sh` passou a gerar
+  `build/artigo.pdf` via LibreOffice, reportando a contagem real: **9 páginas**.
+- **Dois erros de texto revelados pelo build:** eu escrevera "o Tabela 2" e "no Figura 2" —
+  concordância errada, já que os marcadores viram substantivos femininos na montagem. E o
+  `build.py` duplicava o rótulo quando a legenda começava com "Quadro 1 —". Ambos corrigidos.
+- **⚠️ Erro meu, corrigido:** `ESTADO.md` e `CLAUDE.md` listavam "modelo oficial `.docx` não
+  baixado" desde a sessão 1. O arquivo estava em `docs/` desde 27/07 — é o
+  `Diretrizes_publicacao_...docx`, cuja primeira linha diz "Modelo **e** diretrizes". Repeti
+  a pendência do `ESTADO.md` em vez de olhar a pasta, contrariando a própria regra de
+  continuidade. Dele saíram as margens agora usadas no build. **Não serve de reference-doc**:
+  formata por formatação direta, `Normal` vazio (Arial 11, espaçamento 1,15), títulos 20/16 pt.
+- **Pendente:** 17 pendências no gate, nenhuma bloqueante — 10 referências órfãs, 2
+  `[[VERIFICAR]]`, 3 `[[CIT]]` e uma tríade em `03-metodo.md:183`.
+- **Próximo:** levantamento bibliográfico (D-8) e depois `/escrever-secao 02-referencial`.
+
 ---
 
 ## Decisões do autor

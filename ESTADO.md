@@ -7,16 +7,13 @@
 ## Situação atual
 
 **Etapa:** 3 — escrita. Método e Resultados em rascunho.
-**Atualizado:** 03/09/2026 (sessão 5)
+**Atualizado:** 03/09/2026 (sessão 6)
 **Próxima ação:** `/escrever-secao 02-referencial` — mas **não comece escrevendo**. A D-8
 deixou o levantamento bibliográfico para este ponto: a sessão abre buscando de 6 a 10
-referências revisadas por pares, e só então redige. Detalhe no bloco "Próxima sessão".
+referências revisadas por pares, e só então redige. Roteiro no fim deste arquivo.
 
-**O autor precisa providenciar:** nada. `pandoc` instalado em 03/09/2026 e o modelo
-oficial da revista já estava em `docs/` desde 27/07/2026 — as duas pendências antigas de
-ambiente eram falsas.
-
-Nenhum bloqueio para a próxima seção.
+**O autor precisa providenciar:** nada. As duas pendências antigas de ambiente eram falsas
+ou já foram resolvidas — ver "Ambiente".
 
 ## O artigo
 
@@ -25,6 +22,9 @@ Nenhum bloqueio para a próxima seção.
 - **Prazo:** `[[VERIFICAR: há data-limite de submissão?]]`
 - **Tese:** aprovada — automação do ciclo formativo exige camada de decisão
   (certificação) e de intervenção (recomendação) sobre persistência estruturada
+- **Contribuição sobre 2024:** o ciclo anterior automatizou indicadores; este entrega as
+  camadas de decisão e de intervenção sobre persistência com rastreabilidade histórica,
+  mais a migração de infraestrutura
 - **Autores (4 de 6):** Gabriel Macaúbas Melo · Juliana Ferreira Cavalcante ·
   Heremita Brasileiro Lira · Francisco Petrônio
 
@@ -46,42 +46,43 @@ Nenhum bloqueio para a próxima seção.
 | D-12 | D-7 reconfirmado: 40 min, com procedência do "≈1 h" corrigida |
 | D-13 | Banco misturou produção e testes → contagens de população reenquadradas |
 | D-14 | `bulk_create`/`select_related` **não existem no código** → saem do artigo |
+| D-15 | Os dois defeitos da API foram **corrigidos no código** |
+| D-16 | Ressalva sobre a base **enxugada ao mínimo**, mantida em uma frase |
 
 ## Decisões pendentes
 
 - [ ] Título em português e inglês
 - [ ] Se as duas vagas restantes de autoria serão usadas
-- [ ] Corrigir ou não os dois defeitos da API antes de submeter (ver "Riscos")
+- [ ] Se a conclusão menciona a correção da API como trabalho posterior ao ciclo relatado
 
 ## Seções
 
 | Arquivo | Status | Palavras (real/alvo) | Lacunas abertas |
 |---|---|---|---|
-| 00-resumo | não iniciada | 0 / 550 | — |
+| 00-resumo | não iniciada | 0 / 550 | escrever **por último** |
 | 01-introducao | não iniciada | 0 / 1.100 | — |
 | 02-referencial | **próxima** | 0 / 1.600 | depende do levantamento |
-| 03-metodo | **rascunho** | 1.994 / 2.200 | 1 tríade a reescrever (linha 183) |
-| 04-resultados | **rascunho** | 2.484 / 2.800 | 3 `[[VERIFICAR]]` · 3 `[[CIT]]` |
+| 03-metodo | rascunho | 1.994 / 2.200 | 1 tríade (linha 183) |
+| 04-resultados | rascunho | 2.484 / 2.800 | 2 `[[VERIFICAR]]` · 3 `[[CIT]]` |
 | 05-conclusao | não iniciada | 0 / 700 | — |
 | 06-declaracoes | não iniciada | 0 / 100 | — |
 
-Gate: **0 bloqueantes**, 17 pendências. Estimativa **11,8 páginas** (janela 12–18, alvo 16).
-As cinco seções que faltam somam ~4.050 palavras de alvo, o que projeta ~18 páginas — vai
-exigir aperto no fim, não folga.
+Gate: **0 bloqueantes**, 17 pendências. Estimativa do gate: **11,8 páginas**.
+**PDF real: 9 páginas** — a diferença são as seis figuras, que ainda não existem.
+As cinco seções que faltam somam ~4.050 palavras de alvo. O aperto final será no teto.
 
-### Lacunas de `04-resultados`, uma a uma
+### Lacunas de `04-resultados`
 
 | Linha | Marcador | Pergunta | Quem resolve |
 |---|---|---|---|
-| 136 | `[[VERIFICAR]]` | quantos discentes o endpoint `/discentes_aptos_certificacao/` retorna hoje, e em que data? | consulta ao banco |
-| 208 | `[[VERIFICAR]]` | há medição de tempo de inicialização a frio? | autor |
-| 279 | `[[VERIFICAR]]` | proporção de autoavaliações sem notas e sem discente — consulta de 03/09 falhou por DNS | consulta ao banco |
-| 234 | `[[CIT]]` | explicitação de regra implícita como ganho de governança | levantamento |
-| 244 | `[[CIT]]` | devolutiva dirigida vs. adaptativa | levantamento |
-| 251 | `[[CIT]]` | transferibilidade de arquitetura entre contextos | levantamento |
+| 123 | `[[VERIFICAR]]` | quantos discentes `/discentes_aptos_certificacao/` retorna, e em que data? | consulta ao banco |
+| 195 | `[[VERIFICAR]]` | há medição de tempo de inicialização a frio? | autor |
+| 221 | `[[CIT]]` | explicitação de regra implícita como ganho de governança | levantamento |
+| 231 | `[[CIT]]` | devolutiva dirigida vs. adaptativa | levantamento |
+| 238 | `[[CIT]]` | transferibilidade de arquitetura entre contextos | levantamento |
 
-Os três `[[CIT]]` caem exatamente na busca da próxima sessão. Os `[[VERIFICAR]]` de banco
-são acréscimos, não bloqueios — o texto se sustenta sem eles.
+Os três `[[CIT]]` caem na busca da próxima sessão. Os dois `[[VERIFICAR]]` são acréscimos,
+não bloqueios.
 
 ## Figuras — 6 declaradas, **nenhuma produzida**
 
@@ -94,22 +95,22 @@ são acréscimos, não bloqueios — o texto se sustenta sem eles.
 | `FIG:04-1` | Autoavaliações por unidade (33×5, depois 7, 3, 1, 1) | 04 |
 | `TAB:04-2` | Tempos: manual 40 min · 2024 ≈12 s · registro 2–3 s · gráfico 12–15 s | 04 |
 
-⚠️ 300 dpi e texto interno em TNR ≥18 — inviabiliza screenshot. Tabelas e quadros
-**editáveis, nunca imagem**: as três `TAB` saem como markdown, não como figura.
+No PDF elas aparecem como blocos "IMAGEM AUSENTE" com a descrição do que produzir.
+⚠️ 300 dpi e texto interno em TNR ≥18. As três `TAB` são markdown editável, nunca imagem.
 
-## Riscos a decidir antes de submeter
+## Build — funcionando de ponta a ponta
 
-Dois defeitos encontrados no código na sessão 5. Nenhum bloqueia a escrita, ambos são
-verificáveis por um avaliador que abra o repositório:
+```bash
+bash scripts/build.sh        # gate → build/artigo.md → .docx → .pdf (com nº de páginas)
+bash scripts/build.sh --md   # só o markdown consolidado
+```
 
-1. **`except Exception` que grava lixo e devolve 201.** `CreateAutoavaliacaoSerializer.create()`
-   persiste `Autoavaliacao` vazia em caso de falha e reporta sucesso. É a causa dos 177
-   registros contra 15 conjuntos de notas.
-2. **`DeleteAllRecordsAPIView`** apaga as oito tabelas do domínio, exposto como rota
-   autenticada da API de produção.
-
-O artigo já os trata com honestidade (4.6 declara a ausência de segregação de ambientes
-como limitação). A decisão em aberto é se o **código** é corrigido antes da submissão.
+- `scripts/reference-abnt.docx` — estilos do build: TNR 11, espaçamento simples, recuo 1 cm
+- `scripts/formato_principia.py` — injeta A4 e margens no `.docx`; o pandoc 2.9 não copia o
+  `sectPr` do reference-doc e emite `<w:sectPr />` autofechada
+- ⚠️ **O modelo oficial não serve de reference-doc.** Ele formata por formatação direta,
+  com `Normal` vazio (cairia em Arial 11, espaçamento 1,15) e títulos em 20/16 pt. É o
+  destino de colagem da etapa 7, não a fonte de estilos do build
 
 ## Bloqueios
 
@@ -121,20 +122,17 @@ como limitação). A decisão em aberto é se o **código** é corrigido antes d
 
 1. Busca dirigida: 6 a 10 referências revisadas por pares, **≥2019**, com DOI, sobre
    automação de fluxos acadêmico-administrativos, low-code/no-code em instituições de
-   ensino e mensuração de soft skills em programas de formação. Cada entrada com campo
-   `origem` preenchido — sem isso o gate bloqueia.
+   ensino e mensuração de soft skills em programas de formação. Campo `origem` obrigatório.
 2. Fechar os três `[[CIT]]` de `04-resultados`.
 3. `/escrever-secao 02-referencial` (alvo 1.600).
 
 ## Ambiente
 
-- Banco Neon: **inacessível em 03/09/2026** — o host não resolveu por DNS. Último snapshot
-  válido é o de 27/07/2026. Verificar se a instância ainda existe antes de prometer consulta.
-- ✅ `pandoc` 2.9.2.1 instalado; `soffice` disponível — `bash scripts/build.sh` gera
-  `build/artigo.md`, `.docx` e `.pdf` com a contagem real de páginas
-- ✅ **Modelo oficial da revista:** `docs/Diretrizes_publicacao_Revista_Principia_Dez2024-OTH-1.docx`
-  — é o "Modelo e diretrizes para publicação", esteve aqui o tempo todo. Dele saíram as
-  margens usadas em `scripts/formato_principia.py`. ⚠️ Não serve como *reference-doc* do
-  pandoc: formata por formatação direta, com `Normal` vazio (cai em Arial 11) e títulos em
-  20/16 pt. Os estilos de build ficam em `scripts/reference-abnt.docx`; o modelo é o
-  destino final de colagem, na etapa 7
+- ✅ `pandoc` 2.9.2.1 e `libreoffice` instalados — build completo, com PDF
+- ✅ **Modelo oficial da revista:** `docs/Diretrizes_publicacao_Revista_Principia_Dez2024-OTH-1.docx`.
+  É o "Modelo **e** diretrizes", e esteve em `docs/` desde 27/07/2026 — as sessões
+  anteriores o davam como não baixado, o que era falso. Dele saíram as margens do build
+- ⚠️ Banco Neon **inacessível em 03/09/2026** (host não resolveu por DNS). Último snapshot
+  válido é o de 27/07/2026. Confirmar se a instância existe antes de prometer consulta
+- ✅ API corrigida (D-15) — falta o autor rodar `manage.py check` e os testes no ambiente
+  da API, e publicar
