@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 """
 Aplica ao build/artigo.docx o que o reference-doc do pandoc não carrega:
-tamanho de página A4 e as margens da Revista Principia (sup 3,5 · inf 2 · lat 2,5 cm).
+tamanho de página A4 e as margens da Revista Principia (sup 3,5 · inf 2 · lat 2,5 cm),
+extraídas do modelo oficial em docs/.
 
 O pandoc 2.9 não copia o <w:sectPr> do reference-doc, então o documento sai em
 letter com margens padrão — o que torna a contagem de páginas inútil justamente
@@ -21,11 +22,14 @@ RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PADRAO = os.path.join(RAIZ, 'build', 'artigo.docx')
 
 # 1 cm = 567 twips · A4 = 21 x 29,7 cm
+# Valores lidos diretamente do modelo oficial da revista,
+# docs/Diretrizes_publicacao_Revista_Principia_Dez2024-OTH-1.docx (word/document.xml).
 SECTPR = (
     '<w:sectPr>'
-    '<w:pgSz w:w="11906" w:h="16838"/>'
-    '<w:pgMar w:top="1984" w:right="1417" w:bottom="1134" w:left="1417"'
-    ' w:header="708" w:footer="708" w:gutter="0"/>'
+    '<w:pgSz w:w="11909" w:h="16834"/>'
+    '<w:pgMar w:top="1985" w:right="1418" w:bottom="1134" w:left="1418"'
+    ' w:header="720" w:footer="720" w:gutter="0"/>'
+    '<w:cols w:space="720"/>'
     '</w:sectPr>'
 )
 

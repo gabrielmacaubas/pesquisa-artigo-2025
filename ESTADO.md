@@ -12,9 +12,9 @@
 deixou o levantamento bibliográfico para este ponto: a sessão abre buscando de 6 a 10
 referências revisadas por pares, e só então redige. Detalhe no bloco "Próxima sessão".
 
-**O autor precisa providenciar:**
-1. `pandoc` instalado e modelo `.docx` oficial da Principia baixado (bloqueia só o build)
-2. Decidir se corrige os dois defeitos da API antes da submissão (ver "Riscos")
+**O autor precisa providenciar:** nada. `pandoc` instalado em 03/09/2026 e o modelo
+oficial da revista já estava em `docs/` desde 27/07/2026 — as duas pendências antigas de
+ambiente eram falsas.
 
 Nenhum bloqueio para a próxima seção.
 
@@ -130,5 +130,11 @@ como limitação). A decisão em aberto é se o **código** é corrigido antes d
 
 - Banco Neon: **inacessível em 03/09/2026** — o host não resolveu por DNS. Último snapshot
   válido é o de 27/07/2026. Verificar se a instância ainda existe antes de prometer consulta.
-- [ ] `pandoc` não instalado — necessário só na etapa 7
-- [ ] Modelo oficial `.docx` da Revista Principia não baixado
+- ✅ `pandoc` 2.9.2.1 instalado; `soffice` disponível — `bash scripts/build.sh` gera
+  `build/artigo.md`, `.docx` e `.pdf` com a contagem real de páginas
+- ✅ **Modelo oficial da revista:** `docs/Diretrizes_publicacao_Revista_Principia_Dez2024-OTH-1.docx`
+  — é o "Modelo e diretrizes para publicação", esteve aqui o tempo todo. Dele saíram as
+  margens usadas em `scripts/formato_principia.py`. ⚠️ Não serve como *reference-doc* do
+  pandoc: formata por formatação direta, com `Normal` vazio (cai em Arial 11) e títulos em
+  20/16 pt. Os estilos de build ficam em `scripts/reference-abnt.docx`; o modelo é o
+  destino final de colagem, na etapa 7

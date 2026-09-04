@@ -105,7 +105,11 @@ scripts/gate.py · build.py · build.sh
 - `orcamento-paginas.md` · `figuras.md` · `escrita-academica.md`
 - `review-artigo.md` · `continuidade-e-decisoes.md`
 
-## Pendências de ambiente
+## Ambiente (resolvido em 03/09/2026)
 
-- [ ] `pandoc` não instalado (`sudo apt install pandoc`) — só na etapa 7
-- [ ] Modelo oficial `.docx` da Revista Principia ainda não baixado
+- ✅ `pandoc` e `libreoffice` instalados. `bash scripts/build.sh` gera `.md`, `.docx` e
+  `.pdf`, reportando a contagem real de páginas
+- ✅ Modelo oficial da revista: `docs/Diretrizes_publicacao_Revista_Principia_Dez2024-OTH-1.docx`.
+  É o modelo **e** as diretrizes, no mesmo arquivo — foi dele que saíram as regras em
+  `.claude/rules/revista-principia.md`. Serve de destino de colagem na etapa 7, **não** de
+  reference-doc do pandoc (ver `ESTADO.md`)
