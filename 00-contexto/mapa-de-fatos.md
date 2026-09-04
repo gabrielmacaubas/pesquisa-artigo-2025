@@ -71,7 +71,7 @@ cadastro de notas e geração de gráficos radar + tabelas (manuscrito 2024, §4
 | Endpoints | `/api/capacitacao/autoavaliacao_notas/` (POST), `/discentes/` (GET), `/discentes_aptos_certificacao/` (GET), `/login`, `/signup` | dump §5 |
 | Segurança | JWT, rotas com `IsAuthenticated`, credenciais em variáveis de ambiente | dump §5 |
 | Integridade | FKs com `models.PROTECT` (rastreabilidade histórica) | dump §5 |
-| Performance | `select_related`, `prefetch_related`, `bulk_create` | dump §5 |
+| Performance | ⚠️ **alegado** no dump §5 e no relatório §3.4; o código só tem `prefetch_related`. Ver §15.4 | dump §5, **desmentido pelo código em 03/09/2026** |
 | Contêineres | Docker + Docker Compose | dump §5 |
 
 **Gatilho do n8n:** os dois workflows exportados em `api-repo/automacao-deploy-main/`
@@ -420,3 +420,71 @@ evidência de um servidor institucional dedicado em produção — o artigo deve
 Soft skills (7 macro) · Sub-soft skills (4) · PBL · Projeto Real/Espelho · Discente ·
 Níveis qualitativos (Abaixo do básico, Básico, Adequado, Avançado) · Unidade (ciclo de
 avaliação; há 9 no banco).
+
+## 15. Leitura do código do cadastro de notas — 03/09/2026
+
+Levantado para responder por que 177 autoavaliações produziram apenas 15 conjuntos de
+notas. **O autor informou (03/09/2026) que o banco de produção foi também usado para
+testes**, e a leitura do código identifica os dois mecanismos que materializam isso.
+
+**Arquivos:** `capacitacao/api/serializers/autoavaliacao.py`,
+`capacitacao/api/views/autoavaliacao.py`, `capacitacao/api/urls.py`.
+
+### 15.1 O `except` cria autoavaliação vazia e devolve sucesso
+
+`CreateAutoavaliacaoSerializer.create()` encerra assim (serializers/autoavaliacao.py:169-171):
+
+```python
+except Exception as e:
+    print(e)
+    return Autoavaliacao.objects.create()
+```
+
+Qualquer falha no processamento produz uma `Autoavaliacao` **sem discente e sem notas**
+(`unidade` cai no `default=1`), e a view devolve `HTTP 201 CREATED`. Ou seja: submissão
+malsucedida deixa registro órfão e é reportada como bem-sucedida. Esse é o mecanismo que
+explica autoavaliações sem notas associadas. *Verificado no código em 03/09/2026.*
+
+### 15.2 Existe endpoint que apaga todas as tabelas
+
+`DeleteAllRecordsAPIView`, na rota `delete-all-records/`, executa `.objects.all().delete()`
+em oito modelos, incluindo `Discente` e `AutoavaliacaoNota`. É um endpoint de reset de
+ambiente exposto na API de produção, autenticado. Explica ciclos de carga e limpeza durante
+os testes. *Verificado em views/autoavaliacao.py:66-79 e api/urls.py em 03/09/2026.*
+
+### 15.3 `unidade` é contador por discente, não ciclo do programa
+
+A unidade não vem do formulário: é calculada como
+`Max(unidade) + 1` sobre as autoavaliações do próprio discente
+(serializers/autoavaliacao.py:101-103). Reenvio de teste incrementa a unidade do discente.
+As nove unidades do snapshot são, portanto, **número de submissões acumuladas**, e não nove
+ciclos avaliativos do programa. ⚠️ A seção 3 afirma que a unidade é o ciclo avaliativo —
+verdadeiro no uso pretendido, mas o artigo não deve tratar o valor 9 como nove ciclos.
+
+### 15.4 ⚠️ `bulk_create` e `select_related` NÃO existem no código
+
+O dump §5 e o relatório de estágio de Gabriel (§3.4) afirmam uso de `bulk_create` em
+transação única e de `select_related` contra N+1. `grep` em todo o `api-repo` em
+03/09/2026 encontrou:
+
+| Alegado | No código |
+|---|---|
+| `bulk_create` | **nenhuma ocorrência** — as notas são gravadas em laço de `objects.create()`, uma por vez |
+| `select_related` | **nenhuma ocorrência** |
+| `prefetch_related` | 2 ocorrências, em `views/discente.py:42` e `models/discente.py:58` |
+
+Não há `transaction.atomic` envolvendo a gravação. **Vale o código, não o relatório.** A
+seção 3 foi corrigida em 03/09/2026: afirmar inserção em lote seria alegação sem lastro,
+exatamente o tipo de erro que um avaliador com acesso ao repositório consegue verificar.
+
+### 15.5 Consequência para os resultados
+
+A base de 33 discentes e 177 autoavaliações **mistura operação real e tráfego de teste**,
+sem coluna que os separe. Os números defensáveis são os que não dependem dessa separação:
+as 165 notas íntegras, os 15 conjuntos completos de dez itens e os 49 pares
+competência × discente com duas ou mais medições. Contagens de população (33 discentes,
+177 autoavaliações, 9 unidades) passam a ser reportadas **como conteúdo da base, não como
+população do programa**.
+
+`[[VERIFICAR: qual a proporção de autoavaliações sem notas e sem discente? Consulta
+tentada em 03/09/2026 falhou — host do Neon não resolveu por DNS]]`

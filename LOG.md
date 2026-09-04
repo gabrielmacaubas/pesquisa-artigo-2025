@@ -103,6 +103,37 @@
   procedência do "≈1 hora".
 - **Próximo:** `/escrever-secao 04-resultados`.
 
+### 2026-09-03 — Sessão 5: seção 4 (Resultados) escrita; dois achados no código
+
+- **Escrito:** `secoes/04-resultados.md`, 2.834 palavras (alvo 2.800), seis subseções,
+  texto introdutório antes de 4.1 conforme exige a revista. Dados sem interpretação em
+  4.1–4.4, discussão em 4.5, limitações em 4.6. Gate: **0 bloqueantes**.
+- **Três elementos declarados:** `TAB:04-1` (snapshot do banco), `FIG:04-1` (autoavaliações
+  por unidade) e `TAB:04-2` (tempos). Nenhuma referência nova; duas órfãs resolvidas por uso
+  legítimo — `Elmasri, 2018` e `Fielding, 2000`.
+- **O autor informou que o banco também serviu de ambiente de teste**, o que fechou o
+  `[[VERIFICAR]]` sobre 177 autoavaliações × 15 conjuntos de notas, e pediu para conferir o
+  código. A leitura confirmou e detalhou (→ D-13, D-14, mapa de fatos §15).
+- **Achado 1 — o `except` mascara falha:** `CreateAutoavaliacaoSerializer.create()` termina
+  em `except Exception: return Autoavaliacao.objects.create()`. Grava avaliação vazia, sem
+  discente e sem notas, e a view devolve **201 CREATED**. Falha vira registro e é reportada
+  como sucesso.
+- **Achado 2 — `bulk_create` e `select_related` não existem.** O dump §5 e o relatório de
+  Gabriel §3.4 afirmam ambos; `grep` no `api-repo` inteiro não encontra nenhuma ocorrência.
+  As notas são gravadas em laço de `objects.create()`, sem `transaction.atomic`. Só há
+  `prefetch_related`, em dois pontos. **Vale o código, não o relatório** — `03-metodo.md`
+  §3.3 reescrita. Mesmo critério da correção da regra de 2/3 na sessão 3.
+- **Também no código:** `DeleteAllRecordsAPIView` apaga as oito tabelas do domínio, exposta
+  como rota autenticada; e `unidade` é `Max(unidade) + 1` por discente, isto é, conta
+  submissões e não ciclos — as "nove unidades" não são nove ciclos avaliativos, e a seção 4
+  foi corrigida nesse ponto.
+- **Consulta ao banco tentada e falhou:** o host do Neon não resolveu por DNS em 03/09/2026.
+  A proporção de autoavaliações órfãs ficou como `[[VERIFICAR]]`. O mecanismo está provado
+  no código; falta só a magnitude.
+- **Pendente:** 17 pendências no gate — 10 referências órfãs, 3 `[[VERIFICAR]]`, 3 `[[CIT]]`
+  e uma tríade em `03-metodo.md:183`. Nenhuma bloqueia.
+- **Próximo:** levantamento bibliográfico (D-8) e depois `/escrever-secao 02-referencial`.
+
 ---
 
 ## Decisões do autor
@@ -227,6 +258,39 @@ Registro das escolhas feitas via `AskUserQuestion` ou explicitamente na conversa
   de estágio não é citável, a divergência não fica visível ao avaliador.
 - **Impacto:** D-7 confirmado. `mapa-de-fatos.md` §2 corrigido quanto à procedência.
   Usar 40 min em `04-resultados` e no resumo, sem ressalva.
+
+### D-13 — Banco misturou produção e testes; contagens reenquadradas (2026-09-03)
+- **Questão:** por que 177 autoavaliações produziram apenas 15 conjuntos de notas?
+- **Informado pelo autor:** o banco de produção foi também usado para testes, e daí vêm os
+  conflitos. Pedido para considerar o código.
+- **Confirmado no código em 03/09/2026** (mapa de fatos §15):
+  1. `CreateAutoavaliacaoSerializer.create()` termina em `except Exception` que executa
+     `return Autoavaliacao.objects.create()` — persiste avaliação **vazia** (sem discente,
+     sem notas) e a view devolve **201 CREATED**. Falha vira registro e é reportada como
+     sucesso.
+  2. `DeleteAllRecordsAPIView` (rota `delete-all-records/`) apaga **todas as oito tabelas**
+     do domínio. Endpoint de reset exposto na API de produção.
+  3. `unidade` é `Max(unidade) + 1` por discente — conta **submissões**, não ciclos do
+     programa. As "nove unidades" não são nove ciclos avaliativos.
+- **Impacto em `04-resultados`:** `[[VERIFICAR]]` fechado. As contagens de população (33
+  discentes, 177 autoavaliações, 9 unidades) passam a ser reportadas como **conteúdo da
+  base**, não como população do programa. Os três números defensáveis passam a ser as 165
+  notas, os 15 conjuntos íntegros e os 49 pares comparáveis — todos exigem integridade
+  interna do registro, então um registro de teste malformado não os infla. Acrescentada em
+  4.6 a ausência de segregação de ambientes como limitação e como requisito não atendido.
+
+### D-14 — `bulk_create` e `select_related` saem do artigo: não existem no código (2026-09-03)
+- **Questão:** o dump §5 e o relatório de estágio de Gabriel (§3.4) afirmam `bulk_create` em
+  transação única e `select_related` contra N+1. A seção 3 reproduzia isso.
+- **Verificado:** `grep` em todo o `api-repo` não encontra **nenhuma** ocorrência de
+  `bulk_create` nem de `select_related`; há duas de `prefetch_related`. As notas são
+  gravadas em laço de `objects.create()`, sem `transaction.atomic`.
+- **Escolha:** vale o código, não o relatório. Mesmo critério que corrigiu a regra de 2/3 na
+  sessão 3.
+- **Impacto:** `secoes/03-metodo.md` §3.3 reescrita — "gravação registro a registro, na mesma
+  requisição". Mantida a menção a carregamento antecipado, que o `prefetch_related` sustenta.
+  `mapa-de-fatos.md` §4 marca a linha de performance como desmentida pelo código. Nenhuma
+  seção pode alegar inserção em lote.
 
 ---
 

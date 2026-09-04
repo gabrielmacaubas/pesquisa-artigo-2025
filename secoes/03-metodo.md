@@ -147,10 +147,10 @@ criação, data de atualização e o usuário responsável por cada uma das duas
 meio dessa combinação, todo valor exibido em um relatório pode ser rastreado até a operação
 de escrita que o produziu.
 
-A gravação das notas de uma autoavaliação ocorre em operação única, com inserção em lote das
-dez medições. As consultas de leitura empregam carregamento antecipado dos objetos
-relacionados, o que evita a emissão de uma consulta por registro ao percorrer os vínculos
-entre discente, projeto e mentor. O acesso é restrito a requisições autenticadas por token,
+A gravação das dez medições de uma autoavaliação é executada registro a registro, na mesma
+requisição que cria o evento de avaliação. As consultas de leitura empregam carregamento
+antecipado dos objetos relacionados, o que evita a emissão de uma consulta por registro ao
+percorrer os vínculos do discente com projeto e mentor. O acesso é restrito a requisições autenticadas por token,
 com credenciais e chaves mantidas em variáveis de ambiente. A interface é documentada no
 padrão OpenAPI, o que permite que a camada de orquestração descubra o contrato dos
 endpoints sem depender de documentação externa.
