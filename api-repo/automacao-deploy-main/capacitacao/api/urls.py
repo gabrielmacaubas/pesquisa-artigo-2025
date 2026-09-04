@@ -11,5 +11,4 @@ router.register('discentes_aptos_certificacao', DiscenteAptosCertificacaoViewSet
 urlpatterns = [
     path('', include(router.urls)),
     path('discentes_notas/<int:id>/', DiscenteDetailView.as_view(), name='discente-detalhe'),
-    path('delete-all-records/', DeleteAllRecordsAPIView.as_view(), name='delete-all-records'),
 ]

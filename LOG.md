@@ -292,6 +292,26 @@ Registro das escolhas feitas via `AskUserQuestion` ou explicitamente na conversa
   `mapa-de-fatos.md` §4 marca a linha de performance como desmentida pelo código. Nenhuma
   seção pode alegar inserção em lote.
 
+### D-15 — Os dois defeitos da API foram corrigidos no código (2026-09-03)
+- **Questão:** corrigir ou não, antes da submissão, os dois defeitos achados na sessão 5.
+- **Escolha do autor:** corrigir.
+- **Feito em `api-repo/automacao-deploy-main/`:**
+  1. `CreateAutoavaliacaoSerializer.create()` recebeu `@transaction.atomic`; o
+     `except Exception` deixou de gravar `Autoavaliacao` vazia e passa a levantar
+     `ValidationError`, o que devolve **400** e desfaz a transação inteira. Falha não
+     produz mais registro nem é reportada como sucesso.
+  2. `DeleteAllRecordsAPIView` **removida**, junto da rota `delete-all-records/`, do export
+     em `views/__init__.py` e dos imports que ficaram sem uso.
+  3. Adjacente: `AutoavaliacaoViewSet.create()` não tinha ramo `else` para payload inválido
+     e devolvia `None` (500). Agora devolve **400** com os erros do serializer.
+- **Validação:** `py_compile` nos quatro arquivos. Django não está instalado no ambiente do
+  artigo, então `manage.py check` e os testes ficam para o autor rodar no ambiente da API.
+- **⚠️ Impacto no artigo: nenhum, e isso é deliberado.** O artigo relata a operação de 2025,
+  e a correção é de set/2026. A base analisada **continua** contaminada por tráfego de teste,
+  então D-13 permanece válida e a limitação declarada em `04-resultados` §4.6 **não sai**.
+  A correção pode ser mencionada na conclusão como trabalho realizado após o período
+  relatado, se o autor quiser — mas nenhuma afirmação sobre os dados de 2025 muda.
+
 ---
 
 ## Histórico de review (orientadora)

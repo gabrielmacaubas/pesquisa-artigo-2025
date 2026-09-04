@@ -1,3 +1,4 @@
+from django.db import transaction
 from django.db.models import Q, Max
 from rest_framework import serializers
 import datetime
@@ -38,6 +39,7 @@ class CreateAutoavaliacaoSerializer(serializers.ModelSerializer):
             'respostas_subsoft_skills', 'observacao',
         )
 
+    @transaction.atomic
     def create(self, validated_data):
         try:
             _usuario_logado = validated_data.pop('usuario_logado')
@@ -170,9 +172,12 @@ class CreateAutoavaliacaoSerializer(serializers.ModelSerializer):
                 )
 
             return _autoavaliacao_objeto
+        except serializers.ValidationError:
+            raise
         except Exception as e:
-            print(e)
-            return Autoavaliacao.objects.create()
+            raise serializers.ValidationError(
+                {'detail': f'Falha ao registrar a autoavaliacao: {e}'}
+            )
 
 
 class AutoavaliacaoNotaSerializer(serializers.ModelSerializer):
