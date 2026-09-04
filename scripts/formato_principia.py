@@ -43,8 +43,11 @@ def aplicar(caminho):
         for info, dados in itens:
             if info.filename == 'word/document.xml':
                 xml = dados.decode('utf-8')
-                if '<w:sectPr' in xml:
-                    xml = re.sub(r'<w:sectPr.*?</w:sectPr>', SECTPR, xml, flags=re.S)
+                if re.search(r'<w:sectPr\b[^>]*/>', xml):
+                    # o pandoc emite <w:sectPr /> autofechada
+                    xml = re.sub(r'<w:sectPr\b[^>]*/>', SECTPR, xml)
+                elif '<w:sectPr' in xml:
+                    xml = re.sub(r'<w:sectPr\b.*?</w:sectPr>', SECTPR, xml, flags=re.S)
                 else:
                     xml = xml.replace('</w:body>', SECTPR + '</w:body>')
                 dados = xml.encode('utf-8')
