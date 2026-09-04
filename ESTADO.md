@@ -61,11 +61,11 @@ Nenhum bloqueio para a próxima seção.
 | 01-introducao | não iniciada | 0 / 1.100 | — |
 | 02-referencial | **próxima** | 0 / 1.600 | depende do levantamento |
 | 03-metodo | **rascunho** | 1.994 / 2.200 | 1 tríade a reescrever (linha 183) |
-| 04-resultados | **rascunho** | 2.834 / 2.800 | 3 `[[VERIFICAR]]` · 3 `[[CIT]]` |
+| 04-resultados | **rascunho** | 2.484 / 2.800 | 3 `[[VERIFICAR]]` · 3 `[[CIT]]` |
 | 05-conclusao | não iniciada | 0 / 700 | — |
 | 06-declaracoes | não iniciada | 0 / 100 | — |
 
-Gate: **0 bloqueantes**, 17 pendências. Estimativa **12,3 páginas** (janela 12–18, alvo 16).
+Gate: **0 bloqueantes**, 17 pendências. Estimativa **11,8 páginas** (janela 12–18, alvo 16).
 As cinco seções que faltam somam ~4.050 palavras de alvo, o que projeta ~18 páginas — vai
 exigir aperto no fim, não folga.
 

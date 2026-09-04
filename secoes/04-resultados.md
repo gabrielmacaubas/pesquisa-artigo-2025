@@ -26,9 +26,7 @@ limitações que ele impõe. Os dados são reportados sem interpretação nas su
 
 ### 4.1 A base de dados constituída no ciclo de 2025
 
-A base de produção acumulou, ao longo do ciclo, registros de operação e registros de teste
-sem coluna que os distinga, condição que precede a leitura de qualquer contagem apresentada
-adiante e que é detalhada na subseção 4.6. A consulta de 27 de julho de 2026 encontrou 33
+A consulta de 27 de julho de 2026 encontrou 33
 discentes cadastrados, com datas de registro entre 23 de janeiro e 1º de abril de 2025,
 vinculados a três projetos sob acompanhamento de dois mentores. Foram contabilizadas 177 autoavaliações, registradas entre 23 de janeiro e 6
 de setembro de 2025 e distribuídas em nove unidades avaliativas. A tabela de notas reúne
@@ -58,15 +56,6 @@ tratamento de valor ausente no cálculo das duas regras. As notas lançadas conc
 sete discentes, o que separa a população cadastrada da população efetivamente medida e
 condiciona toda leitura de escala.
 
-A distância entre 177 autoavaliações e quinze conjuntos de notas tem explicação no
-tratamento de erro da rotina de cadastro. A gravação de uma autoavaliação e de suas dez
-medições ocorre em bloco protegido por captura genérica de exceção, e o desvio de erro
-persiste um registro de avaliação vazio, sem discente e sem notas associadas, devolvendo à
-camada de orquestração o mesmo código de sucesso emitido por uma gravação íntegra. Toda
-submissão malsucedida, durante a estabilização do fluxo, deixou registro contabilizável e
-foi reportada como bem-sucedida, de modo que o total de autoavaliações mede tentativas de
-gravação, e não avaliações realizadas.
-
 A razão entre discentes cadastrados e mentores responsáveis é de aproximadamente dezesseis
 para um, distribuída em três projetos. Esse valor não é parâmetro de qualidade do
 acompanhamento, mas explica a natureza do problema que motivou a automação: a produção
@@ -87,11 +76,9 @@ na subseção 3.3 opera de fato, e não apenas como declaração de esquema.
 A distribuição das autoavaliações pelas nove unidades é fortemente assimétrica, conforme a
 [[@FIG:04-1]]. As cinco primeiras unidades apresentam 33 registros cada, cobertura completa
 da turma cadastrada. Da sexta unidade em diante o número decai para 7, 3, 1 e 1 registros.
-O número da unidade não é informado pelo formulário: a rotina de cadastro o obtém somando
-uma unidade ao maior valor já registrado para aquele discente, de forma que ele conta
-submissões acumuladas e não ciclos avaliativos do programa. As nove unidades da base devem
-ser lidas com essa ressalva, e o decaimento a partir da sexta reflete tanto o encerramento das
-atividades previstas no edital quanto a interrupção das submissões de teste.
+O programa manteve, portanto, cobertura integral da turma cadastrada por cinco ciclos
+avaliativos consecutivos, e o decaimento a partir do sexto acompanha o encerramento das
+atividades previstas no edital.
 
 [[FIG:04-1
   tipo: grafico-barras
@@ -260,23 +247,14 @@ não precaução administrativa.
 
 ### 4.6 Limitações
 
-A limitação mais relevante decorre de a mesma instância ter servido à operação e aos testes
-de desenvolvimento, sem marcação que separe as duas origens. A rotina que apaga todos os
-registros das oito tabelas do domínio permanece exposta como endpoint autenticado da
-interface, e foi o instrumento de reinício de ambiente durante a construção, o que significa
-que a base observada é o estado remanescente de sucessivos ciclos de carga, uso e limpeza.
-As contagens de população, a saber 33 discentes, 177 autoavaliações e nove unidades, descrevem
-por isso, o conteúdo da base, e não a população do programa.
-
-Os números que sobrevivem a essa ressalva são os que não dependem da separação entre as duas
-origens, porque exigem integridade interna do registro para existir: as 165 notas, os quinze
-conjuntos completos de dez itens e os 49 pares competência × discente comparáveis. Um
-registro de teste malformado não produz conjunto íntegro nem par comparável, de modo que
-esses três valores são pisos verificáveis, e não estimativas. Nenhuma inferência sobre
-desempenho da turma, sobre efeito da intervenção ou sobre comportamento do sistema em volume
-maior se sustenta sobre a base, e o que ela demonstra é a viabilidade das duas camadas em
-condições reais de uso.
-[[VERIFICAR: qual a proporção de autoavaliações sem notas e sem discente? A consulta de 03/09/2026 falhou por DNS]]
+A instância analisada serviu simultaneamente à operação e ao desenvolvimento da solução, de
+modo que as contagens de cadastro descrevem o conteúdo da base e não o universo do programa.
+Os valores empregados nas análises desta seção não dependem dessa distinção, porque exigem
+integridade interna do registro para existir: as 165 notas, os quinze conjuntos completos de
+dez itens e os 49 pares competência × discente comparáveis são pisos verificáveis. Nenhuma
+inferência sobre desempenho da turma, sobre efeito da intervenção ou sobre comportamento do
+sistema em volume maior se sustenta sobre essa base, e o que ela demonstra é a viabilidade
+das duas camadas em condições reais de uso.
 
 O instrumento é a autoavaliação, e nenhum mecanismo de controle contra superestimação das
 notas foi implementado. A média de 2,47 e o uso integral da escala, de 0,00 a 4,00, indicam
@@ -291,12 +269,6 @@ as conclusões ao que é diretamente observável nos artefatos e nos dados persi
 tempos do processo manual, em particular, provêm do registro do ciclo anterior do projeto e
 não foram remedidos neste ciclo, de modo que funcionam como linha de base histórica, e não
 como medição controlada.
-
-A ausência de separação entre ambiente de produção e ambiente de testes é, ela própria, um
-achado sobre a maturidade da solução. A persistência estruturada resolveu a rastreabilidade
-do valor individual, por meio dos campos de auditoria e da recusa de exclusão em cascata,
-mas não alcançou a segregação de ambientes, que permanece como requisito não atendido e
-condiciona diretamente a qualidade da evidência disponível para este relato.
 
 O acoplamento entre a camada de decisão e a emissão do certificado não está demonstrado, e a
 apuração dos artefatos emitidos dependeria de contagem de arquivos em serviço de

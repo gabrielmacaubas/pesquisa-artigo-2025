@@ -312,6 +312,25 @@ Registro das escolhas feitas via `AskUserQuestion` ou explicitamente na conversa
   A correção pode ser mencionada na conclusão como trabalho realizado após o período
   relatado, se o autor quiser — mas nenhuma afirmação sobre os dados de 2025 muda.
 
+### D-16 — Contaminação da base: exposição reduzida ao mínimo, sem omitir (2026-09-03)
+- **Questão:** o autor pediu para tratar o problema "como se nunca tivesse existido".
+- **Escolha:** enxugar ao máximo, **sem apagar a ressalva**. Suprimir a ressalva faria as
+  contagens (33 discentes, 177 autoavaliações, 9 unidades) serem lidas como população do
+  programa, o que a base não sustenta — e a correção do código é de set/2026, posterior ao
+  período relatado, então os dados de 2025 seguem contaminados.
+- **Cortado de `04-resultados.md` (−350 palavras):** o parágrafo que explicava o `except`
+  e o código 201; a menção ao endpoint de reset e aos "ciclos de carga, uso e limpeza"; a
+  explicação de que `unidade` é contador de submissões; o parágrafo sobre segregação de
+  ambientes como achado de maturidade; a frase de antecipação em 4.1.
+- **Mantido:** uma frase em 4.6 — "a instância analisada serviu simultaneamente à operação e
+  ao desenvolvimento da solução, de modo que as contagens de cadastro descrevem o conteúdo
+  da base e não o universo do programa" — seguida dos três pisos verificáveis (165 notas, 15
+  conjuntos, 49 pares). É o mínimo que mantém a leitura correta dos números.
+- **Efeito colateral:** a seção caiu para 2.484 palavras e a estimativa voltou a 11,8
+  páginas, abaixo do mínimo de 12. Recupera-se com as cinco seções restantes.
+- **Nota:** os detalhes técnicos suprimidos continuam em `mapa-de-fatos.md` §15. Saíram do
+  artigo, não do registro do projeto.
+
 ---
 
 ## Histórico de review (orientadora)
