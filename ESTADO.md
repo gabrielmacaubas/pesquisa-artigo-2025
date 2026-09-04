@@ -6,15 +6,19 @@
 
 ## Situação atual
 
-**Etapa:** 3 — escrita. Três das sete seções em rascunho.
-**Atualizado:** 03/09/2026 (sessão 7)
-**Próxima ação:** `/escrever-secao 01-introducao` (alvo 1.100). Tudo de que ela depende já
-existe: tese fechada, referencial escrito, método e resultados em rascunho. A introdução
-**tem de terminar** com um parágrafo apresentando as seções seguintes — exigência explícita
-da revista. É também onde o histórico do ciclo de 2024 é narrado **sem citação** (D-2).
+**Etapa:** 3 — escrita. Quatro das sete seções em rascunho.
+**Atualizado:** 03/09/2026 (sessão 8)
+**Próxima ação:** `/escrever-secao 05-conclusao` (alvo 700). Tudo de que ela depende já
+existe: introdução, método e resultados escritos. A conclusão retoma o objetivo declarado
+na introdução, sintetiza o que a evidência sustenta e declara os desdobramentos — **sem
+afirmar nada que a seção 4 não sustente**, em especial sobre acoplamento da certificação
+(D-10) e sobre escala.
 
-**O autor precisa providenciar:** nada para a próxima seção. Duas pendências dependem dele,
-mas não bloqueiam (ver Bloqueios).
+⚠️ **Escrever no alvo, sem folga.** O orçamento está em 17,2 páginas e a projeção final é
+de ~19 — o aperto é no teto (ver Orçamento).
+
+**O autor precisa providenciar:** nada para a próxima seção. Três itens dependem dele, e
+nenhum bloqueia (ver Bloqueios e Decisões pendentes).
 
 ## O artigo
 
@@ -53,23 +57,25 @@ mas não bloqueiam (ver Bloqueios).
 - [ ] Título em português e inglês
 - [ ] Se as duas vagas restantes de autoria serão usadas
 - [ ] Se a conclusão menciona a correção da API como trabalho posterior ao ciclo relatado
+- [ ] **Destino das 8 referências órfãs** — a Introdução não as absorveu (ver abaixo)
+- [ ] **Onde cortar para caber em 18 páginas** — decisão de escopo, não de redação
 
 ## Seções
 
 | Arquivo | Status | Palavras (real/alvo) | Lacunas abertas |
 |---|---|---|---|
 | 00-resumo | não iniciada | 0 / 550 | escrever **por último** |
-| 01-introducao | **próxima** | 0 / 1.100 | — |
+| 01-introducao | rascunho | 1.085 / 1.100 | nenhuma |
 | 02-referencial | rascunho | 1.561 / 1.600 | nenhuma |
 | 03-metodo | rascunho | 1.994 / 2.200 | 1 tríade (linha 183) |
 | 04-resultados | rascunho | 2.631 / 2.800 | 2 `[[VERIFICAR]]` |
-| 05-conclusao | não iniciada | 0 / 700 | — |
+| 05-conclusao | **próxima** | 0 / 700 | — |
 | 06-declaracoes | não iniciada | 0 / 100 | — |
 
-Gate: **0 bloqueantes**, 11 pendências. Estimativa do gate: **15,6 páginas**.
-As quatro seções que faltam somam ~2.450 palavras de alvo, ou ~3,5 páginas. Com as figuras
-já contabilizadas, a projeção é de **~19 páginas** — ou seja, **o aperto final será no
-teto**, não no piso. Escrever as próximas seções no alvo, sem folga, e prever corte.
+Gate: **0 bloqueantes**, 12 pendências. Total de texto: **7.271 palavras**.
+
+Estilo, todas as seções dentro do perfil do grupo (21–30 pal/frase, 60–105 por parágrafo):
+introdução 27,1 · referencial 29,3 · método 22,4 · resultados 27,7.
 
 ### Lacunas remanescentes
 
@@ -81,15 +87,41 @@ teto**, não no piso. Escrever as próximas seções no alvo, sem folga, e preve
 
 Ambos os `[[VERIFICAR]]` são acréscimos, não bloqueios.
 
-### Referências órfãs (8)
+## ⚠️ Orçamento — o aperto é no teto
+
+| | Páginas |
+|---|---|
+| Estimativa do gate hoje (4 seções + 6 figuras + 23 refs) | **17,2** |
+| Falta escrever: conclusão 700 + declarações 100 + resumo/abstract 550 | +1,9 |
+| **Projeção final** | **≈19,1** |
+
+O máximo da revista é **18**. Serão necessárias ~1,1 página de corte, e a regra de
+`orcamento-paginas.md` diz onde: detalhe de implementação vira pseudocódigo, referencial
+que não sustenta a contribuição sai, figuras redundantes se fundem. **Nunca cortar**
+limitações, origem dos dados ou a discussão à luz da literatura.
+
+Duas fontes de folga já identificadas, ambas decisão do autor:
+1. **As 6 figuras custam 2,2 páginas.** `FIG:04-1` (autoavaliações por unidade) mostra o
+   mesmo fenômeno que uma linha de `TAB:04-1`; fundi-las libera ~0,3 página.
+2. **As 8 referências órfãs custam ~1,6 página** se permanecerem na lista. Removê-las
+   resolve mais da metade do excesso — e a revista **exige** que só constem fontes
+   citadas, então removê-las não é só economia, é conformidade.
+
+## Referências órfãs (8) — a Introdução não as absorveu
 
 `Bendoraitis 2020` · `Django REST Framework 2026` · `Kanban University 2025` ·
 `Muniz 2021` · `Pahl 2015` · `PMI 2017` · `Scrum 2025` · `Trello 2025`.
 
-Todas são de stack e de gestão de projetos: o terreno delas é a **Introdução** (histórico
-do ciclo de 2024, metodologia de trabalho da equipe) e o **Método**. Ou passam a ser
-citadas ao escrever `01-introducao`, ou saem de `refs.md` — a revista só aceita na lista
-as fontes efetivamente citadas.
+A sessão 7 previu que a Introdução as citaria. **Não aconteceu, e por decisão de redação:**
+são referências de stack (Django, DRF, Docker/PaaS, Trello) e de gestão de projetos (PMBOK,
+Scrum, Kanban), e nenhuma tem terreno legítimo num texto de problema, lacuna e objetivo.
+Forçá-las ali seria citação decorativa, exatamente o que um avaliador identifica.
+
+Restam duas saídas, e a escolha é do autor:
+- **Citar no Método**, onde cabem de fato — a equipe trabalhou com Scrum (mapa §14) e a
+  stack é descrita em 3.2. Custa palavras numa seção que está 206 abaixo do alvo.
+- **Remover de `refs.md`** — libera ~1,6 página do orçamento estourado e atende à exigência
+  da revista. É a saída que o orçamento recomenda.
 
 ## Figuras — 6 declaradas, **nenhuma produzida**
 
@@ -105,12 +137,11 @@ as fontes efetivamente citadas.
 No PDF elas aparecem como blocos "IMAGEM AUSENTE" com a descrição do que produzir.
 ⚠️ 300 dpi e texto interno em TNR ≥18. As três `TAB` são markdown editável, nunca imagem.
 
-## Referências — 23 entradas, lacuna do referencial fechada
+## Referências — 23 entradas
 
-`refs.md` passou de 16 para **23 entradas**. As 7 novas são revisadas por pares, de 2019 em
-diante, todas com DOI, e cada uma foi verificada no Crossref ou no texto integral antes de
-entrar — o campo `origem` registra qual. Proporção dentro da janela de sete anos: 17 contra
-6. A fragilidade apontada desde a sessão 2 está resolvida.
+17 dentro da janela de sete anos contra 6 fora (obras fundacionais). As 7 revisadas por
+pares acrescentadas na sessão 7 fecharam a lacuna do referencial. Ver a ressalva das 8
+órfãs acima.
 
 ## Build — funcionando de ponta a ponta
 
@@ -128,14 +159,15 @@ bash scripts/build.sh --md   # só o markdown consolidado
 
 ## Bloqueios
 
-Nenhum bloqueia a escrita. Dois itens dependem do autor e podem ser resolvidos a qualquer
-momento:
+Nenhum bloqueia a escrita. Três itens dependem do autor:
 
 1. **Banco Neon inacessível em 03/09/2026** (host não resolveu por DNS). Enquanto não
    voltar, o `[[VERIFICAR]]` da linha 123 de `04-resultados` fica aberto. Confirmar se a
    instância ainda existe antes de prometer consulta.
 2. **API corrigida (D-15) ainda não validada em ambiente com Django.** Falta o autor rodar
    `manage.py check` e os testes, e publicar.
+3. **Decisão de corte para caber em 18 páginas** — pode esperar até `06-declaracoes`, mas
+   não até o resumo.
 
 ## Ambiente
 

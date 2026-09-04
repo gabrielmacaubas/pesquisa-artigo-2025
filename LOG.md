@@ -433,3 +433,44 @@ uma skill própria de verificação de fontes quando o volume de citações for 
   `[[VERIFICAR]]` em `04-resultados`; uma tríade em `03-metodo.md:183`.
 - **Nenhuma decisão nova do autor** nesta sessão — D-8 foi cumprida, não alterada.
 - **Próximo:** `/escrever-secao 01-introducao`.
+
+### 2026-09-03 — Sessão 8: escreve a Introdução
+
+- **Escrito:** `secoes/01-introducao.md`, **1.085 palavras** (alvo 1.100), onze parágrafos,
+  **zero lacunas abertas**. Nenhum `[[VERIFICAR]]`, `[[CIT]]` ou `[[DECIDIR]]` foi
+  necessário: todo número saiu do mapa de fatos — matriz de 7 competências + 4
+  subcompetências e escala 0–4 (§5, com `(Embrapii, 2021)`), 40 min/discente no processo
+  manual (§2, D-7/D-12), ≈12 s no ciclo de 2024 (§9), 33 discentes e 9 unidades (§6).
+- **Encadeamento escolhido**, do contexto até a pergunta de pesquisa: o programa avalia
+  competências por unidade → a consolidação manual custava 40 min/discente → o ciclo de 2024
+  automatizou a produção do indicador e derrubou o tempo para ≈12 s → mas parou no
+  indicador, deixando humanas a decisão e a devolutiva → e a planilha, no papel de camada de
+  persistência, não preserva a série histórica → **os dois critérios do programa são
+  comparativos, não pontuais**, e por isso não são computáveis sobre a medição mais recente.
+  A pergunta é enunciada como arquitetural antes de pedagógica, que é o que a tese sustenta.
+- **Continuidade do ciclo de 2024 narrada sem citação**, conforme D-2: "o ciclo anterior do
+  projeto", "o registro do ciclo anterior indica". Nenhum "(Autor, 2024)" em lugar nenhum.
+- **Submissão cega respeitada:** nenhuma instituição nomeada. O programa aparece como
+  "Capacitação 4.0" (nome público, coerente com `03-metodo`), e a única citação é o manual
+  do programa, que é fonte pública.
+- **Último parágrafo apresenta as cinco seções**, exigência explícita da revista, redigido
+  a partir do que as seções 2, 3 e 4 de fato contêm — não a partir do outline.
+- **Correção de estilo dentro da própria sessão:** a primeira versão saiu em **35,0
+  palavras/frase**, acima do teto de 30 do perfil do grupo, e o gate acusou. Nove períodos
+  longos foram divididos e a média caiu para **27,1**, com 98,6 palavras por parágrafo.
+  Ambos dentro do perfil de 2024. O gate `--estilo` pegou o problema que a leitura não pegou.
+- **As 8 referências órfãs continuam órfãs, e isso é deliberado.** A sessão 7 previu que a
+  Introdução as absorveria. Nenhuma tem terreno legítimo num texto de problema, lacuna e
+  objetivo: são stack (Bendoraitis, DRF, Pahl, Trello) e gestão de projetos (PMI, Scrum,
+  Kanban University, Muniz). Forçá-las seria citação decorativa — o tipo de coisa que um
+  avaliador identifica de imediato. Ou passam ao Método, ou saem de `refs.md`. Decisão do
+  autor, registrada em `ESTADO.md`.
+- **O teto ficou mais apertado do que a sessão 7 projetou.** Gate em **17,2 páginas** com
+  quatro seções; faltam ~1,9 página de conclusão, declarações e resumo. **Projeção ≈19,1
+  contra máximo de 18.** Serão necessárias ~1,1 página de corte. As duas fontes de folga já
+  identificadas: remover as 8 órfãs (~1,6 pág, e é exigência da revista que só constem
+  fontes citadas) e fundir `FIG:04-1` com `TAB:04-1` (~0,3 pág).
+- **Nenhuma decisão nova do autor** nesta sessão.
+- **Pendente:** 12 pendências, nenhuma bloqueante — 8 órfãs, 2 `[[VERIFICAR]]` em
+  `04-resultados`, 1 tríade em `03-metodo.md:183`, 1 aviso de orçamento.
+- **Próximo:** `/escrever-secao 05-conclusao`, no alvo de 700 e sem folga.
