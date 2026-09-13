@@ -6,16 +6,12 @@
 
 ## Situação atual
 
-**Etapa:** 3 — escrita. Cinco das sete seções em rascunho. **Gate: 1 pendência (exit 2).**
-**Atualizado:** 13/09/2026 (sessão 9)
-**Próxima ação:** `/escrever-secao 06-declaracoes` (alvo 100). São as três seções não
-numeradas exigidas pela revista: Agradecimentos (equipe não-autora, 11 integrantes contra 4
-autores), Financiamento e Conflito de interesses. Fontes no mapa de fatos §1 e §3. Não
-depende de nada nem de ninguém.
-
-Depois dela, **`/revisar-artigo`** — o review completo contra o checklist, antes do resumo.
-O `00-resumo` é o último de todos, por regra: ele precisa refletir o texto final, e o texto
-ainda passa pela orientadora.
+**Etapa:** 3 — escrita. **Seis das sete seções em rascunho.** Gate: 1 pendência (exit 2).
+**Atualizado:** 13/09/2026 (sessão 9, continuação)
+**Próxima ação:** **`/revisar-artigo`** — review completo contra o checklist
+(`.claude/rules/review-artigo.md`), com veredito, sobre as seis seções escritas. É a etapa
+que antecede o resumo, por regra: o `00-resumo` é escrito por último, refletindo o texto
+já revisado.
 
 **O autor precisa providenciar:** nada. Não há decisão em aberto nem bloqueio.
 
@@ -59,6 +55,8 @@ ainda passa pela orientadora.
 | D-23 | Os tempos reportados (2–3 s · 12–15 s) **já incluem inicialização a frio** |
 | D-24 | n8n rodava em **máquina pessoal** de um integrante — declarado como limitação em 4.6 |
 | D-25 | Repositório publicado como **público** no GitHub, sem depuração prévia (riscos aceitos e listados no `LOG.md`) |
+| D-26 | **Agradecimentos anônimos** na submissão — sem nomes e sem instituição, por causa do duplo-cego |
+| D-27 | **Financiamento:** repete "Esta pesquisa não recebeu financiamento" de 2024; os editais são vínculo, não repasse |
 
 ## Decisões pendentes
 
@@ -73,30 +71,36 @@ ainda passa pela orientadora.
 | 02-referencial | rascunho | 1.561 / 1.600 | nenhuma |
 | 03-metodo | rascunho | 2.002 / 2.200 | nenhuma |
 | 04-resultados | rascunho | 2.786 / 2.800 | nenhuma |
-| 05-conclusao | **rascunho** (sessão 9) | 747 / 700 | nenhuma |
-| 06-declaracoes | **próxima** | 0 / 100 | — |
+| 05-conclusao | rascunho | 747 / 700 | nenhuma |
+| 06-declaracoes | **rascunho** (sessão 9, cont.) | 105 / 100 | nenhuma |
 
-Total de texto: **8.181 palavras**. Nenhuma seção traz `[[VERIFICAR]]`, `[[CIT]]` ou
+Total de texto: **8.286 palavras**. Nenhuma seção traz `[[VERIFICAR]]`, `[[CIT]]` ou
 `[[DECIDIR]]`.
 
 Estilo, todas as seções dentro do perfil do grupo (21–30 pal/frase, 60–105 por parágrafo):
-introdução 27,1 · referencial 29,3 · método 22,2 · resultados 27,9 · **conclusão 26,7**.
+introdução 27,1 · referencial 29,3 · método 22,2 · resultados 27,9 · conclusão 26,7 ·
+**declarações 26,2**.
+
+⚠️ **Dívida de D-26, para a versão final e não para a submissão:** os Agradecimentos estão
+anônimos de propósito. A equipe é de 11 integrantes contra 4 autores (mapa de fatos §3), e
+os **7 nomes não-autores têm de ser acrescentados depois do aceite**. O próprio texto da
+seção declara a omissão, para que ela não seja lida como descuido.
 
 ## Orçamento — a pendência única do gate
 
 | | Páginas |
 |---|---|
-| Estimativa do gate hoje (5 seções + 6 figuras + 15 refs) | **16,9** |
-| Falta escrever: declarações 100 + resumo/abstract 550 | +0,9 |
+| Estimativa do gate hoje (6 seções + 6 figuras + 15 refs) | **17,0** |
+| Falta escrever: resumo/abstract 550 palavras | +0,8 |
 | **Projeção final** | **≈17,8** |
 
 Dentro da janela de 12 a 18, **acima do alvo de 16** — é exatamente isso que o gate acusa
-como pendência, e era o previsto desde a sessão 8 (projetava 17,7). Não bloqueia nada, mas
+como pendência, e é o mesmo número projetado desde a sessão 8. Não bloqueia nada, mas
 consome a folga: o artigo chega ao teto com ~0,2 página sobrando.
 
 Se a revisão da orientadora fizer o texto crescer, a primeira fonte de folga continua sendo
 **fundir `FIG:04-1` em `TAB:04-1`** (~0,3 página), que mostram o mesmo fenômeno. A segunda é
-a conclusão, que está 47 palavras acima do alvo.
+a conclusão, 47 palavras acima do alvo.
 
 ## Figuras — 6 declaradas, **nenhuma produzida**
 
@@ -116,8 +120,8 @@ No PDF elas aparecem como blocos "IMAGEM AUSENTE" com a descrição do que produ
 
 Zero órfãs. Onze dentro da janela de sete anos contra quatro fora, todas as de fora
 fundacionais: Fielding define REST, Merkel define Docker, Groover define automação e Elmasri
-é o texto de referência em bancos de dados. A conclusão não acrescentou nenhuma — ela retoma
-o que as seções 3 e 4 sustentam com dado próprio.
+é o texto de referência em bancos de dados. Nem a conclusão nem as declarações
+acrescentaram referência nova.
 
 ## Build — funcionando de ponta a ponta
 
@@ -126,8 +130,9 @@ bash scripts/build.sh        # gate → build/artigo.md → .docx → .pdf (com 
 bash scripts/build.sh --md   # só o markdown consolidado
 ```
 
-⚠️ Os artefatos em `build/` são de 03/09/2026 e **não contêm a conclusão**. Regerar antes de
-qualquer leitura completa do artigo.
+⚠️ Os artefatos em `build/` são de 03/09/2026 e **não contêm a conclusão nem as
+declarações**. Regerar antes de qualquer leitura completa do artigo — inclusive antes de
+mandar o texto para a orientadora.
 
 - `scripts/reference-abnt.docx` — estilos do build: TNR 11, espaçamento simples, recuo 1 cm
 - `scripts/formato_principia.py` — injeta A4 e margens no `.docx`; o pandoc 2.9 não copia o
@@ -138,7 +143,7 @@ qualquer leitura completa do artigo.
 
 ## Bloqueios
 
-**Nenhum bloqueia a escrita.** Duas condições permanentes, já absorvidas pelo texto:
+**Nenhum bloqueia a revisão.** Duas condições permanentes, já absorvidas pelo texto:
 
 - **O banco Neon foi apagado (D-22).** Nenhuma consulta nova é possível. `/consultar-banco`
   está encerrado como recurso, e o snapshot agregado de 27/07/2026 (mapa de fatos §6) é a

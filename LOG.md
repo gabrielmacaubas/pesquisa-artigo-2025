@@ -655,3 +655,51 @@ material já decidido e já escrito.
 `/escrever-secao 06-declaracoes` (alvo 100) — Agradecimentos, Financiamento e Conflito de
 interesses, as três seções não numeradas exigidas pela revista. Depois, `/revisar-artigo`, e
 só então o `00-resumo`.
+
+### 2026-09-13 — Sessão 9 (continuação): seção 06, declarações
+
+Escrita de `secoes/06-declaracoes.md` — Agradecimentos, Financiamento e Conflito de
+interesses, as três seções não numeradas exigidas pela revista. 105 palavras contra alvo de
+100 (+5%), 26,2 palavras por frase, 92 por parágrafo, dentro do perfil do grupo. Nenhuma
+lacuna aberta e nenhuma referência nova.
+
+#### D-26 — Agradecimentos anônimos na versão submetida
+
+- **Questão:** a submissão é duplo-cega e o texto já anonimiza a instituição
+  (`secoes/03-metodo.md:29` fala em "um instituto federal e uma agência de fomento à
+  pesquisa industrial"). Creditar por nome os sete integrantes não-autores quebraria o
+  cegamento.
+- **Opções:** agradecimento anônimo, sem nomes / omitir a seção na submissão e acrescentá-la
+  após o aceite / creditar os nomes agora.
+- **Escolha:** agradecimento anônimo, sem nomes e sem instituição.
+- **Motivo:** mantém a seção no manuscrito submetido, credita os papéis efetivamente
+  desempenhados e não identifica a autoria.
+- **Impacto:** `secoes/06-declaracoes.md` credita a equipe e os mentores por função, e
+  declara no próprio texto que o reconhecimento nominal foi omitido em razão da avaliação
+  cega. **Os nomes têm de ser acrescentados na versão final, após o aceite** — a equipe é de
+  11 integrantes contra 4 autores (mapa de fatos §3).
+
+#### D-27 — Financiamento: repete a declaração de 2024
+
+- **Questão:** o manuscrito de 2024 declarou "Esta pesquisa não recebeu financiamento", mas
+  o mapa de fatos §1 registra os editais nº 02/2024 e nº 02/2025 como vínculo do projeto.
+  Houve bolsa ou repasse por esses editais?
+- **Opções:** repetir a declaração de 2024 / declarar apoio por bolsa vinculada aos editais /
+  marcar `[[VERIFICAR]]` até confirmar.
+- **Escolha:** repetir a declaração de 2024, palavra por palavra.
+- **Motivo:** os editais foram o processo de seleção e vínculo, não repasse de recurso à
+  pesquisa. A declaração anterior do próprio grupo tem procedência registrada no mapa de
+  fatos §1.
+- **Impacto:** `secoes/06-declaracoes.md` traz "Esta pesquisa não recebeu financiamento." O
+  Conflito de interesses também reproduz a formulação de 2024, por consistência de voz.
+
+#### Pendente
+
+- **Gate: exit 2, uma pendência** — orçamento em **17,0 páginas**, acima do alvo de 16 e
+  dentro do teto de 18. Com o `00-resumo` (550 palavras) a projeção fecha em **≈17,8**.
+- Inalterado: seis figuras declaradas e nenhuma produzida; `build/` desatualizado, sem a
+  conclusão nem as declarações.
+
+#### Próximo
+
+`/revisar-artigo` — review completo contra o checklist. O `00-resumo` é o último de todos.
