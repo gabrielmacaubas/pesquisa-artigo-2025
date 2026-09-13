@@ -597,3 +597,61 @@ assim mesmo foi mantida.
 **Também nesta etapa:** `build/` deixou de ser ignorado pelo Git a pedido do autor, e os três
 artefatos foram regenerados antes de entrar. Criado o `README.md`, que explica o projeto, o
 gate, a calibração de voz e aponta `build/` como a versão atual do artigo.
+
+### 2026-09-13 — Sessão 9: conclusão escrita
+
+#### Feito
+
+- **`secoes/05-conclusao.md` escrita — 747 palavras** contra alvo de 700 (+6,7%, dentro da
+  tolerância de 15% do gate). Estrutura: retomada do objetivo e das duas perguntas da
+  introdução, resposta a cada uma, síntese da evidência, limites e desdobramentos.
+- **Nenhuma referência nova.** A conclusão não cita — retoma o que as seções 3 e 4 já
+  sustentam com dado próprio. `refs.md` segue com 15 entradas, todas citadas, zero órfãs.
+- **Zero lacunas.** Nenhum `[[VERIFICAR]]`, `[[CIT]]` ou `[[DECIDIR]]` foi aberto. Todo
+  número da seção já aparecia na seção 4 e vem do mapa de fatos §6 e §9: 33 discentes, 177
+  autoavaliações, 165 notas, média 2,47, 49 pares competência × discente, 40 min → 12 s →
+  2–3 s e 12–15 s.
+- **Primeira versão reescrita por falha de estilo.** O rascunho inicial saiu com 32,0
+  palavras por frase, acima da banda de 21–30 do grupo, e o gate acusou. Foram quebradas
+  quatro frases longas (uma por parágrafo, nos parágrafos 1, 3, 4 e 5), o que levou a média
+  a **26,7** — próxima das 25,4 do manuscrito de 2024. Parágrafos em 93,4 palavras, dentro
+  da banda de 60–105.
+
+#### Restrições observadas na redação
+
+- **D-21** — a correção da API não é mencionada, nem como trabalho futuro. O recorte
+  temporal do artigo é o ciclo de 2025.
+- **D-10** — em nenhum ponto se afirma que os certificados são emitidos pela regra de 2/3.
+  A conclusão declara que o acoplamento entre a camada de decisão e a emissão permanece sem
+  demonstração.
+- **D-22** — o argumento fica ancorado nos 49 pares comparáveis, sem contagem de aptos.
+- Limitações declaradas na conclusão: concentração das notas em sete discentes (viabilidade,
+  não escala), ausência de evidência sobre efeito pedagógico, acoplamento não demonstrado,
+  autoavaliação sem controle contra superestimação, e relato conduzido pela própria equipe.
+- Desdobramentos apontados: consumo do endpoint de aptidão pelo fluxo de emissão, registro
+  transacional dos eventos de emissão e envio, hospedagem institucional (que também retira o
+  orquestrador da estação pessoal, D-24), observação textual do mentor como ancoragem contra
+  o viés de autoavaliação, e extensão a turmas sucessivas.
+
+#### Decisões
+
+**Nenhuma decisão nova do autor.** Nada exigiu `AskUserQuestion`: a seção só depende de
+material já decidido e já escrito.
+
+#### Pendente
+
+- **Gate: exit 2, uma pendência** — orçamento em **16,9 páginas**, acima do alvo de 16. Era o
+  previsto na sessão 8 (projeção de 17,7). Com declarações e resumo, a projeção fecha em
+  **≈17,8**, dentro do teto de 18, mas com ~0,2 página de folga.
+- Se o texto crescer na revisão da orientadora, a primeira fonte de folga é fundir
+  `FIG:04-1` em `TAB:04-1` (~0,3 página); a segunda é a própria conclusão, 47 palavras acima
+  do alvo.
+- **`build/` está desatualizado** — os três artefatos são de 03/09/2026 e não contêm a
+  conclusão. Regerar com `bash scripts/build.sh` antes de qualquer leitura completa.
+- Seis figuras declaradas, nenhuma produzida. Inalterado desde a sessão 8.
+
+#### Próximo
+
+`/escrever-secao 06-declaracoes` (alvo 100) — Agradecimentos, Financiamento e Conflito de
+interesses, as três seções não numeradas exigidas pela revista. Depois, `/revisar-artigo`, e
+só então o `00-resumo`.
