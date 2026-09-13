@@ -703,3 +703,86 @@ lacuna aberta e nenhuma referência nova.
 #### Próximo
 
 `/revisar-artigo` — review completo contra o checklist. O `00-resumo` é o último de todos.
+
+### 2026-09-13 — Sessão 10: review completo e aplicação das correções
+
+- **Feito:** `/revisar-artigo` sobre as seis seções escritas. Relatório em
+  `build/review-2026-09-13.md`: **veredito 🔴 REVISÃO NECESSÁRIA — 5 CRITICAL, 8 MAJOR**.
+  Todas as correções de CRITICAL e MAJOR aplicadas nesta mesma sessão, mais os MINOR.
+- **Método do review:** além do cruzamento com o mapa de fatos, o **código em `api-repo/`
+  foi relido**. Foi essa releitura que produziu os achados mais graves — e que corrigiu dois
+  erros do próprio mapa de fatos.
+
+#### O que o review encontrou
+
+| # | Achado | Onde |
+|---|---|---|
+| C-1 | "Cobertura completa da turma em cinco unidades" contradita pelos próprios números: das 165 linhas das unidades 1–5, no máximo 15 têm nota | 01, 04.2, 04.5, 05 |
+| C-2 | `unidade` tratada como ciclo do programa, contra a advertência do mapa §15.3 | 03.1, 04.2, 01, 05 |
+| C-3 | Causa inventada para o decaimento: "encerramento das atividades previstas no edital" | 04.2 |
+| C-4 | "Inserir as dez medições em lote" — falso, e contradizia a seção 3 | 04.4 |
+| C-5 | Pseudocódigo de 3.4 divergente do código no ramo de inteligência emocional | 03.4 |
+| M-1 | Distância entre 177 registros e 15 conjuntos de notas nunca explicada | 04.1 |
+| M-2 | Aritmética que não fechava: 7 + 4 = 11, texto dizia "dez itens" | 04.1 |
+| M-3 | Contradição entre 3.1 e 3.4 sobre o tratamento de inteligência emocional | 03 |
+| M-4 | Glosa inventada e tecnicamente errada sobre os 1.792 registros de auditoria | 04.1 |
+| M-5 · M-6 | `(Elmasri, 2018)` com dois autores · Fielding apoiando afirmação sobre OpenAPI | 04.5 |
+
+C-1 é o achado central: a afirmação empírica mais repetida do artigo caía com uma subtração
+feita sobre números que o próprio texto apresentava três parágrafos antes.
+
+#### Correções ao mapa de fatos (o mapa estava errado, não o código)
+
+- **§15.4 afirmava que não há `transaction.atomic`. Há** — o decorador está em
+  `serializers/autoavaliacao.py:42`, sobre o `create()` inteiro. A gravação **é** atômica; o
+  que não existe é inserção em lote. Corrigido no mapa.
+- **§15.1 estava desatualizado:** o `except` que devolvia `Autoavaliacao.objects.create()` já
+  foi corrigido (D-15); hoje o código levanta `ValidationError`. Marcado como descrição
+  histórica, válida para o ciclo de 2025 e não para o código atual.
+- **§5 ganhou a composição exata de um conjunto:** 11 linhas, não 10 — 6 notas macro, 4 de
+  subcompetência e 1 nota macro derivada para inteligência emocional, gravada com a média
+  das quatro subs. Foi o que permitiu fechar M-2.
+
+#### D-28 — Pseudocódigo divergente: corrigir sem comentar
+
+- **Questão:** o pseudocódigo de 3.4 não descreve o código. Inteligência emocional produz
+  dois grupos de agrupamento contra um denominador de sete, e no ramo das subcompetências a
+  comparação "menor medição contra as demais" ocorre entre os quatro atributos de uma mesma
+  avaliação, não entre unidades sucessivas.
+- **Opções:** tratar a divergência como achado do trabalho / corrigir o pseudocódigo sem
+  comentário / descrever o critério só em prosa.
+- **Escolha:** **corrigir o pseudocódigo**, sem parágrafo explicativo. A subseção 4.5
+  permanece como está.
+- **Motivo:** decisão do autor.
+- **Impacto:** o bloco de 3.4 passa a descrever os dois conjuntos de agrupamento e a
+  agregação por subcompetência; 3.1 foi realinhada para não prometer um achatamento que a
+  regra de certificação não aplica. ⚠️ **Ficou em aberto:** 4.5 continua sustentando que
+  codificar o critério o tornou auditável, sem registrar o que a inspeção encontrou. O
+  repositório é público (D-25), então o comportamento é verificável por um avaliador.
+
+#### D-29 — Fundir `FIG:04-1` em `TAB:04-1`
+
+- **Questão:** as correções somaram 232 palavras e levaram o orçamento de 17,0 para 17,4
+  páginas. Com o resumo, a projeção batia em **18,2 — acima do máximo de 18**, que rejeita na
+  triagem.
+- **Opções:** fundir a figura na tabela / cortar ~250 palavras da seção 4 / deixar para a
+  diagramação.
+- **Escolha:** **fundir `FIG:04-1` em `TAB:04-1`**, já prevista no `ESTADO.md` como primeira
+  fonte de folga.
+- **Motivo:** a correção C-1 esvaziou a figura. Um gráfico de barras 33/33/33/33/33/7/3/1/1
+  cujas barras são ~91% registros sem nota comunica menos que uma linha de tabela.
+- **Impacto:** cinco figuras em vez de seis. A distribuição pelas nove unidades vira uma
+  linha da `TAB:04-1`, cuja altura subiu de 8 para 9 cm. Orçamento em **17,1**, projeção
+  final **≈17,9**.
+
+#### Pendente
+
+- **Gate: exit 2, uma pendência** — orçamento em 17,1 páginas, acima do alvo de 16 e dentro
+  do teto de 18. A folga é de ~0,1 página depois do resumo.
+- **Dívida de D-28:** a subseção 4.5 afirma auditabilidade sem registrar o que a auditoria
+  encontrou. Revisitar se a orientadora apontar.
+- Inalterado: cinco figuras declaradas e nenhuma produzida; `build/` desatualizado.
+
+#### Próximo
+
+`/escrever-secao 00-resumo` — é o último, por regra, e agora reflete texto já revisado.

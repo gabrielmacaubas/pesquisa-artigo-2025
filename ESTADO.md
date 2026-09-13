@@ -6,14 +6,22 @@
 
 ## Situação atual
 
-**Etapa:** 3 — escrita. **Seis das sete seções em rascunho.** Gate: 1 pendência (exit 2).
-**Atualizado:** 13/09/2026 (sessão 9, continuação)
-**Próxima ação:** **`/revisar-artigo`** — review completo contra o checklist
-(`.claude/rules/review-artigo.md`), com veredito, sobre as seis seções escritas. É a etapa
-que antecede o resumo, por regra: o `00-resumo` é escrito por último, refletindo o texto
-já revisado.
+**Etapa:** 3 — escrita. **Seis das sete seções em rascunho, todas revisadas.** Gate: 1
+pendência (exit 2).
+**Atualizado:** 13/09/2026 (sessão 10 — review aplicado)
+**Próxima ação:** **`/escrever-secao 00-resumo`** — é o último por regra, e agora reflete
+texto já revisado. Fundamentação → objetivo → método → resultados → conclusão, parágrafo
+único de 200 a 300 palavras, sem citações (NBR 6028), mais o Abstract em itálico e 3 a 5
+palavras-chave em ordem alfabética.
 
 **O autor precisa providenciar:** nada. Não há decisão em aberto nem bloqueio.
+
+⚠️ **O review de 13/09/2026 (`build/review-2026-09-13.md`) fechou com 🔴 REVISÃO
+NECESSÁRIA — 5 CRITICAL e 8 MAJOR.** Todos foram corrigidos na mesma sessão. O relatório
+descreve o texto **anterior** às correções; vale como registro do que foi encontrado, não
+como estado atual. O achado central (C-1) era que "cobertura completa da turma em cinco
+unidades" contradizia os números apresentados três parágrafos antes — das 165 linhas das
+unidades 1 a 5, no máximo 15 têm nota associada.
 
 ## O artigo
 
@@ -57,6 +65,8 @@ já revisado.
 | D-25 | Repositório publicado como **público** no GitHub, sem depuração prévia (riscos aceitos e listados no `LOG.md`) |
 | D-26 | **Agradecimentos anônimos** na submissão — sem nomes e sem instituição, por causa do duplo-cego |
 | D-27 | **Financiamento:** repete "Esta pesquisa não recebeu financiamento" de 2024; os editais são vínculo, não repasse |
+| D-28 | Pseudocódigo de 3.4 **corrigido** para espelhar o código, sem parágrafo explicativo; 4.5 permanece |
+| D-29 | **`FIG:04-1` fundida em `TAB:04-1`** — cinco figuras; libera 0,3 pág que as correções consumiram |
 
 ## Decisões pendentes
 
@@ -66,20 +76,27 @@ já revisado.
 
 | Arquivo | Status | Palavras (real/alvo) | Lacunas abertas |
 |---|---|---|---|
-| 00-resumo | não iniciada | 0 / 550 | escrever **por último**, depois da revisão |
-| 01-introducao | rascunho | 1.085 / 1.100 | nenhuma |
-| 02-referencial | rascunho | 1.561 / 1.600 | nenhuma |
-| 03-metodo | rascunho | 2.002 / 2.200 | nenhuma |
-| 04-resultados | rascunho | 2.786 / 2.800 | nenhuma |
-| 05-conclusao | rascunho | 747 / 700 | nenhuma |
-| 06-declaracoes | **rascunho** (sessão 9, cont.) | 105 / 100 | nenhuma |
+| 00-resumo | não iniciada | 0 / 550 | escrever **agora**, é a próxima ação |
+| 01-introducao | revisada | 1.102 / 1.100 | nenhuma |
+| 02-referencial | revisada | 1.561 / 1.600 | nenhuma |
+| 03-metodo | revisada | 2.072 / 2.200 | nenhuma |
+| 04-resultados | revisada | 2.931 / 2.800 | nenhuma |
+| 05-conclusao | revisada | 747 / 700 | nenhuma |
+| 06-declaracoes | revisada | 105 / 100 | nenhuma |
 
-Total de texto: **8.286 palavras**. Nenhuma seção traz `[[VERIFICAR]]`, `[[CIT]]` ou
+Total de texto: **8.518 palavras**. Nenhuma seção traz `[[VERIFICAR]]`, `[[CIT]]` ou
 `[[DECIDIR]]`.
 
 Estilo, todas as seções dentro do perfil do grupo (21–30 pal/frase, 60–105 por parágrafo):
-introdução 27,1 · referencial 29,3 · método 22,2 · resultados 27,9 · conclusão 26,7 ·
-**declarações 26,2**.
+introdução 27,6 · referencial 29,3 · método 22,8 · resultados 28,7 · conclusão 26,7 ·
+declarações 26,2.
+
+⚠️ **Dívida de D-28:** a subseção 4.5 sustenta que codificar o critério o tornou auditável,
+sem registrar o que a inspeção do código encontrou — o agrupamento de inteligência emocional
+produz dois conjuntos contra um denominador de sete, e no ramo das subcompetências a
+comparação ocorre entre atributos de uma mesma avaliação, não entre unidades. O autor optou
+por corrigir só o pseudocódigo. O repositório é público (D-25), então o comportamento é
+verificável por um avaliador.
 
 ⚠️ **Dívida de D-26, para a versão final e não para a submissão:** os Agradecimentos estão
 anônimos de propósito. A equipe é de 11 integrantes contra 4 autores (mapa de fatos §3), e
@@ -90,28 +107,29 @@ seção declara a omissão, para que ela não seja lida como descuido.
 
 | | Páginas |
 |---|---|
-| Estimativa do gate hoje (6 seções + 6 figuras + 15 refs) | **17,0** |
+| Estimativa do gate hoje (6 seções + **5** figuras + 15 refs) | **17,1** |
 | Falta escrever: resumo/abstract 550 palavras | +0,8 |
-| **Projeção final** | **≈17,8** |
+| **Projeção final** | **≈17,9** |
 
-Dentro da janela de 12 a 18, **acima do alvo de 16** — é exatamente isso que o gate acusa
-como pendência, e é o mesmo número projetado desde a sessão 8. Não bloqueia nada, mas
-consome a folga: o artigo chega ao teto com ~0,2 página sobrando.
+Dentro da janela de 12 a 18, **acima do alvo de 16**, e é isso que o gate acusa como
+pendência. As correções do review somaram 232 palavras e levaram a projeção a 18,2, **acima
+do teto**; D-29 recuperou 0,3 página e trouxe de volta para 17,9.
 
-Se a revisão da orientadora fizer o texto crescer, a primeira fonte de folga continua sendo
-**fundir `FIG:04-1` em `TAB:04-1`** (~0,3 página), que mostram o mesmo fenômeno. A segunda é
-a conclusão, 47 palavras acima do alvo.
+A folga agora é de ~0,1 página. **A primeira fonte já foi usada.** Se o texto crescer de
+novo, as candidatas são: a conclusão, 47 palavras acima do alvo; a seção 4, 131 acima; e
+`FIG:03-2` (DER, 9 cm, 0,44 pág), que é a figura mais cara do artigo.
 
-## Figuras — 6 declaradas, **nenhuma produzida**
+## Figuras — 5 declaradas, **nenhuma produzida**
 
 | ID | O que é | Onde |
 |---|---|---|
 | `TAB:03-1` | Quadro editável das 10 competências avaliadas | 03 |
 | `FIG:03-1` | Diagrama de arquitetura (n8n + API + banco + Google Workspace) | 03 |
 | `FIG:03-2` | DER das 7 entidades do domínio | 03 |
-| `TAB:04-1` | Snapshot agregado do banco em 27/07/2026 | 04 |
-| `FIG:04-1` | Autoavaliações por unidade (33×5, depois 7, 3, 1, 1) | 04 |
+| `TAB:04-1` | Snapshot agregado do banco em 27/07/2026, **incluindo a distribuição pelas 9 unidades** (33×5, depois 7, 3, 1, 1) | 04 |
 | `TAB:04-2` | Tempos: manual 40 min · 2024 ≈12 s · registro 2–3 s · gráfico 12–15 s | 04 |
+
+`FIG:04-1` foi removida por D-29: absorvida pela `TAB:04-1`.
 
 No PDF elas aparecem como blocos "IMAGEM AUSENTE" com a descrição do que produzir.
 ⚠️ 300 dpi e texto interno em TNR ≥18. As três `TAB` são markdown editável, nunca imagem.

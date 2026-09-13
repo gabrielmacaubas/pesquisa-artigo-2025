@@ -126,10 +126,10 @@ elimine silenciosamente as medições associadas (Silberschatz; Korth; Sudarshan
 
 A transformação de dados educacionais em orientação para o estudante é o objeto do campo de
 análise da aprendizagem, no qual os painéis de acompanhamento constituem o artefato mais
-difundido. Uma revisão de painéis recentes verifica que a quase
-totalidade deles opera em nível descritivo, apresentando ao estudante a sua posição atual
-sem indicar que providência tomar, lacuna que os autores caracterizam como ausência de
-análise prescritiva (Susnjak; Ramaswami; Mathrani, 2022). A apresentação de indicadores,
+difundido. Uma revisão de painéis recentes (Susnjak; Ramaswami; Mathrani, 2022) verifica
+que a quase totalidade deles opera em nível descritivo, apresentando ao estudante a sua
+posição atual sem indicar que providência tomar, lacuna que os autores caracterizam como
+ausência de análise prescritiva. A apresentação de indicadores,
 isoladamente, não produz a mudança de comportamento que justificaria a sua produção.
 
 A superação dessa lacuna tem sido buscada por meio da vinculação entre a orientação

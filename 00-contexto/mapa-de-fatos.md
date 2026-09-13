@@ -139,6 +139,14 @@ autônomas** mais **inteligência emocional desdobrada em 4 sub-competências**.
 Confere com o banco: 105 notas de soft skill (105 ÷ 7 = 15) e 60 de sub-soft skill
 (60 ÷ 4 = 15) — 15 medições de cada. *Verificado em 27/07/2026.*
 
+**Composição exata de um conjunto completo — 11 linhas, não 10** (verificado no código em
+13/09/2026, `serializers/autoavaliacao.py:126-172`): 6 notas de soft skill vindas de
+`respostas`, 4 notas de sub-soft skill, **mais 1 nota de soft skill adicional para
+inteligência emocional**, gravada com a média das 4 subs. Daí 7 macro + 4 sub = 11 linhas
+por conjunto, das quais **10 são medições independentes** (a 7ª macro é derivada). 15 × 11 =
+165. ⚠️ Escrever "quinze conjuntos de sete medições macro e quatro de sub" faz o leitor
+somar 11 e encontrar "dez" — a derivação precisa estar explícita.
+
 No código, `inteligência emocional` é excluída das notas principais e substituída pelas
 quatro sub-competências renomeadas como `Inteligência Emocional: X` — o achatamento é o
 que produz os 10 itens comparáveis.
@@ -434,7 +442,14 @@ testes**, e a leitura do código identifica os dois mecanismos que materializam 
 **Arquivos:** `capacitacao/api/serializers/autoavaliacao.py`,
 `capacitacao/api/views/autoavaliacao.py`, `capacitacao/api/urls.py`.
 
-### 15.1 O `except` cria autoavaliação vazia e devolve sucesso
+### 15.1 O `except` cria autoavaliação vazia e devolve sucesso — ⚠️ DESATUALIZADO
+
+> **Corrigido no código desde então (D-15).** Reverificado em 13/09/2026: o bloco hoje é
+> `except serializers.ValidationError: raise` seguido de `except Exception as e: raise
+> serializers.ValidationError(...)` (`serializers/autoavaliacao.py:174-178`). O texto abaixo
+> descreve o código **anterior** à correção, que é o que operou durante o ciclo de 2025 e
+> portanto continua valendo como explicação histórica da base. Não vale como descrição do
+> código atual.
 
 `CreateAutoavaliacaoSerializer.create()` encerra assim (serializers/autoavaliacao.py:169-171):
 
@@ -477,7 +492,13 @@ transação única e de `select_related` contra N+1. `grep` em todo o `api-repo`
 | `select_related` | **nenhuma ocorrência** |
 | `prefetch_related` | 2 ocorrências, em `views/discente.py:42` e `models/discente.py:58` |
 
-Não há `transaction.atomic` envolvendo a gravação. **Vale o código, não o relatório.** A
+⚠️ **Correção de 13/09/2026:** a afirmação original desta subseção de que "não há
+`transaction.atomic` envolvendo a gravação" estava **errada**. O decorador existe, sobre o
+`create()` inteiro (`serializers/autoavaliacao.py:42`). Portanto a gravação **é** atômica;
+o que não existe é inserção em lote. Dizer "em uma única transação" é correto; dizer "em
+lote" não é.
+
+**Vale o código, não o relatório.** A
 seção 3 foi corrigida em 03/09/2026: afirmar inserção em lote seria alegação sem lastro,
 exatamente o tipo de erro que um avaliador com acesso ao repositório consegue verificar.
 

@@ -24,9 +24,9 @@ percorre o histórico de cada discente, aplica as duas condições de disparo e 
 documento por correio eletrônico sem intervenção humana no percurso.
 
 A base constituída durante a operação sustenta o que foi afirmado sobre viabilidade. A
-consulta agregada de 27 de julho de 2026 encontrou 33 discentes cadastrados, 177
-autoavaliações distribuídas em nove unidades avaliativas e 165 notas íntegras. A cobertura
-da turma foi completa nas cinco primeiras unidades, e a média das notas ficou em 2,47 numa
+consulta agregada de 27 de julho de 2026 encontrou 33 discentes cadastrados, 177 registros
+de autoavaliação distribuídos em nove unidades e 165 notas reunidas em quinze conjuntos
+completos de medições, concentrados em sete discentes. A média das notas ficou em 2,47 numa
 escala de 0,00 a 4,00. Os 49 pares competência × discente com duas ou mais medições são o
 insumo longitudinal que o algoritmo de certificação consome, e sua existência demonstra
 que a estrutura de persistência produz, em operação real, aquilo que a regra exige.
