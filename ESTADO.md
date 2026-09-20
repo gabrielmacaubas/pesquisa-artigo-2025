@@ -6,22 +6,20 @@
 
 ## Situação atual
 
-**Etapa:** 3 — escrita. **Seis das sete seções em rascunho, todas revisadas.** Gate: 1
-pendência (exit 2).
-**Atualizado:** 13/09/2026 (sessão 10 — review aplicado)
-**Próxima ação:** **`/escrever-secao 00-resumo`** — é o último por regra, e agora reflete
-texto já revisado. Fundamentação → objetivo → método → resultados → conclusão, parágrafo
-único de 200 a 300 palavras, sem citações (NBR 6028), mais o Abstract em itálico e 3 a 5
-palavras-chave em ordem alfabética.
+**Etapa:** 3 — escrita **concluída**. **As sete seções estão em rascunho**, todas revisadas,
+todas sem lacuna. Gate: 1 pendência (exit 2).
+**Atualizado:** 20/09/2026 (sessão 11 — resumo e abstract)
+**Próxima ação:** **produzir as cinco figuras** (`python3 scripts/gate.py --figuras` lista o
+que falta), ou **`/revisar-artigo`** se preferir uma segunda passada de review sobre o texto
+completo agora que o resumo existe. As duas `FIG` são diagramas a desenhar; as três `TAB` são
+markdown editável e podem ser escritas direto no repositório.
 
-**O autor precisa providenciar:** nada. Não há decisão em aberto nem bloqueio.
+**O autor precisa decidir:** se corta ~0,4 página de folga antes de mandar o texto para a
+orientadora (ver **Orçamento**, abaixo). Não há bloqueio.
 
-⚠️ **O review de 13/09/2026 (`build/review-2026-09-13.md`) fechou com 🔴 REVISÃO
-NECESSÁRIA — 5 CRITICAL e 8 MAJOR.** Todos foram corrigidos na mesma sessão. O relatório
-descreve o texto **anterior** às correções; vale como registro do que foi encontrado, não
-como estado atual. O achado central (C-1) era que "cobertura completa da turma em cinco
-unidades" contradizia os números apresentados três parágrafos antes — das 165 linhas das
-unidades 1 a 5, no máximo 15 têm nota associada.
+⚠️ **O `build/` está desatualizado desde 03/09/2026** — não contém a conclusão, as
+declarações nem o resumo. Rodar `bash scripts/build.sh` antes de qualquer leitura completa,
+inclusive antes de mandar o texto para a orientadora.
 
 ## O artigo
 
@@ -70,13 +68,14 @@ unidades 1 a 5, no máximo 15 têm nota associada.
 
 ## Decisões pendentes
 
-**Nenhuma.**
+**Uma, e não é bloqueante:** de onde tirar folga de orçamento, se o autor quiser entrar na
+revisão da orientadora com margem. Ver **Orçamento**.
 
-## Seções
+## Seções — todas escritas
 
 | Arquivo | Status | Palavras (real/alvo) | Lacunas abertas |
 |---|---|---|---|
-| 00-resumo | não iniciada | 0 / 550 | escrever **agora**, é a próxima ação |
+| 00-resumo | rascunho | 612 / 550 | nenhuma |
 | 01-introducao | revisada | 1.102 / 1.100 | nenhuma |
 | 02-referencial | revisada | 1.561 / 1.600 | nenhuma |
 | 03-metodo | revisada | 2.072 / 2.200 | nenhuma |
@@ -84,12 +83,64 @@ unidades 1 a 5, no máximo 15 têm nota associada.
 | 05-conclusao | revisada | 747 / 700 | nenhuma |
 | 06-declaracoes | revisada | 105 / 100 | nenhuma |
 
-Total de texto: **8.518 palavras**. Nenhuma seção traz `[[VERIFICAR]]`, `[[CIT]]` ou
+Total de texto: **9.136 palavras**. Nenhuma seção traz `[[VERIFICAR]]`, `[[CIT]]` ou
 `[[DECIDIR]]`.
 
+O `00-resumo` reúne título PT, resumo, palavras-chave, título EN, abstract e keywords. O
+resumo tem **294 palavras** e o abstract **295**, ambos dentro da janela de 200 a 300 da NBR
+6028, em parágrafo único e sem citação. Palavras-chave em minúsculas, separadas por ponto e
+vírgula, em ordem alfabética nas duas línguas: *automação de processos; avaliação de
+competências socioemocionais; baixo código; certificação; rastreabilidade histórica*.
+
 Estilo, todas as seções dentro do perfil do grupo (21–30 pal/frase, 60–105 por parágrafo):
-introdução 27,6 · referencial 29,3 · método 22,8 · resultados 28,7 · conclusão 26,7 ·
-declarações 26,2.
+resumo 27,8 · introdução 27,6 · referencial 29,3 · método 22,8 · resultados 28,7 ·
+conclusão 26,7 · declarações 26,2. O resumo aparece com 294 pal/parágrafo porque a NBR 6028
+exige parágrafo único — é esperado, não é desvio.
+
+## Orçamento — a pendência única do gate
+
+| | Páginas |
+|---|---|
+| Texto (9.136 palavras) | 13,0 |
+| Figuras (5) | 1,9 |
+| Referências (15) | 3,0 |
+| **Estimado** | **17,98** |
+
+Dentro da janela de 12 a 18, **acima do alvo de 16**, e é isso que o gate acusa. O teto foi
+raspado por 0,02 página: o resumo custou 0,87 em vez dos 0,8 projetados, e a estimativa de
+referências do `ESTADO.md` anterior estava errada (15 refs = 3,0 páginas, não 1,2).
+
+**Não há folga para a revisão da orientadora.** Qualquer acréscimo estoura o teto e vira
+bloqueante no gate. Fontes de folga, por ordem de menor dano:
+
+1. `FIG:03-2` (DER) de 9 cm para 7 cm → **0,08 pág**
+2. Conclusão, 47 palavras acima do alvo → **0,07 pág**
+3. Seção 4, 131 palavras acima do alvo → **0,19 pág**
+
+As três juntas trazem o artigo para ~17,6. A fonte prevista antes (fundir `FIG:04-1`) já foi
+usada em D-29.
+
+## Figuras — 5 declaradas, **nenhuma produzida**
+
+| ID | O que é | Onde | Tamanho |
+|---|---|---|---|
+| `TAB:03-1` | Quadro editável das 10 competências avaliadas | 03 | 1col, 7 cm |
+| `FIG:03-1` | Diagrama de arquitetura (n8n + API + banco + Google Workspace) | 03 | 1col, 8 cm |
+| `FIG:03-2` | DER das 7 entidades do domínio | 03 | 1col, 9 cm |
+| `TAB:04-1` | Snapshot agregado do banco em 27/07/2026, **incluindo a distribuição pelas 9 unidades** (33×5, depois 7, 3, 1, 1) | 04 | 1col, 9 cm |
+| `TAB:04-2` | Tempos: manual 40 min · 2024 ≈12 s · registro 2–3 s · gráfico 12–15 s | 04 | 1col, 6 cm |
+
+No PDF elas aparecem como blocos "IMAGEM AUSENTE" com a descrição do que produzir.
+⚠️ 300 dpi e texto interno em TNR ≥18. As três `TAB` são markdown editável, nunca imagem.
+
+## Referências — 15 entradas, todas citadas
+
+Zero órfãs. Onze dentro da janela de sete anos contra quatro fora, todas as de fora
+fundacionais: Fielding define REST, Merkel define Docker, Groover define automação e Elmasri
+é o texto de referência em bancos de dados. O resumo não acrescentou referência — não pode,
+por norma.
+
+## Dívidas registradas
 
 ⚠️ **Dívida de D-28:** a subseção 4.5 sustenta que codificar o critério o tornou auditável,
 sem registrar o que a inspeção do código encontrou — o agrupamento de inteligência emocional
@@ -103,44 +154,6 @@ anônimos de propósito. A equipe é de 11 integrantes contra 4 autores (mapa de
 os **7 nomes não-autores têm de ser acrescentados depois do aceite**. O próprio texto da
 seção declara a omissão, para que ela não seja lida como descuido.
 
-## Orçamento — a pendência única do gate
-
-| | Páginas |
-|---|---|
-| Estimativa do gate hoje (6 seções + **5** figuras + 15 refs) | **17,1** |
-| Falta escrever: resumo/abstract 550 palavras | +0,8 |
-| **Projeção final** | **≈17,9** |
-
-Dentro da janela de 12 a 18, **acima do alvo de 16**, e é isso que o gate acusa como
-pendência. As correções do review somaram 232 palavras e levaram a projeção a 18,2, **acima
-do teto**; D-29 recuperou 0,3 página e trouxe de volta para 17,9.
-
-A folga agora é de ~0,1 página. **A primeira fonte já foi usada.** Se o texto crescer de
-novo, as candidatas são: a conclusão, 47 palavras acima do alvo; a seção 4, 131 acima; e
-`FIG:03-2` (DER, 9 cm, 0,44 pág), que é a figura mais cara do artigo.
-
-## Figuras — 5 declaradas, **nenhuma produzida**
-
-| ID | O que é | Onde |
-|---|---|---|
-| `TAB:03-1` | Quadro editável das 10 competências avaliadas | 03 |
-| `FIG:03-1` | Diagrama de arquitetura (n8n + API + banco + Google Workspace) | 03 |
-| `FIG:03-2` | DER das 7 entidades do domínio | 03 |
-| `TAB:04-1` | Snapshot agregado do banco em 27/07/2026, **incluindo a distribuição pelas 9 unidades** (33×5, depois 7, 3, 1, 1) | 04 |
-| `TAB:04-2` | Tempos: manual 40 min · 2024 ≈12 s · registro 2–3 s · gráfico 12–15 s | 04 |
-
-`FIG:04-1` foi removida por D-29: absorvida pela `TAB:04-1`.
-
-No PDF elas aparecem como blocos "IMAGEM AUSENTE" com a descrição do que produzir.
-⚠️ 300 dpi e texto interno em TNR ≥18. As três `TAB` são markdown editável, nunca imagem.
-
-## Referências — 15 entradas, todas citadas
-
-Zero órfãs. Onze dentro da janela de sete anos contra quatro fora, todas as de fora
-fundacionais: Fielding define REST, Merkel define Docker, Groover define automação e Elmasri
-é o texto de referência em bancos de dados. Nem a conclusão nem as declarações
-acrescentaram referência nova.
-
 ## Build — funcionando de ponta a ponta
 
 ```bash
@@ -148,9 +161,8 @@ bash scripts/build.sh        # gate → build/artigo.md → .docx → .pdf (com 
 bash scripts/build.sh --md   # só o markdown consolidado
 ```
 
-⚠️ Os artefatos em `build/` são de 03/09/2026 e **não contêm a conclusão nem as
-declarações**. Regerar antes de qualquer leitura completa do artigo — inclusive antes de
-mandar o texto para a orientadora.
+⚠️ Os artefatos em `build/` são de 03/09/2026 e **não contêm a conclusão, as declarações nem
+o resumo**. Regerar antes de qualquer leitura completa.
 
 - `scripts/reference-abnt.docx` — estilos do build: TNR 11, espaçamento simples, recuo 1 cm
 - `scripts/formato_principia.py` — injeta A4 e margens no `.docx`; o pandoc 2.9 não copia o
@@ -161,15 +173,23 @@ mandar o texto para a orientadora.
 
 ## Bloqueios
 
-**Nenhum bloqueia a revisão.** Duas condições permanentes, já absorvidas pelo texto:
+**Nenhum bloqueia a revisão.** Três condições permanentes, já absorvidas pelo texto:
 
 - **O banco Neon foi apagado (D-22).** Nenhuma consulta nova é possível. `/consultar-banco`
   está encerrado como recurso, e o snapshot agregado de 27/07/2026 (mapa de fatos §6) é a
   única base numérica do artigo. Qualquer número novo teria de vir de outra fonte com
   procedência.
 - **A API corrigida (D-15) segue sem validação em ambiente com Django.** Não importa mais
-  para o artigo, porque D-21 a manteve fora do texto. Continua sendo trabalho de engenharia
-  a fazer, se o autor quiser publicar a correção.
+  para o artigo, porque D-21 a manteve fora do texto.
+- **O teto de páginas está raspado.** Ver Orçamento.
+
+## Git
+
+- **Há remote** (D-25): `origin` = `git@github-pessoal:gabrielmacaubas/pesquisa-artigo-2025.git`,
+  público. O `CLAUDE.md` ainda diz "repositório local, sem remote" — está desatualizado.
+- **`master` está 5 commits à frente de `origin/master`** (conclusão, declarações, review
+  aplicado, gitignore e este). Nada foi enviado: o push é decisão do autor, e o repositório
+  é público.
 
 ## Ambiente
 

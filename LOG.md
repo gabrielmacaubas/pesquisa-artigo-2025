@@ -786,3 +786,61 @@ feita sobre números que o próprio texto apresentava três parágrafos antes.
 #### Próximo
 
 `/escrever-secao 00-resumo` — é o último, por regra, e agora reflete texto já revisado.
+
+### 2026-09-20 — Sessão 11: resumo e abstract, e o encerramento que faltou
+
+- **Feito:** `/escrever-secao 00-resumo`, o último arquivo de texto do artigo. Título em
+  português e em inglês (D-18), resumo, palavras-chave, abstract e keywords em um só arquivo.
+  **As sete seções estão escritas.**
+- ⚠️ **A escrita ocorreu em 13/09/2026 e a sessão não foi encerrada.** O arquivo ficou uma
+  semana fora do git, com o `ESTADO.md` afirmando que o resumo não havia começado. Esta
+  entrada e a reescrita do `ESTADO.md` regularizam os dois. Lição registrada porque já é a
+  segunda vez que o encerramento fica para depois: **o `/encerrar-sessao` é o que separa
+  trabalho feito de trabalho perdido.**
+
+#### O resumo
+
+Estrutura da NBR 6028 na ordem que a revista exige para artigo original: fundamentação →
+objetivo → método → resultados → conclusão, em parágrafo único e sem nenhuma citação.
+
+| | Valor | Limite |
+|---|---|---|
+| Resumo (PT) | **294 palavras** | 200–300 |
+| Abstract (EN) | **295 palavras** | espelho do resumo |
+| Seção inteira | 612 palavras | alvo 550 |
+
+Palavras-chave em minúsculas, ponto e vírgula, ordem alfabética nas duas línguas, cinco
+termos cada: *automação de processos; avaliação de competências socioemocionais; baixo
+código; certificação; rastreabilidade histórica* · *certification; historical traceability;
+low-code; process automation; socioemotional skills assessment*.
+
+Todo número do resumo vem do mapa de fatos §6 e §9: 33 discentes, 177 registros de
+autoavaliação em nove unidades, 165 notas em quinze conjuntos completos, média de 2,47 na
+escala de 0,00 a 4,00, 49 pares competência × discente, 40 min → ≈12 s no ciclo anterior,
+2–3 s para o registro e 12–15 s para o gráfico em 2025. Nenhuma referência nova, nenhuma
+lacuna aberta.
+
+**Retrabalho de estilo:** a primeira versão fechou em 37,8 palavras por frase, acima da
+faixa do grupo, porque o parágrafo único puxa a frase para cima. Foi reescrita em 22 frases,
+o que trouxe a média para 27,8 — dentro do perfil de 2024. Vale para a próxima vez: o
+formato de parágrafo único não autoriza frase de 50 palavras.
+
+#### Pendente
+
+- **Gate: exit 2, uma pendência** — orçamento em **17,98 páginas**, contra teto de 18. O
+  resumo custou 0,87 página em vez dos 0,8 projetados, e a estimativa de referências do
+  `ESTADO.md` anterior estava errada: 15 referências ocupam 3,0 páginas, não 1,2. **A folga
+  para a revisão da orientadora é zero.** As fontes de corte estão listadas no `ESTADO.md`.
+- **Cinco figuras declaradas e nenhuma produzida.** É o que falta para o artigo existir
+  inteiro.
+- **`build/` desatualizado desde 03/09/2026** — sem conclusão, sem declarações, sem resumo.
+- **`master` está 5 commits à frente de `origin/master`.** O repositório ganhou remote
+  público em D-25 e o `CLAUDE.md` ainda diz que não há remote. Nada foi enviado; o push é
+  decisão do autor.
+
+#### Próximo
+
+Produzir as cinco figuras — as três `TAB` são markdown editável e saem rápido; as duas `FIG`
+são diagramas a desenhar. `python3 scripts/gate.py --figuras` lista o que cada uma precisa
+mostrar. Alternativa: `/revisar-artigo` para uma segunda passada agora que o texto está
+completo.
