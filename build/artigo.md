@@ -473,7 +473,8 @@ de criação, data de atualização e o usuário responsável por cada uma das d
 Por meio dessa combinação, todo valor exibido em um relatório pode ser rastreado até a
 operação de escrita que o produziu.
 
-A gravação das dez medições de uma autoavaliação é executada registro a registro, na mesma
+A gravação das onze linhas de uma autoavaliação, das quais dez são medições
+independentes, é executada registro a registro, na mesma
 requisição que cria o evento de avaliação. As consultas de leitura empregam carregamento
 antecipado dos objetos relacionados, o que evita a emissão de uma consulta por registro ao
 percorrer os vínculos do discente com projeto e mentor. O acesso é restrito a requisições
@@ -719,7 +720,7 @@ cada competência.
 ![](figuras/fig-04-1.png)
 
 ::: {custom-style="Legenda"}
-Figura 4 — Relatório de perfil produzido pelo fluxo de geração de gráficos, com três avaliações sucessivas sobrepostas nos eixos das competências e a tabela dos níveis qualitativos correspondentes. Nome do discente suprimido.
+Figura 4 — Relatório de perfil produzido pelo fluxo de geração de gráficos, com três avaliações sucessivas sobrepostas nos eixos das competências e a tabela dos níveis qualitativos correspondentes. A data que acompanha cada rótulo é a do registro da autoavaliação, não a da unidade avaliativa. Nome do discente suprimido.
 :::
 
 ::: {custom-style="FonteIlustracao"}
@@ -782,7 +783,7 @@ Figura 5 — Frente do modelo de certificado preenchido pelo fluxo de emissão. 
 :::
 
 ::: {custom-style="FonteIlustracao"}
-Fonte: dados da pesquisa.
+Fonte: modelo de documento do programa Capacitação 4.0.
 :::
 
 
@@ -796,7 +797,7 @@ Figura 6 — Verso do modelo de certificado, com a relação das competências s
 :::
 
 ::: {custom-style="FonteIlustracao"}
-Fonte: dados da pesquisa.
+Fonte: modelo de documento do programa Capacitação 4.0.
 :::
 
 

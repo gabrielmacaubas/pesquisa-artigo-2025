@@ -8,12 +8,13 @@
 
 **Etapa:** 4 — **o artigo existe inteiro e o PDF está diagramado**. Sete seções, **nove
 figuras/quadros/tabelas**, `.docx` e `.pdf` gerados. Gate: 1 pendência (exit 2).
-**Atualizado:** 20/09/2026 (sessão 14 — figuras sintéticas trocadas por artefatos reais)
-**Próxima ação:** **`/revisar-artigo`** — segunda passada de review sobre o artigo completo.
-Depois dela, mandar `build/artigo.pdf` para a orientadora.
+**Atualizado:** 20/09/2026 (sessão 15 — review completo, correções aplicadas)
+**Próxima ação:** **mandar `build/artigo.pdf` para a orientadora.** O review de 20/09 está
+em `build/review-2026-09-20.md`; o que dependia de redação já foi corrigido.
 
-**O autor precisa decidir:** se aceita a fonte interna das figuras (ver **Figuras**). Só
-isso, e não bloqueia nada.
+**O autor precisa decidir:** três riscos aceitos, todos listados no review — as 19 páginas
+(C-1, D-30), o texto interno das capturas abaixo de 18 pt (M-4) e o reuso de imagem do
+relatório de estágio protocolado (M-5). Nenhum deles é corrigível sem retirar conteúdo.
 
 ⚠️ **`build/artigo.pdf` regerado em 20/09/2026: 19 páginas reais — uma acima do teto da
 revista.** É consequência direta de D-30, decisão consciente do autor para caber as quatro
@@ -221,6 +222,21 @@ figuras/tabelas, 15 referências. `build/artigo.pdf` é o arquivo para mandar à
 - ⚠️ **O modelo oficial não serve de reference-doc.** Ele formata por formatação direta,
   com `Normal` vazio (cairia em Arial 11, espaçamento 1,15) e títulos em 20/16 pt. É o
   destino de colagem da etapa 7, não a fonte de estilos do build
+
+## Review de 20/09/2026 — `build/review-2026-09-20.md`
+
+**Veredito: 🔴 REVISÃO NECESSÁRIA — 2 CRITICAL e 5 MAJOR.** Corrigidos na mesma sessão:
+
+| # | Achado | Correção |
+|---|---|---|
+| C-2 | Figuras 5 e 6 davam `Fonte: dados da pesquisa` a um modelo que o mapa §14 atribui à EMBRAPII | fonte passou a `modelo de documento do programa Capacitação 4.0` |
+| M-1 | `origem` das quatro figuras novas dizia só "acervo do projeto" | cada bloco agora nomeia arquivo e página |
+| M-2 | 3.3 falava em "dez medições" e 4.1 em "onze linhas", para a mesma gravação | 3.3 passou a "onze linhas, das quais dez são medições independentes" |
+| M-3 | Os três rótulos da Figura 4 trazem a mesma data, e o texto fala em avaliações sucessivas | a legenda passou a dizer que a data é a do registro, não a da unidade |
+
+**Permanecem, por decisão:** C-1 (19 páginas), M-4 (texto interno das capturas abaixo de
+18 pt) e M-5 (reuso de imagem de relatório protocolado, sujeito a verificação de
+similaridade).
 
 ## Bloqueios
 

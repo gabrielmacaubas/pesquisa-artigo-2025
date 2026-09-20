@@ -155,7 +155,8 @@ de criação, data de atualização e o usuário responsável por cada uma das d
 Por meio dessa combinação, todo valor exibido em um relatório pode ser rastreado até a
 operação de escrita que o produziu.
 
-A gravação das dez medições de uma autoavaliação é executada registro a registro, na mesma
+A gravação das onze linhas de uma autoavaliação, das quais dez são medições
+independentes, é executada registro a registro, na mesma
 requisição que cria o evento de avaliação. As consultas de leitura empregam carregamento
 antecipado dos objetos relacionados, o que evita a emissão de uma consulta por registro ao
 percorrer os vínculos do discente com projeto e mentor. O acesso é restrito a requisições
@@ -228,7 +229,7 @@ reunida.
 [[FIG:03-3
   tipo: screenshot
   status: pronto
-  origem: tela do fluxo "Certificados" no n8n, registrada durante a operação de 2025 e conservada no acervo do projeto
+  origem: tela do fluxo "Certificados" no n8n, registrada durante a operação de 2025; imagem extraída de docs/tcc_juliana.pdf, p. 20 (Figura 3)
   dados: nenhum; o que a figura mostra é a topologia do fluxo, não dados de discente
   descricao: Onze nós do fluxo de emissão, do gatilho manual à mesclagem final. Os dois endereços de endpoint foram suprimidos, conforme a regra de dados e privacidade.
   legenda: Figura 3 — Fluxo de emissão de certificados construído na ferramenta de automação, do gatilho manual à conversão em PDF e à concessão de permissões. Endereços de serviço suprimidos. Fonte: dados da pesquisa.

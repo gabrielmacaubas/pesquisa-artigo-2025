@@ -1074,3 +1074,73 @@ institucional.
 
 `/revisar-artigo`. O review agora tem de olhar as figuras novas com a lente do §6 do
 checklist: identificação de autoria e dado individual de discente.
+
+### 2026-09-20 — Sessão 15: review completo do artigo com as figuras reais
+
+- **Feito:** `/revisar-artigo` sobre o artigo inteiro, já com as quatro imagens de
+  artefato real. Relatório em `build/review-2026-09-20.md`:
+  **veredito 🔴 REVISÃO NECESSÁRIA — 2 CRITICAL, 5 MAJOR, 3 MINOR.** As correções que não
+  dependiam de decisão editorial foram aplicadas na mesma sessão.
+- **Reafirmado pelo autor:** D-30, manter as 19 páginas.
+
+#### Os dois CRITICAL
+
+**C-1 — 19 páginas contra o máximo de 18.** Não é defeito de redação: é a consequência de
+D-30. Fica registrado porque a Principia rejeita na triagem, sem avaliar, e porque o
+caminho de volta é curto — dispensar o diagrama de arquitetura (0,40 pág) e cortar da
+seção 4, que está 203 palavras acima do alvo.
+
+**C-2 — atribuição falsa da fonte do certificado.** As Figuras 5 e 6 traziam
+`Fonte: dados da pesquisa`. O modelo de certificado **não é do grupo**: o próprio mapa de
+fatos §14 registra, da leitura do relatório de Juliana, "Origem do template | EMBRAPII,
+2024". O relatório de origem credita EMBRAPII; o artigo creditava os autores. Corrigido
+para `Fonte: modelo de documento do programa Capacitação 4.0`, que credita o programa sem
+criar entrada bibliográfica inverificável — uma entrada `EMBRAPII, 2024` sem `origem`
+rastreável bloquearia o gate, e com razão.
+
+Vale o registro do método: **esse achado saiu de conferir a figura contra o mapa de fatos,
+não de ler o artigo.** O texto estava fluente e a legenda, plausível.
+
+#### Os MAJOR corrigidos
+
+- **M-1** — o campo `origem` das quatro figuras novas dizia apenas "conservado no acervo
+  do projeto". Cada bloco agora nomeia arquivo e página: `docs/tcc_juliana.pdf` p. 20 e
+  p. 22, `docs/ARTIGO - PROJETO 2024` p. 17. O campo existe para refazer o caminho.
+- **M-2** — 3.3 dizia "a gravação das dez medições" e 4.1 dizia "onze linhas", sobre a
+  mesma operação de escrita. São 11 linhas, das quais 10 independentes (mapa §5). A seção
+  3 passou a dizer as duas coisas. É a segunda vez que essa aritmética escorrega: o review
+  de 13/09 já a pegara em outro ponto (M-2 daquele relatório).
+- **M-3** — os três rótulos da Figura 4 trazem a mesma data, 28/10/2024, enquanto o texto
+  fala em "avaliações sucessivas". Não há erro factual, porque 3.1 já explica que a
+  unidade conta submissões e não posição no calendário, mas a leitura imediata do
+  avaliador é de três avaliações lançadas no mesmo dia. A legenda passou a dizer que a
+  data é a do registro.
+
+#### Os MAJOR que ficam, por decisão
+
+- **M-4 — texto interno das capturas abaixo de 18 pt.** A revista exige 18 para figura, e
+  `figuras.md` já registra que isso inviabiliza a maior parte das capturas de tela. As
+  quatro estão acima dos 300 dpi, o que atende à outra metade da norma. O manuscrito de
+  2024, mesmo grupo e mesmo veículo, foi submetido em condição equivalente.
+- **M-5 — reuso de imagem de relatório de estágio protocolado.** É trabalho do próprio
+  grupo e não é citável (D-4), então não há o que citar; mas o relatório está depositado
+  em repositório institucional e uma verificação de similaridade de imagem pode acusar.
+  Risco aceito, agora escrito.
+
+#### O que o review confirmou
+
+Conferência número a número contra o mapa §6 e §9: os treze valores do artigo batem. As
+quinze referências estão todas citadas, sem órfãs, e as sete revisadas por pares têm
+`origem` verificada no Crossref ou no texto integral. As supressões das quatro figuras
+foram conferidas imagem a imagem — nenhum dado de discente, nenhuma identificação de
+autoria. Estilo dentro do perfil do grupo nas sete seções.
+
+#### Pendente
+
+- **19 páginas.** Fora da norma do veículo, por decisão registrada.
+- **`master` está 9 commits à frente de `origin/master`.**
+
+#### Próximo
+
+Mandar `build/artigo.pdf` para a orientadora. Quando vier o retorno dela,
+`/aplicar-review-orientadora`.

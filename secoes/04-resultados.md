@@ -40,7 +40,7 @@ A [[@TAB:04-1]] consolida o conjunto.
   status: pronto
   origem: consulta agregada ao banco de produção em 27/07/2026, registrada em mapa-de-fatos §6
   dados: mapa-de-fatos §6
-  descricao: Quadro editável com as métricas agregadas do banco em 27/07/2026, em dois pares de colunas, métrica e valor. Linhas: discentes cadastrados, registros de autoavaliação, conjuntos completos de medições, discentes com notas lançadas, notas por tipo, faixa e média das notas, pares competência x discente com duas ou mais medições, mentores, projetos e registros de auditoria. Acrescentar uma linha com a distribuição dos registros pelas nove unidades (33, 33, 33, 33, 33, 7, 3, 1, 1), que substitui o gráfico de barras antes previsto. Nenhum dado individual. Corpo em TNR 10.
+  descricao: Quadro editável com as métricas agregadas do banco em 27/07/2026, em dois pares de colunas, cada par com métrica e valor. Linhas: discentes cadastrados, registros de autoavaliação, conjuntos completos de medições, discentes com notas lançadas, notas por tipo, faixa e média das notas, pares competência x discente com duas ou mais medições, mentores, projetos e registros de auditoria. Inclui uma linha com a distribuição dos registros pelas nove unidades (33, 33, 33, 33, 33, 7, 3, 1, 1). Nenhum dado individual. Corpo em TNR 10.
   legenda: Tabela 1 — Caracterização agregada da base de produção do ciclo de 2025, apurada em 27 de julho de 2026 (n=33 discentes), incluindo a distribuição dos registros de autoavaliação pelas nove unidades. Fonte: dados da pesquisa.
   largura: 1col
   altura_cm: 8
@@ -109,10 +109,10 @@ cada competência.
 [[FIG:04-1
   tipo: screenshot
   status: pronto
-  origem: relatório de perfil gerado pelo fluxo de gráficos em execução de out/2024, conservado no acervo do projeto
+  origem: relatório de perfil gerado pelo fluxo de gráficos em execução de out/2024; imagem extraída de docs/ARTIGO - PROJETO 2024 - Versão 2.docx.pdf, p. 17 (Figura 9)
   dados: dados operacionais do programa; nenhuma nota individual é transcrita para o texto
   descricao: Relatório de perfil em duas metades. Acima, os radares das competências macro e das subcompetências com três avaliações sobrepostas. Abaixo, a tabela dos níveis qualitativos correspondentes. O nome do discente foi suprimido em ambas as metades.
-  legenda: Figura 4 — Relatório de perfil produzido pelo fluxo de geração de gráficos, com três avaliações sucessivas sobrepostas nos eixos das competências e a tabela dos níveis qualitativos correspondentes. Nome do discente suprimido. Fonte: dados da pesquisa.
+  legenda: Figura 4 — Relatório de perfil produzido pelo fluxo de geração de gráficos, com três avaliações sucessivas sobrepostas nos eixos das competências e a tabela dos níveis qualitativos correspondentes. A data que acompanha cada rótulo é a do registro da autoavaliação, não a da unidade avaliativa. Nome do discente suprimido. Fonte: dados da pesquisa.
   largura: 1col
   altura_cm: 8
   arquivo: figuras/fig-04-1.png
@@ -166,10 +166,10 @@ socioemocionais trabalhadas no percurso.
 [[FIG:04-2
   tipo: screenshot
   status: pronto
-  origem: modelo de certificado mantido em nuvem e preenchido pelo fluxo "Certificados", conservado no acervo do projeto
+  origem: modelo de certificado do programa, mantido em nuvem e preenchido pelo fluxo "Certificados"; imagem extraída de docs/tcc_juliana.pdf, p. 22 (Figuras 4 e 5)
   dados: nenhum; o modelo traz marcações de substituição, não dados de discente
   descricao: Frente do modelo de certificado, com as marcações de nome, inscrição, projeto, data e mentor. Instituição, cidade e nome de servidor suprimidos por causa da avaliação cega.
-  legenda: Figura 5 — Frente do modelo de certificado preenchido pelo fluxo de emissão. Os campos entre chaves são substituídos pelos dados do discente na emissão. Identificação institucional suprimida em razão da avaliação cega. Fonte: dados da pesquisa.
+  legenda: Figura 5 — Frente do modelo de certificado preenchido pelo fluxo de emissão. Os campos entre chaves são substituídos pelos dados do discente na emissão. Identificação institucional suprimida em razão da avaliação cega. Fonte: modelo de documento do programa Capacitação 4.0.
   largura: 1col
   altura_cm: 8
   arquivo: figuras/fig-04-2.png
@@ -178,10 +178,10 @@ socioemocionais trabalhadas no percurso.
 [[FIG:04-3
   tipo: screenshot
   status: pronto
-  origem: modelo de certificado mantido em nuvem e preenchido pelo fluxo "Certificados", conservado no acervo do projeto
+  origem: modelo de certificado do programa, mantido em nuvem e preenchido pelo fluxo "Certificados"; imagem extraída de docs/tcc_juliana.pdf, p. 22 (Figuras 4 e 5)
   dados: nenhum; o modelo traz marcações de substituição, não dados de discente
   descricao: Verso do modelo de certificado, com a relação das sete competências socioemocionais do programa. Instituição, cidade e nomes de servidores suprimidos por causa da avaliação cega.
-  legenda: Figura 6 — Verso do modelo de certificado, com a relação das competências socioemocionais trabalhadas no percurso formativo. Identificação institucional suprimida em razão da avaliação cega. Fonte: dados da pesquisa.
+  legenda: Figura 6 — Verso do modelo de certificado, com a relação das competências socioemocionais trabalhadas no percurso formativo. Identificação institucional suprimida em razão da avaliação cega. Fonte: modelo de documento do programa Capacitação 4.0.
   largura: 1col
   altura_cm: 8
   arquivo: figuras/fig-04-3.png
