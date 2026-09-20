@@ -61,6 +61,10 @@ def campos_do_bloco(corpo):
     return campos
 
 
+def estilo(nome, texto):
+    return '::: {custom-style="%s"}\n%s\n:::' % (nome, texto)
+
+
 def render_figura(tipo, ident, campos, numerado):
     rotulo, numero = numerado
     legenda = campos.get('legenda', '')
@@ -74,7 +78,9 @@ def render_figura(tipo, ident, campos, numerado):
         fonte = m.group(1).strip()
     arquivo = campos.get('arquivo', '')
     caminho = os.path.join(RAIZ, arquivo)
-    cabeca = '**%s %d — %s**' % (rotulo, numero, titulo)
+    # legenda e fonte saem com estilo próprio: o pandoc converte o Div em estilo
+    # de parágrafo, e é assim que elas ficam centralizadas em TNR 10 e 8
+    cabeca = estilo('Legenda', '%s %d — %s' % (rotulo, numero, titulo))
 
     if not (arquivo and os.path.exists(caminho)):
         corpo = ('> ⚠️ IMAGEM AUSENTE: `%s` — %s'
@@ -88,7 +94,7 @@ def render_figura(tipo, ident, campos, numerado):
     # tabela e quadro levam o título acima; figura, abaixo (NBR 14724)
     ordem = [cabeca, corpo] if tipo == 'TAB' else [corpo, cabeca]
     if fonte:
-        ordem.append(fonte)
+        ordem.append(estilo('FonteIlustracao', fonte))
     return '\n\n'.join([''] + ordem + [''])
 
 

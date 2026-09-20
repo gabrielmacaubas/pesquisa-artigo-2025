@@ -40,10 +40,10 @@ A [[@TAB:04-1]] consolida o conjunto.
   status: pronto
   origem: consulta agregada ao banco de produção em 27/07/2026, registrada em mapa-de-fatos §6
   dados: mapa-de-fatos §6
-  descricao: Quadro editável com as métricas agregadas do banco em 27/07/2026, em duas colunas, métrica e valor. Linhas: discentes cadastrados, registros de autoavaliação, conjuntos completos de medições, discentes com notas lançadas, notas por tipo, faixa e média das notas, pares competência x discente com duas ou mais medições, mentores, projetos e registros de auditoria. Acrescentar uma linha com a distribuição dos registros pelas nove unidades (33, 33, 33, 33, 33, 7, 3, 1, 1), que substitui o gráfico de barras antes previsto. Nenhum dado individual. Corpo em TNR 10.
+  descricao: Quadro editável com as métricas agregadas do banco em 27/07/2026, em dois pares de colunas, métrica e valor. Linhas: discentes cadastrados, registros de autoavaliação, conjuntos completos de medições, discentes com notas lançadas, notas por tipo, faixa e média das notas, pares competência x discente com duas ou mais medições, mentores, projetos e registros de auditoria. Acrescentar uma linha com a distribuição dos registros pelas nove unidades (33, 33, 33, 33, 33, 7, 3, 1, 1), que substitui o gráfico de barras antes previsto. Nenhum dado individual. Corpo em TNR 10.
   legenda: Tabela 1 — Caracterização agregada da base de produção do ciclo de 2025, apurada em 27 de julho de 2026 (n=33 discentes), incluindo a distribuição dos registros de autoavaliação pelas nove unidades. Fonte: dados da pesquisa.
   largura: 1col
-  altura_cm: 9
+  altura_cm: 8
   arquivo: figuras/tab-04-1.md
 ]]
 
@@ -63,14 +63,6 @@ desenvolvimento, discutido na subseção 4.6. A consequência para a leitura dos
 direta: a contagem de autoavaliações mede o volume de eventos gravados, ao passo que a
 contagem de notas mede o material efetivamente disponível para análise, e é esta segunda
 grandeza que limita todas as afirmações das subseções seguintes.
-
-A razão entre discentes cadastrados e mentores responsáveis é de aproximadamente dezesseis
-para um, distribuída em três projetos. Esse valor não é parâmetro de qualidade do
-acompanhamento, mas explica a natureza do problema que motivou a automação: a produção
-manual do perfil de cada discente recaía sobre uma equipe pequena e a cada unidade
-avaliativa, o que multiplica o esforço pelo número de ciclos, e não apenas pelo número de
-participantes. A carga acumulada ao longo de nove unidades é a grandeza que a solução
-descrita neste trabalho desloca para a máquina.
 
 A tabela de auditoria do painel administrativo acumulou 1.792 registros no período, contra
 177 registros de autoavaliação persistidos. Cada entrada corresponde a uma operação de
@@ -106,6 +98,23 @@ o que comparar, e a regra de dois terços permaneceria enunciado normativo sem
 correspondente computável. A existência do conjunto demonstra que a estrutura de
 persistência descrita na subseção 3.3 produz, em operação real, o insumo longitudinal que
 a camada de decisão consome.
+
+A forma como essa comparação chega ao mentor está reproduzida na [[@FIG:04-1]],
+construída com dados sintéticos: o gráfico de perfil sobrepõe as medições de duas
+unidades sucessivas sobre os mesmos eixos, e é dessa sobreposição que tanto a leitura
+humana quanto as duas regras extraem a variação de cada competência.
+
+[[FIG:04-1
+  tipo: grafico-linhas
+  status: pronto
+  origem: elaborado a partir do formato de saída do fluxo "graficos", com valores sintéticos construídos para este artigo
+  dados: valores sintéticos; a numeração dos eixos segue o Quadro 1
+  descricao: Gráfico radar com os sete eixos das competências macro, numerados conforme o Quadro 1, e duas unidades sobrepostas em escala de 0 a 4. Sem nome e sem dado de discente real.
+  legenda: Figura 3 — Gráfico de perfil de competências macro, com duas unidades sucessivas sobrepostas em escala de 0 a 4. Exemplo sintético, construído para ilustrar o formato da saída, sem dado de discente. Fonte: elaborado pelos autores.
+  largura: 1col
+  altura_cm: 9
+  arquivo: figuras/fig-04-1.png
+]]
 
 O contraste com a organização anterior dos dados é o ponto central. Uma planilha em que
 cada unidade sobrescreve a nota da competência preserva apenas o estado corrente e reduz a
@@ -144,6 +153,24 @@ do volume de medições descrito na subseção 4.2 o limite superior do que essa
 consegue detectar. O conjunto sobre o qual a condição pode ser verificada corresponde aos
 49 pares competência × discente com duas ou mais medições.
 
+Os artefatos que as duas camadas entregam estão reproduzidos na [[@FIG:04-2]], também
+em exemplos sintéticos, uma vez que nenhum documento emitido para discente real pode ser
+reproduzido em publicação aberta. O certificado registra a participação no programa, e a
+mensagem de recomendação nomeia a competência apontada, a condição que disparou o
+apontamento e a prática sugerida.
+
+[[FIG:04-2
+  tipo: diagrama-arquitetura
+  status: pronto
+  origem: elaborado a partir do modelo de documento do workflow "Certificados" e do template HTML do workflow "Gera recomendações"
+  dados: exemplos sintéticos construídos para este artigo
+  descricao: Dois painéis lado a lado, esquemáticos. À esquerda o certificado de participação, com nome fictício declarado como tal. À direita a mensagem de recomendação, com competência, motivo do disparo e prática sugerida. Sem dado de discente real.
+  legenda: Figura 4 — Certificado de participação e mensagem de recomendação pedagógica, os dois artefatos entregues pelas camadas de decisão e de intervenção. Exemplos sintéticos, sem dado de discente. Fonte: elaborado pelos autores.
+  largura: 1col
+  altura_cm: 7
+  arquivo: figuras/fig-04-2.png
+]]
+
 O envio das mensagens não é persistido em tabela do banco, de modo que o volume entregue
 não dispõe de evidência transacional e não é reportado aqui. O mesmo vale para a emissão
 dos certificados, cujos artefatos residem em serviço de armazenamento em nuvem, fora do
@@ -171,7 +198,7 @@ nuvem, em 12 a 15 segundos. A [[@TAB:04-2]] reúne as medições.
   descricao: Quadro editável comparando o tempo do processo manual, o tempo do ciclo automatizado anterior e os tempos das etapas do ciclo de 2025. Colunas para a etapa, o tempo e o ciclo a que a medição pertence. Corpo em TNR 10.
   legenda: Tabela 2 — Tempo de execução por etapa, do processo manual às etapas automatizadas dos ciclos de 2024 e de 2025. Fonte: dados da pesquisa.
   largura: 1col
-  altura_cm: 6
+  altura_cm: 5
   arquivo: figuras/tab-04-2.md
 ]]
 

@@ -1,13 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Aplica ao build/artigo.docx o que o reference-doc do pandoc não carrega:
-tamanho de página A4 e as margens da Revista Principia (sup 3,5 · inf 2 · lat 2,5 cm),
-extraídas do modelo oficial em docs/.
+Aplica ao build/artigo.docx o que o reference-doc do pandoc não carrega.
 
-O pandoc 2.9 não copia o <w:sectPr> do reference-doc, então o documento sai em
-letter com margens padrão — o que torna a contagem de páginas inútil justamente
-na restrição que mais importa (12 a 18 páginas).
+1. Tamanho de página A4 e margens da Revista Principia (sup 3,5 · inf 2 · lat 2,5 cm),
+   extraídas do modelo oficial em docs/. O pandoc 2.9 não copia o <w:sectPr> do
+   reference-doc, então o documento sai em letter com margens padrão — o que torna a
+   contagem de páginas inútil justamente na restrição que mais importa (12 a 18).
+
+2. Largura das tabelas. Para tabela de markdown sem largura declarada, o pandoc 2.9
+   emite <w:tblW w:type="pct" w:w="0.0"/> e um <w:tblGrid/> VAZIO. O LibreOffice
+   resolve isso jogando as colunas além da margem direita: na prática, some tudo
+   menos a primeira coluna. Aqui a tabela recebe 100% da largura útil e uma grade
+   proporcional ao conteúdo de cada coluna.
 
   python3 scripts/formato_principia.py [caminho.docx]
 """
@@ -34,6 +39,74 @@ SECTPR = (
 )
 
 
+# largura útil do texto: A4 (21 cm) menos as margens laterais de 2,5 cm = 16 cm
+LARGURA_UTIL = 9072  # twips
+
+
+def _celulas_da_linha(linha_xml):
+    return re.findall(r'<w:tc>.*?</w:tc>', linha_xml, re.S)
+
+
+def _texto(xml):
+    return ''.join(re.findall(r'<w:t[^>]*>(.*?)</w:t>', xml, re.S))
+
+
+def ajustar_tabelas(xml):
+    """Dá largura e grade a cada tabela, proporcional ao conteúdo das colunas."""
+    ajustadas = 0
+
+    def uma(m):
+        nonlocal ajustadas
+        tabela = m.group(0)
+        linhas = re.findall(r'<w:tr>.*?</w:tr>', tabela, re.S)
+        if not linhas:
+            return tabela
+        colunas = len(_celulas_da_linha(linhas[0]))
+        if colunas == 0:
+            return tabela
+
+        # peso de cada coluna: o maior texto que ela precisa acomodar
+        pesos = [4] * colunas          # 4 caracteres é o piso de uma coluna "#"
+        for linha in linhas:
+            for i, celula in enumerate(_celulas_da_linha(linha)[:colunas]):
+                pesos[i] = max(pesos[i], len(_texto(celula)))
+        # nenhuma coluna abaixo de 6% nem acima de 70% da largura útil
+        total = float(sum(pesos))
+        fracoes = [min(0.70, max(0.04, p / total)) for p in pesos]
+        soma = sum(fracoes)
+        larguras = [int(LARGURA_UTIL * f / soma) for f in fracoes]
+        larguras[-1] += LARGURA_UTIL - sum(larguras)
+
+        grade = '<w:tblGrid>%s</w:tblGrid>' % ''.join(
+            '<w:gridCol w:w="%d"/>' % l for l in larguras)
+        tabela = re.sub(r'<w:tblGrid\s*/>|<w:tblGrid>.*?</w:tblGrid>', grade,
+                        tabela, count=1, flags=re.S)
+        # sem tblLayout fixed o LibreOffice recalcula as colunas e ignora a grade
+        tabela = re.sub(r'<w:tblW[^/]*/>',
+                        '<w:tblW w:type="pct" w:w="5000"/>'
+                        '<w:tblLayout w:type="fixed"/>', tabela, count=1)
+        # cada célula declara a sua largura, senão o LibreOffice ignora a grade
+        def celula(mc):
+            i = celula.contador % colunas
+            celula.contador += 1
+            if '<w:tcW' in mc.group(0):
+                return mc.group(0)
+            return mc.group(0).replace(
+                '<w:tcPr>', '<w:tcPr><w:tcW w:w="%d" w:type="dxa"/>' % larguras[i], 1)
+        celula.contador = 0
+        tabela = re.sub(r'<w:tc>.*?</w:tcPr>', celula, tabela, flags=re.S)
+        # nenhuma linha se parte no meio. Manter a tabela inteira junta com
+        # keepNext foi testado e custa uma página de espaço em branco: fica fora.
+        tabela = tabela.replace('<w:trPr>', '<w:trPr><w:cantSplit/>')
+        tabela = re.sub(r'<w:tr>(?!<w:trPr>)', '<w:tr><w:trPr><w:cantSplit/></w:trPr>',
+                        tabela)
+        ajustadas += 1
+        return tabela
+
+    xml = re.sub(r'<w:tbl>.*?</w:tbl>', uma, xml, flags=re.S)
+    return xml, ajustadas
+
+
 def aplicar(caminho):
     if not os.path.exists(caminho):
         print(f'{caminho} não existe — rode o build antes.')
@@ -54,6 +127,9 @@ def aplicar(caminho):
                     xml = re.sub(r'<w:sectPr\b.*?</w:sectPr>', SECTPR, xml, flags=re.S)
                 else:
                     xml = xml.replace('</w:body>', SECTPR + '</w:body>')
+                xml, n = ajustar_tabelas(xml)
+                if n:
+                    print('  %d tabelas ajustadas à largura útil de 16 cm' % n)
                 dados = xml.encode('utf-8')
             zout.writestr(info, dados)
 

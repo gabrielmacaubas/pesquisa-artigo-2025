@@ -33,6 +33,7 @@ código; certificação; rastreabilidade histórica.
 
 ## Abstract
 
+::: {custom-style="AbstractEN"}
 Professional training programs that monitor the development of socioemotional skills
 produce, in each assessment unit, a volume of measurements whose manual consolidation
 required about forty minutes per student. The automation built in the previous cycle of
@@ -55,9 +56,12 @@ preserve the order of magnitude of the previous cycle even with the addition of 
 layers and of the integrity guarantees. It is concluded that closing the training cycle
 depends less on orchestration than on the property of the data layer that sustains it,
 and that what was demonstrated is feasibility under real conditions of use, not scale.
+:::
 
+::: {custom-style="AbstractEN"}
 Keywords: certification; historical traceability; low-code; process automation;
 socioemotional skills assessment.
+:::
 
 ## 1 Introdução
 
@@ -348,22 +352,22 @@ entre elas sem nova coleta.
 
 
 
-**Quadro 1 — Competências socioemocionais avaliadas no ciclo de 2025, após o desdobramento da inteligência emocional em subcompetências.**
+::: {custom-style="Legenda"}
+Quadro 1 — Competências socioemocionais avaliadas no ciclo de 2025, após o desdobramento da inteligência emocional em subcompetências.
+:::
 
-| # | Competência | Nível na matriz |
-|---|---|---|
-| 1 | Pensamento crítico e inovação | macro |
-| 2 | Aprendizagem ativa e estratégias de aprendizagem | macro |
-| 3 | Empreendedorismo | macro |
-| 4 | Criatividade, originalidade e iniciativa | macro |
-| 5 | Liderança e influência social | macro |
-| 6 | Resolução de problemas complexos | macro |
-| 7 | Inteligência emocional: autorregulação | subcompetência |
-| 8 | Inteligência emocional: percepção social | subcompetência |
-| 9 | Inteligência emocional: autoconhecimento | subcompetência |
-| 10 | Inteligência emocional: habilidades de relacionamento | subcompetência |
+| # | Competência macro | # | Subcompetência de inteligência emocional |
+|---|---|---|---|
+| 1 | Pensamento crítico e inovação | 7 | Autorregulação |
+| 2 | Aprendizagem ativa e estratégias de aprendizagem | 8 | Percepção social |
+| 3 | Empreendedorismo | 9 | Autoconhecimento |
+| 4 | Criatividade, originalidade e iniciativa | 10 | Habilidades de relacionamento |
+| 5 | Liderança e influência social | | |
+| 6 | Resolução de problemas complexos | | |
 
+::: {custom-style="FonteIlustracao"}
 Fonte: elaborado pelos autores.
+:::
 
 
 
@@ -393,9 +397,13 @@ Figura 1 apresenta a disposição dos componentes.
 
 ![](figuras/fig-03-1.png)
 
-**Figura 1 — Arquitetura da solução no ciclo de 2025, com a orquestração em n8n e a interface de programação de aplicações como núcleo de persistência e de decisão.**
+::: {custom-style="Legenda"}
+Figura 1 — Arquitetura da solução no ciclo de 2025, com a orquestração em n8n e a interface de programação de aplicações como núcleo de persistência e de decisão.
+:::
 
+::: {custom-style="FonteIlustracao"}
 Fonte: elaborado pelos autores.
+:::
 
 
 
@@ -438,9 +446,13 @@ flexibilidade para expansões futuras da matriz sem alteração de esquema.
 
 ![](figuras/fig-03-2.png)
 
-**Figura 2 — Modelo entidade-relacionamento do domínio de avaliação de competências socioemocionais.**
+::: {custom-style="Legenda"}
+Figura 2 — Modelo entidade-relacionamento do domínio de avaliação de competências socioemocionais.
+:::
 
+::: {custom-style="FonteIlustracao"}
 Fonte: elaborado pelos autores.
+:::
 
 
 
@@ -484,7 +496,7 @@ para cada discente com ao menos uma autoavaliacao:
     se (hoje - data_entrada do vinculo mais recente) < 365 dias: descartar
 
     agrupar as notas em conjuntos:
-        um conjunto por competencia macro, com as medicoes da propria competencia
+        um conjunto por competencia macro, com as suas medicoes
         um conjunto por competencia macro que tenha subcompetencias, com as
         medicoes das subcompetencias que a compoem
     competencias_avaliadas <- numero de competencias macro distintas
@@ -607,29 +619,24 @@ A Tabela 1 consolida o conjunto.
 
 
 
-**Tabela 1 — Caracterização agregada da base de produção do ciclo de 2025, apurada em 27 de julho de 2026 (n=33 discentes), incluindo a distribuição dos registros de autoavaliação pelas nove unidades.**
+::: {custom-style="Legenda"}
+Tabela 1 — Caracterização agregada da base de produção do ciclo de 2025, apurada em 27 de julho de 2026 (n=33 discentes), incluindo a distribuição dos registros de autoavaliação pelas nove unidades.
+:::
 
-| Métrica | Valor |
-|---|---|
-| Discentes cadastrados | 33 |
-| Período dos cadastros | 23/01/2025 a 01/04/2025 |
-| Registros de autoavaliação | 177 |
-| Período das autoavaliações | 23/01/2025 a 06/09/2025 |
-| Unidades avaliativas | 9 |
-| Registros por unidade, da 1ª à 9ª | 33 · 33 · 33 · 33 · 33 · 7 · 3 · 1 · 1 |
-| Notas registradas | 165 |
-| Notas de competência macro | 105 |
-| Notas de subcompetência | 60 |
-| Conjuntos completos de medições | 15 |
-| Discentes com notas lançadas | 7 |
-| Faixa das notas | 0,00 a 4,00 |
-| Média das notas | 2,47 |
-| Pares competência × discente com duas ou mais medições | 49 |
-| Mentores | 2 |
-| Projetos | 3 |
-| Registros de auditoria do painel administrativo | 1.792 |
+| Métrica | Valor | Métrica | Valor |
+|---|---|---|---|
+| Discentes cadastrados | 33 | Notas registradas | 165 |
+| Discentes com notas lançadas | 7 | Notas de competência macro | 105 |
+| Registros de autoavaliação | 177 | Notas de subcompetência | 60 |
+| Unidades avaliativas | 9 | Conjuntos completos de medições | 15 |
+| Mentores | 2 | Faixa das notas | 0,00 a 4,00 |
+| Projetos | 3 | Média das notas | 2,47 |
+| Registros de auditoria | 1.792 | Pares competência × discente com duas ou mais medições | 49 |
+| Registros por unidade, da 1ª à 9ª | 33 · 33 · 33 · 33 · 33 · 7 · 3 · 1 · 1 | Período das autoavaliações | 23/01/2025 a 06/09/2025 |
 
+::: {custom-style="FonteIlustracao"}
 Fonte: dados da pesquisa.
+:::
 
 
 
@@ -649,14 +656,6 @@ desenvolvimento, discutido na subseção 4.6. A consequência para a leitura dos
 direta: a contagem de autoavaliações mede o volume de eventos gravados, ao passo que a
 contagem de notas mede o material efetivamente disponível para análise, e é esta segunda
 grandeza que limita todas as afirmações das subseções seguintes.
-
-A razão entre discentes cadastrados e mentores responsáveis é de aproximadamente dezesseis
-para um, distribuída em três projetos. Esse valor não é parâmetro de qualidade do
-acompanhamento, mas explica a natureza do problema que motivou a automação: a produção
-manual do perfil de cada discente recaía sobre uma equipe pequena e a cada unidade
-avaliativa, o que multiplica o esforço pelo número de ciclos, e não apenas pelo número de
-participantes. A carga acumulada ao longo de nove unidades é a grandeza que a solução
-descrita neste trabalho desloca para a máquina.
 
 A tabela de auditoria do painel administrativo acumulou 1.792 registros no período, contra
 177 registros de autoavaliação persistidos. Cada entrada corresponde a uma operação de
@@ -692,6 +691,25 @@ o que comparar, e a regra de dois terços permaneceria enunciado normativo sem
 correspondente computável. A existência do conjunto demonstra que a estrutura de
 persistência descrita na subseção 3.3 produz, em operação real, o insumo longitudinal que
 a camada de decisão consome.
+
+A forma como essa comparação chega ao mentor está reproduzida na Figura 3,
+construída com dados sintéticos: o gráfico de perfil sobrepõe as medições de duas
+unidades sucessivas sobre os mesmos eixos, e é dessa sobreposição que tanto a leitura
+humana quanto as duas regras extraem a variação de cada competência.
+
+
+
+![](figuras/fig-04-1.png)
+
+::: {custom-style="Legenda"}
+Figura 3 — Gráfico de perfil de competências macro, com duas unidades sucessivas sobrepostas em escala de 0 a 4. Exemplo sintético, construído para ilustrar o formato da saída, sem dado de discente.
+:::
+
+::: {custom-style="FonteIlustracao"}
+Fonte: elaborado pelos autores.
+:::
+
+
 
 O contraste com a organização anterior dos dados é o ponto central. Uma planilha em que
 cada unidade sobrescreve a nota da competência preserva apenas o estado corrente e reduz a
@@ -730,6 +748,26 @@ do volume de medições descrito na subseção 4.2 o limite superior do que essa
 consegue detectar. O conjunto sobre o qual a condição pode ser verificada corresponde aos
 49 pares competência × discente com duas ou mais medições.
 
+Os artefatos que as duas camadas entregam estão reproduzidos na Figura 4, também
+em exemplos sintéticos, uma vez que nenhum documento emitido para discente real pode ser
+reproduzido em publicação aberta. O certificado registra a participação no programa, e a
+mensagem de recomendação nomeia a competência apontada, a condição que disparou o
+apontamento e a prática sugerida.
+
+
+
+![](figuras/fig-04-2.png)
+
+::: {custom-style="Legenda"}
+Figura 4 — Certificado de participação e mensagem de recomendação pedagógica, os dois artefatos entregues pelas camadas de decisão e de intervenção. Exemplos sintéticos, sem dado de discente.
+:::
+
+::: {custom-style="FonteIlustracao"}
+Fonte: elaborado pelos autores.
+:::
+
+
+
 O envio das mensagens não é persistido em tabela do banco, de modo que o volume entregue
 não dispõe de evidência transacional e não é reportado aqui. O mesmo vale para a emissão
 dos certificados, cujos artefatos residem em serviço de armazenamento em nuvem, fora do
@@ -751,7 +789,9 @@ nuvem, em 12 a 15 segundos. A Tabela 2 reúne as medições.
 
 
 
-**Tabela 2 — Tempo de execução por etapa, do processo manual às etapas automatizadas dos ciclos de 2024 e de 2025.**
+::: {custom-style="Legenda"}
+Tabela 2 — Tempo de execução por etapa, do processo manual às etapas automatizadas dos ciclos de 2024 e de 2025.
+:::
 
 | Etapa | Tempo | Ciclo |
 |---|---|---|
@@ -760,7 +800,9 @@ nuvem, em 12 a 15 segundos. A Tabela 2 reúne as medições.
 | Registro de uma autoavaliação completa | 2 a 3 s | 2025 |
 | Geração do gráfico de perfil e armazenamento em nuvem | 12 a 15 s | 2025 |
 
+::: {custom-style="FonteIlustracao"}
 Fonte: dados da pesquisa.
+:::
 
 
 

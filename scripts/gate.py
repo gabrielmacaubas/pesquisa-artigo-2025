@@ -35,6 +35,16 @@ MIN_PAGINAS = 12.0
 ALVO_PAGINAS = 16.0
 PALAVRAS_POR_PAGINA = 700.0
 CM_POR_PAGINA = 24.0
+# medido no PDF formatado de 20/09/2026: 15 referências ocupam 0,86 página em TNR 11
+# com espaçamento simples. O valor anterior, 5 por página, vinha de estimativa de
+# layout 1,5 e inflava o orçamento em cerca de duas páginas.
+REFS_POR_PAGINA = 15.0
+# O modelo soma texto, ilustrações e referências e ignora o que a diagramação cria:
+# figura que não cabe no pé da página e desce inteira, linha órfã de parágrafo,
+# espaço antes e depois de cada título de seção. Medido no PDF formatado de
+# 20/09/2026: o modelo dava 16,8 páginas e o documento saiu com 18. A diferença
+# entra aqui, explícita, em vez de ficar escondida numa constante ajustada à mão.
+FOLGA_DIAGRAMACAO = 1.2
 FOLGA_LEGENDA_CM = 1.5
 
 CAMPOS_FIG = ['tipo', 'status', 'origem', 'dados', 'descricao',
@@ -280,8 +290,8 @@ def orcamento(secoes, figuras, refs):
         if campos.get('largura') == 'meia':
             custo /= 2.0
         pag_fig += custo
-    pag_refs = len(refs) / 5.0
-    total = pag_texto + pag_fig + pag_refs
+    pag_refs = len(refs) / REFS_POR_PAGINA
+    total = pag_texto + pag_fig + pag_refs + FOLGA_DIAGRAMACAO
 
     print('\n── Orçamento de páginas ' + '─' * 40)
     for l in linhas:
@@ -291,6 +301,8 @@ def orcamento(secoes, figuras, refs):
     print('     texto ......... %5.1f pág' % pag_texto)
     print('     figuras (%d) ... %5.1f pág' % (len(figuras), pag_fig))
     print('     referências ... %5.1f pág' % pag_refs)
+    print('     diagramação ... %5.1f pág   (medida, ver o comentário no gate)'
+          % FOLGA_DIAGRAMACAO)
     print('     ' + '-' * 30)
     print('     ESTIMADO ...... %5.1f pág   (janela %.0f-%.0f | alvo %.0f)'
           % (total, MIN_PAGINAS, TETO_PAGINAS, ALVO_PAGINAS))

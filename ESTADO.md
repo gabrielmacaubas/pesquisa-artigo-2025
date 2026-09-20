@@ -6,18 +6,16 @@
 
 ## Situação atual
 
-**Etapa:** 4 — **o artigo existe inteiro**. Sete seções escritas, **cinco figuras
-produzidas**, `.docx` e `.pdf` gerados. Gate: 1 pendência (exit 2).
-**Atualizado:** 20/09/2026 (sessão 12 — figuras produzidas e build completo)
-**Próxima ação:** **`/revisar-artigo`** — segunda passada de review sobre o artigo completo,
-agora com resumo e figuras. Depois dela, mandar `build/artigo.pdf` para a orientadora.
+**Etapa:** 4 — **o artigo existe inteiro e o PDF está diagramado**. Sete seções, **sete
+figuras/quadros/tabelas**, `.docx` e `.pdf` gerados. Gate: 1 pendência (exit 2).
+**Atualizado:** 20/09/2026 (sessão 13 — defeitos de diagramação corrigidos e produtos ilustrados)
+**Próxima ação:** **`/revisar-artigo`** — segunda passada de review sobre o artigo completo.
+Depois dela, mandar `build/artigo.pdf` para a orientadora.
 
-**O autor precisa decidir:** duas coisas, nenhuma bloqueante. (a) Se aceita a fonte interna
-das figuras (ver **Figuras**). (b) Se manda o PDF para a orientadora agora ou só depois do
-review.
+**O autor precisa decidir:** se aceita a fonte interna das figuras (ver **Figuras**). Só
+isso, e não bloqueia nada.
 
-✅ **`build/` regerado em 20/09/2026** com tudo dentro: `build/artigo.docx` e
-`build/artigo.pdf`, **17 páginas reais**.
+✅ **`build/artigo.pdf` regerado em 20/09/2026: 18 páginas reais**, no teto da revista.
 
 ## O artigo
 
@@ -102,21 +100,24 @@ exige parágrafo único — é esperado, não é desvio.
 | Texto (9.136 palavras) | 13,0 |
 | Figuras (5) | 1,9 |
 | Referências (15) | 3,0 |
-| **Estimado pelo gate** | **17,98** |
-| **Real, no PDF de 20/09/2026** | **17** |
+| **Estimado pelo gate** | **17,9** |
+| **Real, no PDF de 20/09/2026** | **18** |
 
-O número que vale é o do documento formatado: **17 páginas reais**, dentro da janela de 12 a
-18. A estimativa do gate (17,98) é conservadora e erra para cima em cerca de uma página —
-agora que existe um PDF completo, dá para calibrar essa diferença, se valer a pena.
+O número que vale é o do documento formatado: **18 páginas reais**, que é exatamente o teto
+da revista. O modelo do gate foi calibrado contra esse PDF nesta sessão e agora bate com ele
+(17,9 contra 18): as referências passaram de 5 para 15 por página, que é o que elas
+realmente ocupam, e entrou uma linha explícita de **folga de diagramação, 1,2 página** — o
+espaço que figura empurrada para a página seguinte, linha órfã e respiro de título consomem
+e que o modelo antes ignorava.
 
-**A folga real é de ~1 página**, não de 0,02. Ainda assim o gate vai acusar pendência
-enquanto a estimativa passar de 16. Fontes de corte, se a orientadora pedir espaço:
+**Não há folga.** Qualquer acréscimo passa de 18 e é rejeitado na triagem. Fontes de corte:
 
-1. `FIG:03-2` (DER) de 9 cm para 7 cm → **0,08 pág**
-2. Conclusão, 47 palavras acima do alvo → **0,07 pág**
-3. Seção 4, 131 palavras acima do alvo → **0,19 pág**
+1. Conclusão, 47 palavras acima do alvo → **0,07 pág**
+2. Seção 4, ainda 144 palavras acima do alvo → **0,21 pág**
+3. `FIG:03-2` (DER) redesenhada mais baixa → **0,08 pág**
 
-As três juntas trazem o artigo para ~17,6. A fonte prevista antes (fundir `FIG:04-1`) já foi
+Nesta sessão já foram usadas duas fontes: o Quadro 1 e a Tabela 1 foram remontados em dois
+pares de colunas (de 12 e 16 cm para 7 e 8 cm), e um parágrafo de 93 palavras saiu de 4.1. A fonte prevista antes (fundir `FIG:04-1`) já foi
 usada em D-29.
 
 ## Figuras — 5 declaradas, **5 prontas**
@@ -128,6 +129,12 @@ usada em D-29.
 | `FIG:03-2` | **Figura 2** | `figuras/fig-03-2.png` | DER das 8 entidades, com cardinalidades e nota de auditoria |
 | `TAB:04-1` | **Tabela 1** | `figuras/tab-04-1.md` | Snapshot agregado de 27/07/2026, com a distribuição pelas 9 unidades |
 | `TAB:04-2` | **Tabela 2** | `figuras/tab-04-2.md` | Tempos: manual 40 min · 2024 ≈12 s · registro 2–3 s · gráfico 12–15 s |
+| `FIG:04-1` | **Figura 3** | `figuras/fig-04-1.png` | Gráfico de perfil com duas unidades sobrepostas — **dados sintéticos** |
+| `FIG:04-2` | **Figura 4** | `figuras/fig-04-2.png` | Certificado e mensagem de recomendação — **exemplos sintéticos** |
+
+As duas últimas são o produto que as camadas entregam, e foram pedidas pelo autor em
+20/09/2026. São sintéticas por obrigação: `dados-e-privacidade.md` proíbe reproduzir
+documento de discente real, e a legenda de cada uma declara isso.
 
 As três `TAB` são markdown editável, nunca imagem — exigência da revista. Os dois `.png`
 saem de `python3 scripts/figuras.py`, que os regera do zero em **300 dpi**, com texto
@@ -173,9 +180,15 @@ bash scripts/build.sh --md   # só o markdown consolidado
 ✅ Regerado em 20/09/2026 com o artigo inteiro: **17 páginas reais**, 7 seções, 5
 figuras/tabelas, 15 referências. `build/artigo.pdf` é o arquivo para mandar à orientadora.
 
-- `scripts/figuras.py` — gera os dois `.png` em 300 dpi; rodar de novo se algo mudar
+- `scripts/figuras.py` — gera os quatro `.png` em 300 dpi; rodar de novo se algo mudar
 - `scripts/build.py` — tabela e quadro entram como markdown editável, com título acima e
   `Fonte:` abaixo; figura leva o título abaixo (NBR 14724)
+- `scripts/preparar_reference.py` — **novo**, injeta no `reference-abnt.docx` os estilos que
+  faltavam (legenda, fonte da ilustração, pseudocódigo, abstract em itálico) e corrige os
+  que vinham errados do pandoc. Idempotente; rodar depois de qualquer troca do template
+- `scripts/formato_principia.py` — além da página A4, agora dá largura e grade às tabelas.
+  Sem isso o pandoc 2.9 emite `<w:tblGrid/>` vazio e o LibreOffice joga todas as colunas
+  menos a primeira para fora da margem direita
 
 - `scripts/reference-abnt.docx` — estilos do build: TNR 11, espaçamento simples, recuo 1 cm
 - `scripts/formato_principia.py` — injeta A4 e margens no `.docx`; o pandoc 2.9 não copia o

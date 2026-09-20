@@ -40,6 +40,7 @@ código; certificação; rastreabilidade histórica.
 
 ## Abstract
 
+::: {custom-style="AbstractEN"}
 Professional training programs that monitor the development of socioemotional skills
 produce, in each assessment unit, a volume of measurements whose manual consolidation
 required about forty minutes per student. The automation built in the previous cycle of
@@ -62,6 +63,9 @@ preserve the order of magnitude of the previous cycle even with the addition of 
 layers and of the integrity guarantees. It is concluded that closing the training cycle
 depends less on orchestration than on the property of the data layer that sustains it,
 and that what was demonstrated is feasibility under real conditions of use, not scale.
+:::
 
+::: {custom-style="AbstractEN"}
 Keywords: certification; historical traceability; low-code; process automation;
 socioemotional skills assessment.
+:::

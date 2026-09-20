@@ -911,3 +911,95 @@ estimativa erra para cima. O gate continua acusando pendência porque compara co
 
 `/revisar-artigo` — segunda passada contra o checklist, agora com o artigo inteiro, resumo e
 figuras incluídos. Depois dela, `build/artigo.pdf` é o arquivo para a orientadora.
+
+### 2026-09-20 — Sessão 13: o PDF estava quebrado, e faltavam os produtos
+
+O autor leu o PDF gerado na sessão 12 e apontou quatro defeitos. Todos procediam, e três
+deles eram graves o bastante para rejeição na triagem.
+
+#### 1. As tabelas perdiam as colunas
+
+Do Quadro 1 e da Tabela 1 só aparecia a primeira coluna. **Causa:** para tabela de markdown
+sem largura declarada, o pandoc 2.9 emite `<w:tblW w:type="pct" w:w="0.0"/>` e um
+`<w:tblGrid/>` **vazio**; o LibreOffice resolve a ambiguidade jogando as demais colunas para
+fora da margem direita. Como o `formato_principia.py` encolhe a página para A4 **depois** do
+pandoc, o estrago ficava invisível no `.docx` e só aparecia no PDF.
+
+`formato_principia.py` passa a dar a cada tabela 100% da largura útil e uma grade
+proporcional ao conteúdo de cada coluna, com piso de 4% e teto de 70%.
+
+#### 2. O pseudocódigo saía uma palavra por linha
+
+Duas causas somadas. O estilo `SourceCode` **não existia** no template, então o bloco herdava
+o corpo: justificado, com recuo de 1 cm. E o `VerbatimChar` pedia **Consolas**, fonte que não
+existe no Linux e cai numa substituta larga demais para a linha caber. Criado o `SourceCode`
+(esquerda, sem recuo) e o `VerbatimChar` passou a Liberation Mono 9. Uma linha do
+pseudocódigo foi encurtada para caber na largura sem quebrar.
+
+#### 3. Legenda e fonte fora do padrão do veículo
+
+A referência é o manuscrito de 2024: título da ilustração **centralizado** acima ou abaixo, e
+`Fonte:` **centralizada**, menor. O build emitia as duas em negrito, à esquerda, com recuo de
+parágrafo. Criados os estilos `Legenda` (TNR 10, centralizado) e `FonteIlustracao` (TNR 8,
+centralizado); o `build.py` passa a emitir os dois como Div com `custom-style`. Corrigidos
+também o estilo `Figure`, que não centralizava a imagem, e o `Compact`, que dava recuo de
+primeira linha **dentro da célula** — era ele que empurrava o texto de cada célula e forçava
+quebras. A margem de célula subiu de 0 para 80 twips, que era o "espaçamento colado".
+
+De brinde, o `Abstract` e as `Keywords` passaram a itálico, como a revista exige e como o
+manuscrito de 2024 faz.
+
+#### 4. Faltavam os produtos — as duas figuras novas
+
+Procede: o artigo descrevia a certificação e a recomendação sem mostrar o que sai delas.
+
+- **Figura 3** — gráfico de perfil com duas unidades sobrepostas, eixos numerados conforme o
+  Quadro 1. É a forma como a comparação longitudinal chega ao mentor.
+- **Figura 4** — certificado de participação e mensagem de recomendação, lado a lado.
+
+⚠️ **As duas são sintéticas, e a legenda de cada uma declara isso.** Não é preciosismo:
+`dados-e-privacidade.md` proíbe reproduzir documento de discente real em publicação aberta,
+e a regra 5 manda construir exemplo sintético e dizer que é sintético. Ambas saem de
+`scripts/figuras.py`, em 300 dpi, com texto interno em 18,2 pt.
+
+#### O preço em páginas, e de onde ele saiu
+
+As duas figuras custaram cerca de uma página, e o documento bateu em 19 — acima do teto.
+Compensação, sem tocar em limitação, procedência de dado ou discussão à luz da literatura:
+
+| Medida | Ganho |
+|---|---|
+| Quadro 1 remontado em dois pares de colunas (12 → 7 cm) | 0,21 pág |
+| Tabela 1 remontada em dois pares de colunas (16 → 8 cm) | 0,33 pág |
+| Corte do parágrafo da razão discente/mentor em 4.1, 93 palavras | 0,13 pág |
+
+O parágrafo cortado era **interpretação dentro de subseção de resultados**, o que o checklist
+§4 já desaconselha, e a introdução ainda traz o mesmo argumento.
+
+**Resultado: 18 páginas reais**, exatamente no teto.
+
+#### O gate estava medindo errado, nos dois sentidos
+
+Com um PDF completo em mãos deu para conferir o modelo de orçamento contra a realidade, e
+ele errava em três pontos:
+
+- **Referências: 5 por página.** O PDF mostra 15 referências em 0,86 página. Constante
+  corrigida para 15 — sozinha, inflava o orçamento em cerca de duas páginas.
+- **Altura das tabelas: chutada.** `TAB:04-1` estava declarada com 9 cm e ocupava 16. As três
+  passaram a declarar a altura medida.
+- **Diagramação: ignorada.** Figura que não cabe no pé da página e desce inteira, linha órfã,
+  respiro de título. Medido em 1,2 página neste documento, e agora é uma linha explícita do
+  orçamento em vez de constante ajustada à mão.
+
+Com as três correções o modelo dá 17,9 contra 18 reais. Antes dava 17,0 contra 19.
+
+#### Pendente
+
+- **Gate: exit 2, uma pendência** — 17,9 páginas, acima do alvo de 16 e no teto de 18.
+- **Fonte das figuras** — Liberation Serif no lugar da Times New Roman, decisão ainda aberta.
+- **`master` está 7 commits à frente de `origin/master`.**
+
+#### Próximo
+
+`/revisar-artigo`. O `build/artigo.pdf` de 20/09/2026 é a versão para ler e para mandar à
+orientadora.

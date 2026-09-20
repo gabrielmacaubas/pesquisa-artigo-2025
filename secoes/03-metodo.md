@@ -50,7 +50,7 @@ entre elas sem nova coleta.
   status: pronto
   origem: nó "Definir competências" do workflow "Gera recomendações" (exportação de set/2025) cruzado com o manual de operação do programa
   dados: mapa-de-fatos §5
-  descricao: Quadro editável com as dez competências avaliadas, indicando quais são macro e quais são subcompetências de inteligência emocional. Corpo em TNR 10.
+  descricao: Quadro editável com as dez competências avaliadas, em dois pares de colunas: à esquerda as seis macro autônomas, à direita as quatro subcompetências de inteligência emocional. A numeração de 1 a 10 é a mesma usada nos eixos do gráfico de perfil. Corpo em TNR 10.
   legenda: Quadro 1 — Competências socioemocionais avaliadas no ciclo de 2025, após o desdobramento da inteligência emocional em subcompetências. Fonte: elaborado pelos autores.
   largura: 1col
   altura_cm: 7
@@ -178,7 +178,7 @@ para cada discente com ao menos uma autoavaliacao:
     se (hoje - data_entrada do vinculo mais recente) < 365 dias: descartar
 
     agrupar as notas em conjuntos:
-        um conjunto por competencia macro, com as medicoes da propria competencia
+        um conjunto por competencia macro, com as suas medicoes
         um conjunto por competencia macro que tenha subcompetencias, com as
         medicoes das subcompetencias que a compoem
     competencias_avaliadas <- numero de competencias macro distintas
