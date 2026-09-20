@@ -844,3 +844,70 @@ Produzir as cinco figuras — as três `TAB` são markdown editável e saem ráp
 são diagramas a desenhar. `python3 scripts/gate.py --figuras` lista o que cada uma precisa
 mostrar. Alternativa: `/revisar-artigo` para uma segunda passada agora que o texto está
 completo.
+
+### 2026-09-20 — Sessão 12: as cinco figuras produzidas, e o artigo fecha em 17 páginas
+
+- **Feito:** produzidas as **cinco** figuras que faltavam, regerado o build completo. O
+  artigo existe de ponta a ponta pela primeira vez: `build/artigo.pdf`, **17 páginas
+  reais**, sete seções, cinco elementos gráficos e quinze referências.
+
+#### As três tabelas
+
+Escritas como markdown editável em `figuras/tab-*.md`, nunca como imagem — a revista rejeita
+tabela capturada. Conteúdo tirado do mapa de fatos: as dez competências do §5, o snapshot
+agregado do §6 e os tempos do §9.
+
+O `scripts/build.py` não sabia lidar com isso: o campo `arquivo` apontando para um `.md`
+virava `![](figuras/tab-04-1.md)`, uma imagem quebrada. Passou a **embutir o markdown**
+quando o arquivo é `.md`, e a colocar o título **acima** da tabela e a `Fonte:` **abaixo**,
+como manda a NBR 14724 — a figura continua com o título embaixo.
+
+#### As duas figuras
+
+`scripts/figuras.py`, novo, desenha os dois diagramas com PIL e os grava em **300 dpi**, com
+texto interno em **18,2 pt** (mínimo da revista: 18). São regeráveis por comando, o que
+evita o diagrama-órfão-em-ferramenta-proprietária.
+
+- **Figura 1 — arquitetura:** quatro faixas, entrada, fluxos, núcleo e saída, com as setas
+  do percurso. Sem captura de tela, sem hostname.
+- **Figura 2 — modelo de dados:** as entidades do domínio com cardinalidades, mais a nota de
+  rodapé sobre os campos de auditoria e a restrição de proteção. Nenhum atributo pessoal.
+
+⚠️ **Pendente de decisão do autor:** o texto interno está em **Liberation Serif**,
+metricamente compatível com a Times New Roman, porque a TNR não está instalada na máquina.
+Aceitar a substituição ou regerar em máquina com a fonte, trocando duas constantes no
+script.
+
+#### Correção factual encontrada ao desenhar o DER
+
+A seção 3.3 afirmava que o modelo se organiza em torno de **sete** entidades. O diretório
+`api-repo/automacao-deploy-main/capacitacao/models/` tem **oito**: discente, mentor,
+projeto, vínculo discente-projeto, competência macro, subcompetência, autoavaliação e nota.
+A própria prosa da seção já enumerava as oito. Corrigido no texto e na descrição do bloco da
+figura. É o tipo de número que um avaliador confere contra a figura ao lado.
+
+#### Quadro e tabela deixaram de ser a mesma coisa
+
+A revista distingue quadro (informação textual) de tabela (dado numérico), e cada um tem
+**sequência de numeração própria**. O build numerava tudo como "Tabela N". Os blocos passaram
+a aceitar `rotulo: quadro`, e o quadro das competências virou **Quadro 1**, com as duas da
+seção 4 como **Tabela 1** e **Tabela 2**. A concordância da chamada no texto foi ajustada
+junto ("apresentado **no** Quadro 1").
+
+#### O orçamento era mais folgado do que o gate dizia
+
+A estimativa do gate é de 17,98 páginas. **O PDF formatado tem 17.** A folga real contra o
+teto de 18 é de cerca de uma página, e não os 0,02 que a sessão anterior registrou — a
+estimativa erra para cima. O gate continua acusando pendência porque compara com o alvo de
+16, o que é comportamento correto dele.
+
+#### Pendente
+
+- **Gate: exit 2, uma pendência** — a estimativa de orçamento acima do alvo de 16.
+- **Fonte das figuras** — decisão do autor, acima.
+- **`master` está 6 commits à frente de `origin/master`.** Nada enviado.
+
+#### Próximo
+
+`/revisar-artigo` — segunda passada contra o checklist, agora com o artigo inteiro, resumo e
+figuras incluídos. Depois dela, `build/artigo.pdf` é o arquivo para a orientadora.

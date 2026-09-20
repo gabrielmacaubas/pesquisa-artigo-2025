@@ -1,3 +1,64 @@
+# Automação de certificação e recomendação pedagógica em programa de capacitação profissional: da geração de indicadores à camada de decisão
+
+## Resumo
+
+Programas de capacitação profissional que acompanham o desenvolvimento de competências
+socioemocionais produzem, a cada unidade avaliativa, um volume de medições cuja
+consolidação manual consumia cerca de quarenta minutos por discente. A automação
+construída no ciclo anterior deste projeto reduziu esse tempo, mas encerrava-se na
+produção dos indicadores de desempenho. O objetivo é descrever e avaliar a solução do
+ciclo de 2025 do programa Capacitação 4.0, que estendeu essa automação com uma camada de
+decisão e uma camada de intervenção. A primeira responde pela certificação por critério
+objetivo, e a segunda pela recomendação pedagógica dirigida ao discente. Adotou-se
+pesquisa aplicada de natureza descritiva sobre o sistema em operação real, com evidência
+extraída do código da interface de programação de aplicações, das exportações dos fluxos
+construídos em ferramenta de baixo código e de consulta agregada ao banco de produção
+realizada em 27 de julho de 2026, sem que registro individual algum fosse reportado. A
+base constituída reúne 33 discentes cadastrados, 177 registros de autoavaliação
+distribuídos em nove unidades e 165 notas organizadas em quinze conjuntos completos de
+medições, com média de 2,47 na escala de 0,00 a 4,00. Dela resultam 49 pares competência
+× discente com duas ou mais medições, insumo longitudinal exigido pela regra de evolução
+em dois terços das competências avaliadas. O registro de uma autoavaliação completa
+passou a ocorrer em 2 a 3 segundos, e a geração do gráfico de perfil, em 12 a 15
+segundos. Esses tempos preservam a ordem de magnitude do ciclo anterior mesmo com o
+acréscimo das duas camadas e das garantias de integridade. Conclui-se que o encerramento
+do ciclo formativo depende menos da orquestração do que da propriedade da camada de
+dados que a sustenta, e que o demonstrado é viabilidade em condições reais de uso, não
+escala.
+
+Palavras-chave: automação de processos; avaliação de competências socioemocionais; baixo
+código; certificação; rastreabilidade histórica.
+
+# Automating certification and pedagogical recommendation in a professional training program: from indicator generation to the decision layer
+
+## Abstract
+
+Professional training programs that monitor the development of socioemotional skills
+produce, in each assessment unit, a volume of measurements whose manual consolidation
+required about forty minutes per student. The automation built in the previous cycle of
+this project reduced that time, but ended at the production of performance indicators.
+The objective is to describe and evaluate the solution of the 2025 cycle of the
+Capacitação 4.0 program, which extended that automation with a decision layer and an
+intervention layer. The former is in charge of certification under an objective
+criterion, and the latter of the pedagogical recommendation sent to the student. Applied
+descriptive research was conducted on the system in real operation, with evidence taken
+from the application programming interface source code, from the exports of the
+workflows built in a low-code tool and from an aggregate query to the production
+database performed on 27 July 2026, with no individual record reported. The resulting
+base comprises 33 registered students, 177 self-assessment records distributed across
+nine units and 165 scores organized into fifteen complete sets of measurements, with a
+mean of 2.47 on a scale from 0.00 to 4.00. From that base come 49 skill-by-student pairs
+with two or more measurements, the longitudinal input required by the rule of
+improvement in two thirds of the assessed skills. Recording a complete self-assessment
+takes 2 to 3 seconds, and generating the profile chart, 12 to 15 seconds. Those times
+preserve the order of magnitude of the previous cycle even with the addition of the two
+layers and of the integrity guarantees. It is concluded that closing the training cycle
+depends less on orchestration than on the property of the data layer that sustains it,
+and that what was demonstrated is feasibility under real conditions of use, not scale.
+
+Keywords: certification; historical traceability; low-code; process automation;
+socioemotional skills assessment.
+
 ## 1 Introdução
 
 Programas de capacitação profissional voltados à formação para a inovação têm incorporado
@@ -5,93 +66,97 @@ ao seu desenho o acompanhamento sistemático de competências socioemocionais, t
 objeto de avaliação periódica e não como resultado tácito da convivência em projeto. O
 programa Capacitação 4.0, que constitui o contexto deste trabalho, opera segundo essa
 orientação e estabelece uma matriz de sete competências macro, quatro subcompetências
-vinculadas à inteligência emocional e uma escala de zero a quatro pontos, aplicada ao final
-de cada unidade avaliativa do percurso do discente (Embrapii, 2021).
+vinculadas à inteligência emocional e uma escala de zero a quatro pontos, aplicada ao
+final de cada unidade avaliativa do percurso do discente (Embrapii, 2021).
 
 O acompanhamento assim desenhado produz, a cada unidade, um volume de medições que cresce
 com o produto entre o número de participantes e o número de competências avaliadas, e o
 trabalho de consolidação desse volume era conduzido manualmente em planilhas eletrônicas
-mantidas pelos mentores do programa. O registro do ciclo anterior do projeto indica um custo
-aproximado de quarenta minutos por discente para reunir as notas, produzir os gráficos de
-acompanhamento e organizar o material devolvido. A carga imposta à equipe era, assim,
-proporcional ao tamanho da turma e independente do valor analítico do resultado obtido.
+mantidas pelos mentores do programa. O registro do ciclo anterior do projeto indica um
+custo aproximado de quarenta minutos por discente para reunir as notas, produzir os
+gráficos de acompanhamento e organizar o material devolvido. A carga imposta à equipe era,
+assim, proporcional ao tamanho da turma e independente do valor analítico do resultado
+obtido.
 
 Esse arranjo foi o alvo do ciclo de 2024 do projeto, que automatizou a coleta e a
 consolidação por meio de fluxos construídos em ferramenta de baixo código. Esses fluxos
-integravam-se a uma interface de programação de aplicações responsável pelo armazenamento das
-notas, e produziam automaticamente os gráficos radar e as tabelas de acompanhamento. O tempo
-de processamento por discente caiu para cerca de doze segundos, e a produção dos indicadores
-deixou de depender da disponibilidade do mentor. O ganho é expressivo no eixo em que foi
-medido, e é justamente a delimitação desse eixo que motiva o presente trabalho.
+integravam-se a uma interface de programação de aplicações responsável pelo armazenamento
+das notas, e produziam automaticamente os gráficos radar e as tabelas de acompanhamento. O
+tempo de processamento por discente caiu para cerca de doze segundos, e a produção dos
+indicadores deixou de depender da disponibilidade do mentor. O ganho é expressivo no eixo
+em que foi medido, e é justamente a delimitação desse eixo que motiva o presente trabalho.
 
-A automação entregue naquele ciclo encerrava-se na produção do indicador. O gráfico chegava
-ao mentor, e permaneciam humanas as duas etapas que efetivamente fecham um ciclo formativo:
-decidir se o percurso do discente satisfaz o critério que autoriza a certificação e devolver
-a ele uma orientação capaz de alterar o desempenho antes da unidade seguinte. Ambas as
-etapas eram executadas por leitura visual dos gráficos. A redução do tempo de consolidação
-não se converteu, portanto, em redução do tempo até a decisão, que permanecia como gargalo
-real do processo.
+A automação entregue naquele ciclo encerrava-se na produção do indicador. O gráfico
+chegava ao mentor, e permaneciam humanas as duas etapas que efetivamente fecham um ciclo
+formativo: decidir se o percurso do discente satisfaz o critério que autoriza a
+certificação e devolver a ele uma orientação capaz de alterar o desempenho antes da
+unidade seguinte. Ambas as etapas eram executadas por leitura visual dos gráficos. A
+redução do tempo de consolidação não se converteu, portanto, em redução do tempo até a
+decisão, que permanecia como gargalo real do processo.
 
 Há uma segunda limitação, menos visível e de consequência mais ampla, que diz respeito ao
 meio em que as medições passaram a residir. A planilha eletrônica acumulava a função de
-camada de persistência sem oferecer as garantias que essa função exige. Nada impede que uma
-medição anterior seja sobrescrita, a nota não fica formalmente vinculada ao discente e à
-competência que a originaram, e o momento da coleta se perde quando o arquivo é reorganizado
-entre unidades. A série histórica de cada participante existia, portanto, por convenção de
-uso, e não por construção.
+camada de persistência sem oferecer as garantias que essa função exige. Nada impede que
+uma medição anterior seja sobrescrita, a nota não fica formalmente vinculada ao discente e
+à competência que a originaram, e o momento da coleta se perde quando o arquivo é
+reorganizado entre unidades. A série histórica de cada participante existia, portanto, por
+convenção de uso, e não por construção.
 
-Essa fragilidade importa porque os dois critérios que o programa formula são comparativos e
-não pontuais. A certificação, tal como enunciada pela coordenação, exige evidência de
+Essa fragilidade importa porque os dois critérios que o programa formula são comparativos
+e não pontuais. A certificação, tal como enunciada pela coordenação, exige evidência de
 evolução em pelo menos dois terços das competências avaliadas, e a recomendação pedagógica
-deve alcançar o discente cujo desempenho caiu em relação à unidade anterior, mesmo quando a
-nota permanece dentro da faixa considerada adequada. Nenhum dos dois pode ser computado sobre
-a medição mais recente isoladamente. Ambos perguntam como a competência variou entre unidades
-sucessivas, e não em que ponto ela se encontra agora.
+deve alcançar o discente cujo desempenho caiu em relação à unidade anterior, mesmo quando
+a nota permanece dentro da faixa considerada adequada. Nenhum dos dois pode ser computado
+sobre a medição mais recente isoladamente. Ambos perguntam como a competência variou entre
+unidades sucessivas, e não em que ponto ela se encontra agora.
 
-Diante disso, o problema que orienta este trabalho pode ser formulado nos seguintes termos:
-quais componentes uma automação de ciclo formativo precisa incorporar para que a decisão de
-certificação e a devolutiva ao discente deixem de depender de leitura manual de
+Diante disso, o problema que orienta este trabalho pode ser formulado nos seguintes
+termos: quais componentes uma automação de ciclo formativo precisa incorporar para que a
+decisão de certificação e a devolutiva ao discente deixem de depender de leitura manual de
 indicadores, e que condições de persistência de dados essas duas camadas impõem à
-arquitetura que as sustenta. A pergunta é de natureza arquitetural antes de ser de natureza
-pedagógica, porque a viabilidade de ambas as camadas depende de uma propriedade da base de
-dados que a planilha não oferece.
+arquitetura que as sustenta. A pergunta é de natureza arquitetural antes de ser de
+natureza pedagógica, porque a viabilidade de ambas as camadas depende de uma propriedade
+da base de dados que a planilha não oferece.
 
 O objetivo geral consiste em descrever e avaliar a solução construída no ciclo de 2025 do
 projeto, que estendeu a automação existente com uma camada de decisão e uma camada de
 intervenção assentadas sobre persistência relacional com rastreabilidade histórica.
-Especificamente, o trabalho descreve o modelo de dados adotado e as restrições de integridade
-que preservam a série de medições. Apresenta também a operacionalização do critério de
-certificação como consulta computável exposta em serviço, o fluxo de recomendação pedagógica
-com envio autônomo por correio eletrônico e a caracterização da base efetivamente constituída
-durante a operação.
+Especificamente, o trabalho descreve o modelo de dados adotado e as restrições de
+integridade que preservam a série de medições. Apresenta também a operacionalização do
+critério de certificação como consulta computável exposta em serviço, o fluxo de
+recomendação pedagógica com envio autônomo por correio eletrônico e a caracterização da
+base efetivamente constituída durante a operação.
 
-A contribuição sobre o ciclo anterior está no deslocamento do limite da automação. Enquanto
-o trabalho de 2024 respondia à pergunta de como produzir o indicador em menos tempo, o de
-2025 responde à de como produzir a decisão e a intervenção a partir dele. Esse deslocamento
-exige tanto a formalização do critério em código auditável quanto a substituição da planilha
-por um banco de dados relacional capaz de responder pela trajetória de cada competência.
-Somam-se a isso a migração da infraestrutura de hospedagem, conduzida no mesmo período, e a
-exposição da regra de certificação como serviço consumível por qualquer cliente autorizado.
+A contribuição sobre o ciclo anterior está no deslocamento do limite da automação.
+Enquanto o trabalho de 2024 respondia à pergunta de como produzir o indicador em menos
+tempo, o de 2025 responde à de como produzir a decisão e a intervenção a partir dele. Esse
+deslocamento exige tanto a formalização do critério em código auditável quanto a
+substituição da planilha por um banco de dados relacional capaz de responder pela
+trajetória de cada competência. Somam-se a isso a migração da infraestrutura de
+hospedagem, conduzida no mesmo período, e a exposição da regra de certificação como
+serviço consumível por qualquer cliente autorizado.
 
 O relato apoia-se em evidência de operação real e não em ambiente construído para o
-experimento, o que define tanto o seu alcance quanto os seus limites. A base analisada reúne
-as autoavaliações registradas por trinta e três discentes ao longo de nove unidades
-avaliativas do ciclo de 2025. Ela sustenta afirmações sobre a viabilidade das camadas
-propostas em condições de uso, sem autorizar afirmação sobre escala ou sobre efeito
-pedagógico da intervenção. Todos os dados utilizados são operacionais do próprio programa e
-foram tratados de forma agregada, sem que qualquer registro individual seja reportado.
+experimento, o que define tanto o seu alcance quanto os seus limites. A base analisada
+reúne os registros de autoavaliação acumulados por trinta e três discentes ao longo de
+nove unidades do ciclo de 2025, dos quais quinze conjuntos completos de medições,
+concentrados em sete participantes, constituem o material efetivamente comparável. Ela
+sustenta afirmações sobre a viabilidade das camadas propostas em condições de uso, sem
+autorizar afirmação sobre escala ou sobre efeito pedagógico da intervenção. Todos os dados
+utilizados são operacionais do próprio programa e foram tratados de forma agregada, sem
+que qualquer registro individual seja reportado.
 
 O texto está organizado em cinco seções. A seção 2 reúne a literatura sobre automação de
 processos em instituições de ensino, sobre plataformas de baixo código e a fronteira entre
 orquestração e regra de negócio, e sobre as condições de mensuração de competências
 socioemocionais, delimitando a lacuna que o trabalho ocupa. A seção 3 descreve o método,
 incluindo o recorte do estudo, a arquitetura da solução, o modelo de dados e a formulação
-exata das regras de certificação e de recomendação. Nela também se registra o tratamento dado
-aos dados pessoais. A seção 4 apresenta a base constituída, a cobertura longitudinal que ela
-oferece, o comportamento observado das duas camadas e os tempos de execução, seguidos da
-discussão desses resultados à luz da literatura e das limitações do estudo. A seção 5 retoma o
-objetivo, sintetiza o que a evidência sustenta e aponta os desdobramentos previstos para os
-ciclos seguintes.
+exata das regras de certificação e de recomendação. Nela também se registra o tratamento
+dado aos dados pessoais. A seção 4 apresenta a base constituída, a cobertura longitudinal
+que ela oferece, o comportamento observado das duas camadas e os tempos de execução,
+seguidos da discussão desses resultados à luz da literatura e das limitações do estudo. A
+seção 5 retoma o objetivo, sintetiza o que a evidência sustenta e aponta os desdobramentos
+previstos para os ciclos seguintes.
 
 ## 2 Referencial teórico
 
@@ -214,10 +279,10 @@ elimine silenciosamente as medições associadas (Silberschatz; Korth; Sudarshan
 
 A transformação de dados educacionais em orientação para o estudante é o objeto do campo de
 análise da aprendizagem, no qual os painéis de acompanhamento constituem o artefato mais
-difundido. Uma revisão de painéis recentes verifica que a quase
-totalidade deles opera em nível descritivo, apresentando ao estudante a sua posição atual
-sem indicar que providência tomar, lacuna que os autores caracterizam como ausência de
-análise prescritiva (Susnjak; Ramaswami; Mathrani, 2022). A apresentação de indicadores,
+difundido. Uma revisão de painéis recentes (Susnjak; Ramaswami; Mathrani, 2022) verifica
+que a quase totalidade deles opera em nível descritivo, apresentando ao estudante a sua
+posição atual sem indicar que providência tomar, lacuna que os autores caracterizam como
+ausência de análise prescritiva. A apresentação de indicadores,
 isoladamente, não produz a mudança de comportamento que justificaria a sua produção.
 
 A superação dessa lacuna tem sido buscada por meio da vinculação entre a orientação
@@ -249,8 +314,8 @@ sobre a operação real de um programa de capacitação profissional, e não sob
 construído para o experimento. O objeto de estudo é o próprio sistema em funcionamento no
 ciclo de 2025 do programa Capacitação 4.0, cujos componentes foram construídos e operados
 pela equipe de pesquisa ao longo de dois editais consecutivos de fluxo contínuo. A
-descrição que segue privilegia o nível de detalhe necessário para que um terceiro reproduza
-a solução em contexto equivalente, sem transcrever rotinas de implementação.
+descrição que segue privilegia o nível de detalhe necessário para que um terceiro
+reproduza a solução em contexto equivalente, sem transcrever rotinas de implementação.
 
 A evidência empregada provém de acervos distintos e verificáveis. O primeiro é o
 código-fonte da interface de programação de aplicações, mantido em repositório versionado.
@@ -273,23 +338,44 @@ programa e é o processo sobre o qual a automação descrita neste trabalho atua
 A matriz de competências e a escala de avaliação não foram definidas por esta pesquisa:
 elas seguem o manual de operação do programa (Embrapii, 2021), que estabelece sete
 competências socioemocionais macro e quatro subcompetências vinculadas à inteligência
-emocional. No processamento, a competência inteligência emocional é substituída por suas
-quatro subcompetências, o que produz o conjunto de dez itens comparáveis apresentado na
-Tabela 1. Esse achatamento é o que torna as medições homogêneas entre si e viabiliza
-tanto a comparação longitudinal quanto as regras descritas nas subseções 3.4 e 3.5.
+emocional. No fluxo de recomendação, a competência inteligência emocional é substituída
+por suas quatro subcompetências, o que produz o conjunto de dez itens comparáveis
+apresentado no Quadro 1. A regra de certificação agrega as subcompetências por média
+e conta as competências avaliadas sobre as sete da matriz, conforme detalhado na subseção
+3.4. As duas formas de agrupamento derivam do mesmo registro
+persistido, e é a preservação simultânea dos dois níveis na base que permite alternar
+entre elas sem nova coleta.
 
 
-> ⚠️ IMAGEM AUSENTE: `figuras/tab-03-1.md` — Quadro editável com as dez competências avaliadas, indicando quais são macro e quais são subcompetências de inteligência emocional. Corpo em TNR 10.
 
-**Tabela 1 — Competências socioemocionais avaliadas no ciclo de 2025, após o desdobramento da inteligência emocional em subcompetências. Fonte: elaborado pelos autores.**
+**Quadro 1 — Competências socioemocionais avaliadas no ciclo de 2025, após o desdobramento da inteligência emocional em subcompetências.**
+
+| # | Competência | Nível na matriz |
+|---|---|---|
+| 1 | Pensamento crítico e inovação | macro |
+| 2 | Aprendizagem ativa e estratégias de aprendizagem | macro |
+| 3 | Empreendedorismo | macro |
+| 4 | Criatividade, originalidade e iniciativa | macro |
+| 5 | Liderança e influência social | macro |
+| 6 | Resolução de problemas complexos | macro |
+| 7 | Inteligência emocional: autorregulação | subcompetência |
+| 8 | Inteligência emocional: percepção social | subcompetência |
+| 9 | Inteligência emocional: autoconhecimento | subcompetência |
+| 10 | Inteligência emocional: habilidades de relacionamento | subcompetência |
+
+Fonte: elaborado pelos autores.
 
 
-Cada discente registra, ao final de cada unidade avaliativa, uma autoavaliação com uma nota
-de 0 a 4 para cada competência. A nota é convertida em quatro níveis qualitativos: abaixo
-do básico, de 0 a 1; básico, de 1 a 2; adequado, de 2 a 3; e avançado, de 3 a 4. A unidade
-é o ciclo avaliativo do programa e funciona como o eixo temporal de todas as comparações
-feitas pelo sistema. O recorte analisado corresponde às autoavaliações registradas entre 23
-de janeiro e 6 de setembro de 2025, distribuídas em nove unidades, conforme detalhado na
+
+Cada discente registra, ao final de cada unidade avaliativa, uma autoavaliação com uma
+nota de 0 a 4 para cada competência. A nota é convertida em quatro níveis qualitativos:
+abaixo do básico, de 0 a 1; básico, de 1 a 2; adequado, de 2 a 3; e avançado, de 3 a 4. A
+unidade corresponde ao ciclo avaliativo do programa e funciona como o eixo temporal de
+todas as comparações feitas pelo sistema; seu valor não é informado no formulário, e sim
+atribuído pela interface como o sucessor da maior unidade já registrada para aquele
+discente, de modo que o número armazenado expressa a contagem de submissões acumuladas por
+participante. O recorte analisado corresponde às autoavaliações registradas entre 23 de
+janeiro e 6 de setembro de 2025, distribuídas em nove unidades, conforme detalhado na
 seção 4.
 
 ### 3.2 Arquitetura da solução
@@ -304,18 +390,22 @@ de automação, o que impedia auditar por que um determinado valor havia sido pr
 Figura 1 apresenta a disposição dos componentes.
 
 
-> ⚠️ IMAGEM AUSENTE: `figuras/fig-03-1.png` — Diagrama esquemático em três faixas. Entrada, formulário e planilha de respostas. Orquestração, os quatro fluxos do n8n auto-hospedado. Núcleo, a API Django sobre PostgreSQL gerenciado. Saída, planilhas, gráficos, certificados em PDF no Drive e mensagens de correio eletrônico. Sem captura de tela e sem hostname. Texto interno em TNR 18 ou maior.
 
-**Figura 1 — Arquitetura da solução no ciclo de 2025, com a orquestração em n8n e a interface de programação de aplicações como núcleo de persistência e de decisão. Fonte: elaborado pelos autores.**
+![](figuras/fig-03-1.png)
+
+**Figura 1 — Arquitetura da solução no ciclo de 2025, com a orquestração em n8n e a interface de programação de aplicações como núcleo de persistência e de decisão.**
+
+Fonte: elaborado pelos autores.
+
 
 
 Quatro fluxos compõem a orquestração, na nomenclatura adotada pela própria equipe. O
 primeiro lê as respostas do formulário de autoavaliação, submete as notas à interface e
-devolve os resultados a uma planilha. O segundo gera os gráficos de perfil e os armazena em
-serviço de arquivos em nuvem. O terceiro identifica discentes com desempenho insatisfatório
-e envia recomendações pedagógicas por correio eletrônico. O quarto emite os certificados de
-participação. Os dois últimos constituem a contribuição do ciclo de 2025 e são detalhados
-nas subseções 3.4 e 3.5.
+devolve os resultados a uma planilha. O segundo gera os gráficos de perfil e os armazena
+em serviço de arquivos em nuvem. O terceiro identifica discentes com desempenho
+insatisfatório e envia recomendações pedagógicas por correio eletrônico. O quarto emite os
+certificados de participação. Os dois últimos constituem a contribuição do ciclo de 2025 e
+são detalhados nas subseções 3.4 e 3.5.
 
 A ferramenta de automação foi executada em contêiner Docker auto-hospedado, a partir da
 imagem oficial do projeto, o que padronizou o ambiente entre as máquinas da equipe e
@@ -328,101 +418,118 @@ sob controle humano — limitação retomada na seção 5.
 Ao longo de 2025, a infraestrutura de persistência migrou de uma plataforma de hospedagem
 gerenciada, utilizada ao final de 2024, para um banco PostgreSQL gerenciado em nuvem
 associado a implantação da interface em plataforma sem servidor, ambos em região
-`us-east-1`. A migração não alterou o modelo de dados nem as regras de negócio. O que ela
+us-east-1. A migração não alterou o modelo de dados nem as regras de negócio. O que ela
 substituiu foi o ambiente de execução, que deixou de ser contínuo e passou a operar sob
-demanda. Essa mudança reduziu o custo de operação, mas introduziu latência de inicialização
-a frio nas primeiras requisições após período de inatividade.
+demanda. Essa mudança reduziu o custo de operação, mas introduziu latência de
+inicialização a frio nas primeiras requisições após período de inatividade.
 
 ### 3.3 Modelo de dados e rastreabilidade histórica
 
-O modelo relacional organiza-se em torno de sete entidades, apresentadas na Figura 2.
+O modelo relacional organiza-se em torno de oito entidades, apresentadas na Figura 2.
 Discente e mentor concentram a identificação institucional dos participantes. A entidade
-projeto classifica a iniciativa entre real e espelho e vincula-a a um mentor responsável. A
-entidade associativa entre discente e projeto registra o tipo de vínculo e a data de
+projeto classifica a iniciativa entre real e espelho e vincula-a a um mentor responsável.
+A entidade associativa entre discente e projeto registra o tipo de vínculo e a data de
 entrada no programa, campo que se mostra determinante para a regra de certificação. A
 matriz de competências é representada por duas entidades hierarquizadas, em que cada
 subcompetência aponta para a competência macro que a contém. Esse arranjo preserva a
 flexibilidade para expansões futuras da matriz sem alteração de esquema.
 
 
-> ⚠️ IMAGEM AUSENTE: `figuras/fig-03-2.png` — Diagrama entidade-relacionamento das sete entidades do domínio, com cardinalidades e a indicação dos campos de auditoria. Redesenhar, não capturar tela de ferramenta. Omitir os atributos que armazenam dado pessoal identificável, representando-os como "dados de identificação". Texto interno em TNR 18 ou maior.
 
-**Figura 2 — Modelo entidade-relacionamento do domínio de avaliação de competências socioemocionais. Fonte: elaborado pelos autores.**
+![](figuras/fig-03-2.png)
+
+**Figura 2 — Modelo entidade-relacionamento do domínio de avaliação de competências socioemocionais.**
+
+Fonte: elaborado pelos autores.
+
 
 
 O registro de desempenho separa-se em dois níveis. A autoavaliação representa o evento de
 avaliação de um discente em uma unidade e admite observação textual do mentor. A nota
 vincula um valor numérico a uma competência macro ou a uma subcompetência dentro daquela
 autoavaliação. Essa separação é o que permite que a mesma competência seja medida
-repetidamente ao longo das unidades, sem sobrescrita do valor anterior. É também a condição
-técnica que sustenta a tese defendida neste trabalho, pois nenhuma das duas regras descritas
-adiante é computável sobre uma estrutura que guarde apenas o estado corrente.
+repetidamente ao longo das unidades, sem sobrescrita do valor anterior. É também a
+condição técnica que sustenta a tese defendida neste trabalho, pois nenhuma das duas
+regras descritas adiante é computável sobre uma estrutura que guarde apenas o estado
+corrente.
 
 A integridade referencial foi implementada com restrição de proteção em todas as chaves
 estrangeiras (Django Software Foundation, 2026). A remoção de uma competência ou de um
 discente com avaliações associadas é recusada pelo banco, em vez de propagar exclusão em
-cascata. Somam-se a isso quatro campos de auditoria em cada entidade, que registram data de
-criação, data de atualização e o usuário responsável por cada uma das duas operações. Por
-meio dessa combinação, todo valor exibido em um relatório pode ser rastreado até a operação
-de escrita que o produziu.
+cascata. Somam-se a isso quatro campos de auditoria em cada entidade, que registram data
+de criação, data de atualização e o usuário responsável por cada uma das duas operações.
+Por meio dessa combinação, todo valor exibido em um relatório pode ser rastreado até a
+operação de escrita que o produziu.
 
 A gravação das dez medições de uma autoavaliação é executada registro a registro, na mesma
 requisição que cria o evento de avaliação. As consultas de leitura empregam carregamento
 antecipado dos objetos relacionados, o que evita a emissão de uma consulta por registro ao
-percorrer os vínculos do discente com projeto e mentor. O acesso é restrito a requisições autenticadas por token,
-com credenciais e chaves mantidas em variáveis de ambiente. A interface é documentada no
-padrão OpenAPI, o que permite que a camada de orquestração descubra o contrato dos
-endpoints sem depender de documentação externa.
+percorrer os vínculos do discente com projeto e mentor. O acesso é restrito a requisições
+autenticadas por token, com credenciais e chaves mantidas em variáveis de ambiente. A
+interface é documentada no padrão OpenAPI, o que permite que a camada de orquestração
+descubra o contrato dos endpoints sem depender de documentação externa.
 
 ### 3.4 Camada de decisão: operacionalização da regra de certificação
 
 A regra de certificação do programa exige evolução de desempenho em ao menos dois terços
 das competências avaliadas. Sua operacionalização como consulta sobre dados persistidos
-está implementada na interface, no método de classe `aptosCertificacao` da entidade
-discente, e é exposta em endpoint dedicado que devolve a relação de aptos. O algoritmo
-encadeia quatro filtros, e o critério de dois terços é aplicado em dois níveis distintos,
-primeiro dentro de cada competência e depois no conjunto delas, conforme o pseudocódigo
+está implementada na interface, em método de classe da entidade discente, e é exposta em
+endpoint dedicado que devolve a relação de aptos. O algoritmo encadeia quatro filtros, e o
+critério de dois terços é aplicado em dois níveis distintos, primeiro dentro de cada
+conjunto de medições e depois no total de competências avaliadas, conforme o pseudocódigo
 apresentado a seguir.
 
 ```
 para cada discente com ao menos uma autoavaliacao:
     se (hoje - data_entrada do vinculo mais recente) < 365 dias: descartar
-    agrupar as notas por competencia macro, agregando por media as subcompetencias
-    se numero de competencias avaliadas < 3: descartar
-    se alguma competencia tem medicao abaixo de 1,0: descartar
 
-    competencias_aprovadas <- 0
-    para cada competencia com ao menos 2 medicoes:
-        referencia <- menor medicao da competencia
-        restantes  <- demais medicoes
-        saltos <- quantidade de medicoes em restantes tais que
-                  medicao >= referencia + 2  ou  medicao = 4
+    agrupar as notas em conjuntos:
+        um conjunto por competencia macro, com as medicoes da propria competencia
+        um conjunto por competencia macro que tenha subcompetencias, com as
+        medicoes das subcompetencias que a compoem
+    competencias_avaliadas <- numero de competencias macro distintas
+    se competencias_avaliadas < 3: descartar
+
+    se alguma medicao de competencia macro < 1,0: descartar
+    se a media de alguma subcompetencia < 1,0: descartar
+
+    conjuntos_aprovados <- 0
+    para cada conjunto com ao menos 2 medicoes:
+        se o conjunto for de subcompetencias:
+            valores <- media de cada subcompetencia ao longo das unidades
+        senao:
+            valores <- as medicoes da competencia ao longo das unidades
+        referencia <- menor valor
+        restantes  <- demais valores
+        saltos <- quantidade de valores em restantes tais que
+                  valor >= referencia + 2  ou  valor = 4
         se saltos >= arredondar(|restantes| x 2/3):
-            competencias_aprovadas <- competencias_aprovadas + 1
+            conjuntos_aprovados <- conjuntos_aprovados + 1
 
-    se competencias_aprovadas >= arredondar(competencias_avaliadas x 2/3):
+    se conjuntos_aprovados >= arredondar(competencias_avaliadas x 2/3):
         marcar discente como apto
 ```
 
-Três aspectos do critério merecem registro, por não serem evidentes em seu enunciado
+Quatro aspectos do critério merecem registro, por não serem evidentes em seu enunciado
 verbal. O salto exigido dentro de cada competência é de dois pontos na escala de 0 a 4, ou
 seja, de dois níveis qualitativos, e não de um. O valor máximo da escala é aceito como
 equivalente ao salto, o que impede que um discente já avaliado em nível avançado seja
 penalizado pela ausência de margem para crescer. A referência de comparação é a menor
-medição registrada para aquela competência, e não a medição da primeira unidade. O critério
-mede, portanto, a amplitude entre o pior desempenho e os demais, não a evolução
+medição registrada para aquela competência, e não a medição da primeira unidade. O
+critério mede, portanto, a amplitude entre o pior desempenho e os demais, não a evolução
 estritamente cronológica. O filtro de permanência mínima de um ano no programa, por fim,
 opera sobre a data de entrada do vínculo mais recente do discente com um projeto.
 
 A emissão do documento é conduzida pelo quarto fluxo de automação. Após autenticar-se na
 interface, o fluxo percorre a relação de discentes em lote e normaliza a capitalização do
-nome, que é armazenado em caixa baixa na origem. Em seguida preenche um modelo de documento
-mantido em nuvem, converte o resultado em PDF e concede aos orientadores permissão de
-edição sobre a versão editável do arquivo. Convém explicitar o alcance dessa etapa. A versão
-exportada do fluxo consome a listagem geral de discentes, e não o endpoint que aplica a
-regra de dois terços, de forma que os documentos emitidos são certificados de participação.
-A camada de decisão está implementada e disponível como serviço, mas seu acoplamento ao
-fluxo de emissão não está demonstrado pela evidência reunida.
+nome, que é armazenado em caixa baixa na origem. Em seguida preenche um modelo de
+documento mantido em nuvem, converte o resultado em PDF e concede aos orientadores
+permissão de edição sobre a versão editável do arquivo. O alcance dessa etapa precisa ser
+explicitado. A versão exportada do fluxo consome a listagem geral de discentes, e não o
+endpoint que aplica a regra de dois terços, de forma que os documentos emitidos são
+certificados de participação. A camada de decisão está implementada e disponível como
+serviço, mas seu acoplamento ao fluxo de emissão não está demonstrado pela evidência
+reunida.
 
 ### 3.5 Camada de intervenção: a regra de recomendação pedagógica
 
@@ -443,23 +550,22 @@ houver alternativas disponíveis. Esgotado o banco, o sistema registra explicita
 exaustão em vez de repetir conteúdo. Discentes sem qualquer apontamento são desviados do
 fluxo por condicional e não recebem mensagem.
 
-O conjunto de apontamentos é composto em documento estruturado, convertido em PDF e enviado
-por correio eletrônico ao destinatário. Duas características dessa camada precisam ser
-consideradas na leitura dos resultados. A seleção do texto é aleatória dentro da competência
-apontada, e não adaptada ao perfil do discente, o que significa que a personalização
-alcançada é de nível de competência, não de nível individual. Além disso, o envio não é
-registrado em tabela do banco, de modo que o volume de mensagens efetivamente entregues não
-dispõe de evidência transacional.
+O conjunto de apontamentos é composto em documento estruturado, convertido em PDF e
+enviado por correio eletrônico ao destinatário. Duas características dessa camada precisam
+ser consideradas na leitura dos resultados. A seleção do texto é aleatória dentro da
+competência apontada, e não adaptada ao perfil do discente, o que significa que a
+personalização alcançada é de nível de competência, não de nível individual. Além disso, o
+envio não é registrado em tabela do banco, de modo que o volume de mensagens efetivamente
+entregues não dispõe de evidência transacional.
 
 ### 3.6 Tratamento dos dados e procedimentos éticos
 
 A base de produção armazena dados pessoais dos participantes associados a avaliações de
 competências socioemocionais. Constam desse conjunto o nome e o número de inscrição no
 cadastro de pessoas físicas, bem como a matrícula e o endereço de correio eletrônico
-institucional. Os dados
-analisados neste trabalho são operacionais do programa de capacitação, produzidos como
-registro ordinário de sua governança, e não foram coletados para finalidade de pesquisa com
-seres humanos.
+institucional. Os dados analisados neste trabalho são operacionais do programa de
+capacitação, produzidos como registro ordinário de sua governança, e não foram coletados
+para finalidade de pesquisa com seres humanos.
 
 Toda extração empregada na redação deste artigo foi conduzida por consultas agregadas, com
 funções de contagem, média e valores extremos, sem recuperação de linhas individuais.
@@ -480,39 +586,69 @@ de intervenção. A terceira reúne as medições de tempo de execução registr
 durante a operação, empregadas na comparação com o processo manual que antecedeu a
 automação.
 
-A ordem de apresentação acompanha o argumento construído nas seções anteriores. Descreve-se
-primeiro a base de dados constituída, depois a cobertura longitudinal que ela oferece e a
-consequente computabilidade da regra de certificação, em seguida o comportamento observado
-da camada de intervenção e os tempos de execução, e por fim a discussão do conjunto e as
-limitações que ele impõe. Os dados são reportados sem interpretação nas subseções 4.1 a
-4.4; a leitura à luz do problema formulado na introdução concentra-se nas subseções 4.5 e
-4.6.
+A ordem de apresentação acompanha o argumento construído nas seções anteriores.
+Descreve-se primeiro a base de dados constituída, depois a cobertura longitudinal que ela
+oferece e a consequente computabilidade da regra de certificação, em seguida o
+comportamento observado da camada de intervenção e os tempos de execução, e por fim a
+discussão do conjunto e as limitações que ele impõe. Os dados são reportados sem
+interpretação nas subseções 4.1 a 4.4; a leitura à luz do problema formulado na introdução
+concentra-se nas subseções 4.5 e 4.6.
 
 ### 4.1 A base de dados constituída no ciclo de 2025
 
-A consulta de 27 de julho de 2026 encontrou 33
-discentes cadastrados, com datas de registro entre 23 de janeiro e 1º de abril de 2025,
-vinculados a três projetos sob acompanhamento de dois mentores. Foram contabilizadas 177 autoavaliações, registradas entre 23 de janeiro e 6
-de setembro de 2025 e distribuídas em nove unidades avaliativas. A tabela de notas reúne
-165 registros, dos quais 105 vinculados a competências macro e 60 a subcompetências de
-inteligência emocional. As notas ocupam integralmente a escala prevista, de 0,00 a 4,00,
-com média de 2,47, valor situado na faixa qualitativa adequada. A Tabela 2 consolida o
-conjunto.
+A consulta de 27 de julho de 2026 encontrou 33 discentes cadastrados, com datas de
+registro entre 23 de janeiro e 1º de abril de 2025, vinculados a três projetos sob
+acompanhamento de dois mentores. Foram contabilizados 177 registros de autoavaliação,
+abertos entre 23 de janeiro e 6 de setembro de 2025 e distribuídos em nove unidades. A
+tabela de notas reúne 165 registros, dos quais 105 vinculados a competências macro e 60 a
+subcompetências de inteligência emocional. As notas ocupam integralmente a escala
+prevista, de 0,00 a 4,00, com média de 2,47, valor situado na faixa qualitativa adequada.
+A Tabela 1 consolida o conjunto.
 
 
-> ⚠️ IMAGEM AUSENTE: `figuras/tab-04-1.md` — Quadro editável com as métricas agregadas do banco em 27/07/2026 — discentes, autoavaliações, unidades, notas por tipo, faixa e média das notas, mentores, projetos e registros de auditoria. Uma coluna para a métrica e outra para o valor. Nenhum dado individual. Corpo em TNR 10.
 
-**Tabela 2 — Caracterização agregada da base de produção do ciclo de 2025, apurada em 27 de julho de 2026 (n=33 discentes). Fonte: dados da pesquisa.**
+**Tabela 1 — Caracterização agregada da base de produção do ciclo de 2025, apurada em 27 de julho de 2026 (n=33 discentes), incluindo a distribuição dos registros de autoavaliação pelas nove unidades.**
+
+| Métrica | Valor |
+|---|---|
+| Discentes cadastrados | 33 |
+| Período dos cadastros | 23/01/2025 a 01/04/2025 |
+| Registros de autoavaliação | 177 |
+| Período das autoavaliações | 23/01/2025 a 06/09/2025 |
+| Unidades avaliativas | 9 |
+| Registros por unidade, da 1ª à 9ª | 33 · 33 · 33 · 33 · 33 · 7 · 3 · 1 · 1 |
+| Notas registradas | 165 |
+| Notas de competência macro | 105 |
+| Notas de subcompetência | 60 |
+| Conjuntos completos de medições | 15 |
+| Discentes com notas lançadas | 7 |
+| Faixa das notas | 0,00 a 4,00 |
+| Média das notas | 2,47 |
+| Pares competência × discente com duas ou mais medições | 49 |
+| Mentores | 2 |
+| Projetos | 3 |
+| Registros de auditoria do painel administrativo | 1.792 |
+
+Fonte: dados da pesquisa.
+
 
 
 A distribuição das 165 notas entre os dois níveis da matriz é regular e confirma a
-consistência do desdobramento descrito na subseção 3.1. As 105 notas de competência macro
-correspondem a quinze conjuntos completos de sete medições, e as 60 notas de subcompetência
-correspondem aos mesmos quinze conjuntos de quatro medições. A base contém, portanto,
-quinze conjuntos íntegros de dez itens comparáveis, sem registro parcial que exigisse
-tratamento de valor ausente no cálculo das duas regras. As notas lançadas concentram-se em
-sete discentes, o que separa a população cadastrada da população efetivamente medida e
-condiciona toda leitura de escala.
+consistência do desdobramento descrito na subseção 3.1. Cada conjunto completo ocupa onze
+linhas na tabela de notas: seis notas de competência macro, quatro notas de subcompetência
+e uma nota macro adicional para inteligência emocional, que a interface calcula como a
+média das quatro subcompetências no momento da gravação. As 105 notas macro e as 60 de
+subcompetência correspondem, assim, a quinze conjuntos completos, cada um reunindo dez
+medições independentes, sem registro parcial que exigisse tratamento de valor ausente no
+cálculo das duas regras.
+
+Esses quinze conjuntos distribuem-se por sete discentes e correspondem a quinze dos 177
+registros de autoavaliação contabilizados. Os demais registros não têm notas associadas,
+condição coerente com o uso da mesma instância como ambiente de operação e de
+desenvolvimento, discutido na subseção 4.6. A consequência para a leitura dos resultados é
+direta: a contagem de autoavaliações mede o volume de eventos gravados, ao passo que a
+contagem de notas mede o material efetivamente disponível para análise, e é esta segunda
+grandeza que limita todas as afirmações das subseções seguintes.
 
 A razão entre discentes cadastrados e mentores responsáveis é de aproximadamente dezesseis
 para um, distribuída em três projetos. Esse valor não é parâmetro de qualidade do
@@ -522,83 +658,82 @@ avaliativa, o que multiplica o esforço pelo número de ciclos, e não apenas pe
 participantes. A carga acumulada ao longo de nove unidades é a grandeza que a solução
 descrita neste trabalho desloca para a máquina.
 
-A tabela de auditoria do painel administrativo acumulou 1.792 registros de operação no
-período, contra 177 autoavaliações persistidas. A razão entre os dois números não expressa
-retrabalho: o painel foi o instrumento de conferência e de correção usado pela equipe
-durante a estabilização do fluxo de cadastro, e cada consulta ou ajuste manual deixa
-registro próprio. O valor interessa como demonstração de que a trilha de auditoria descrita
-na subseção 3.3 opera de fato, e não apenas como declaração de esquema.
+A tabela de auditoria do painel administrativo acumulou 1.792 registros no período, contra
+177 registros de autoavaliação persistidos. Cada entrada corresponde a uma operação de
+escrita conduzida por meio do painel, e não a uma consulta, de modo que o número
+dimensiona a intervenção manual sobre a base durante a estabilização do fluxo de cadastro.
+O valor interessa em dois sentidos: demonstra que a trilha de auditoria descrita na
+subseção 3.3 opera de fato, e não apenas como declaração de esquema, e quantifica o
+trabalho de correção que acompanhou o uso da instância também como ambiente de
+desenvolvimento.
 
 ### 4.2 Cobertura longitudinal e computabilidade da regra de certificação
 
-A distribuição das autoavaliações pelas nove unidades é fortemente assimétrica, conforme a
-Figura 3. As cinco primeiras unidades apresentam 33 registros cada, cobertura completa
-da turma cadastrada. Da sexta unidade em diante o número decai para 7, 3, 1 e 1 registros.
-O programa manteve, portanto, cobertura integral da turma cadastrada por cinco ciclos
-avaliativos consecutivos, e o decaimento a partir do sexto acompanha o encerramento das
-atividades previstas no edital.
-
-
-> ⚠️ IMAGEM AUSENTE: `figuras/fig-04-1.png` — Gráfico de barras verticais com o número de autoavaliações registradas por unidade avaliativa, das unidades 1 a 9. Valores 33, 33, 33, 33, 33, 7, 3, 1 e 1. Eixo vertical rotulado em número de autoavaliações. Sem qualquer identificação de discente. Texto interno em TNR 18 ou maior, 300 dpi.
-
-**Figura 3 — Autoavaliações registradas por unidade avaliativa no ciclo de 2025, entre 23 de janeiro e 6 de setembro (n=177). Fonte: dados da pesquisa.**
-
+A distribuição dos registros de autoavaliação pelas nove unidades é fortemente
+assimétrica, conforme a Tabela 1. As cinco primeiras unidades apresentam 33 registros
+cada, e da sexta em diante o número decai para 7, 3, 1 e 1. Esses valores contam eventos
+de avaliação gravados, e não medições realizadas: como as 165 notas se distribuem em
+quinze conjuntos, no máximo quinze dos 165 registros das cinco primeiras unidades carregam
+nota associada. A assimetria descreve, portanto, o conteúdo da base, e não a adesão dos
+participantes ao instrumento ao longo do tempo.
 
 O decaimento observado a partir da sexta unidade tem consequência direta sobre as duas
-regras. A condição de queda depende de comparação com a unidade imediatamente anterior, e a
-regra de certificação depende do número de medições disponíveis por competência, de modo
-que ambas perdem poder de discriminação à medida que a cobertura se rarefaz. As cinco
-unidades de cobertura integral concentram, assim, praticamente toda a capacidade analítica
-da base, e é sobre elas que os resultados das subseções seguintes devem ser lidos.
+regras. A condição de queda depende de comparação com a unidade imediatamente anterior, e
+a regra de certificação depende do número de medições disponíveis por competência, de modo
+que ambas perdem poder de discriminação à medida que as medições se rarefazem. Os quinze
+conjuntos completos concentram, assim, toda a capacidade analítica da base, e é sobre eles
+que os resultados das subseções seguintes devem ser lidos.
 
 O resultado que sustenta diretamente a tese deste trabalho está no cruzamento entre
 competência e discente. A consulta identificou 49 pares competência × discente com duas ou
-mais medições registradas, insumo exatamente equivalente ao que o algoritmo de certificação
-exige para comparar a menor medição às demais. Sem esses 49 pares não haveria o que
-comparar, e a regra de dois terços permaneceria enunciado normativo sem correspondente
-computável. A existência do conjunto demonstra que a estrutura de persistência descrita na
-subseção 3.3 produz, em operação real, o insumo longitudinal que a camada de decisão
-consome.
+mais medições registradas, insumo exatamente equivalente ao que o algoritmo de
+certificação exige para comparar a menor medição às demais. Sem esses 49 pares não haveria
+o que comparar, e a regra de dois terços permaneceria enunciado normativo sem
+correspondente computável. A existência do conjunto demonstra que a estrutura de
+persistência descrita na subseção 3.3 produz, em operação real, o insumo longitudinal que
+a camada de decisão consome.
 
 O contraste com a organização anterior dos dados é o ponto central. Uma planilha em que
 cada unidade sobrescreve a nota da competência preserva apenas o estado corrente e reduz a
 zero o número de pares comparáveis, independentemente de quantas avaliações tenham sido
-efetivamente conduzidas. Por meio da separação entre o evento de avaliação e o valor medido,
-a mesma competência do mesmo discente passa a ocupar tantas linhas quantas forem as
-unidades, e é essa multiplicação que converte um requisito de regulamento em consulta
+efetivamente conduzidas. Por meio da separação entre o evento de avaliação e o valor
+medido, a mesma competência do mesmo discente passa a ocupar tantas linhas quantas forem
+as unidades, e é essa multiplicação que converte um requisito de regulamento em consulta
 executável.
 
 A verificação da aptidão propriamente dita não pôde ser reportada. O filtro de permanência
-mínima de 365 dias opera sobre a data de entrada do vínculo mais recente do discente com um
-projeto, e os cadastros analisados concentram-se no primeiro trimestre de 2025, de forma que
-o resultado do endpoint depende da data em que ele é consultado. A instância de banco
-utilizada no ciclo foi posteriormente desativada, de modo que a contagem de discentes
-retornada pelo endpoint não pôde ser apurada nem reproduzida. O que a base sustenta é a
-computabilidade da regra, evidenciada pelos 49 pares competência × discente com duas ou mais
-medições, e não o número de discentes que a satisfariam em uma data determinada.
+mínima de 365 dias opera sobre a data de entrada do vínculo mais recente do discente com
+um projeto, e os cadastros analisados concentram-se no primeiro trimestre de 2025, de
+forma que o resultado do endpoint depende da data em que ele é consultado. A instância de
+banco utilizada no ciclo foi posteriormente desativada, de modo que a contagem de
+discentes retornada pelo endpoint não pôde ser apurada nem reproduzida. O que a base
+sustenta é a computabilidade da regra, evidenciada pelos 49 pares competência × discente
+com duas ou mais medições, e não o número de discentes que a satisfariam em uma data
+determinada.
 
 ### 4.3 Comportamento observado das camadas de decisão e de intervenção
 
 A camada de decisão foi verificada por inspeção do código do método que a implementa e do
-endpoint que a expõe, e não por observação de emissões efetivamente filtradas. A regra está
-disponível como serviço autenticado e devolve a relação de aptos a partir dos quatro
-filtros descritos na subseção 3.4. Já o fluxo de emissão exportado consome a listagem geral
-de discentes e produz certificados de participação para todos os retornados, sem aplicar o
-filtro. O resultado defensável, portanto, é a disponibilidade da camada de decisão como
-serviço, não seu emprego no ato de emissão.
+endpoint que a expõe, e não por observação de emissões efetivamente filtradas. A regra
+está disponível como serviço autenticado e devolve a relação de aptos a partir dos quatro
+filtros descritos na subseção 3.4. Já o fluxo de emissão exportado consome a listagem
+geral de discentes e produz certificados de participação para todos os retornados, sem
+aplicar o filtro. O resultado defensável, portanto, é a disponibilidade da camada de
+decisão como serviço, não seu emprego no ato de emissão.
 
-A camada de intervenção opera sobre a mesma base longitudinal e dispensa intervenção humana
-entre a leitura das notas e a entrega da mensagem. O fluxo recupera o histórico completo,
-ordena as autoavaliações por unidade, aplica as duas condições de disparo, compõe o
-documento e o envia por correio eletrônico. A condição de queda depende de medição anterior
-persistida e só se torna avaliável a partir da segunda unidade, o que faz da cobertura
-descrita na subseção 4.2 o limite superior do que essa camada consegue detectar. Nas cinco
-primeiras unidades, com 33 registros cada, a condição esteve disponível em quatro delas.
+A camada de intervenção opera sobre a mesma base longitudinal e dispensa intervenção
+humana entre a leitura das notas e a entrega da mensagem. O fluxo recupera o histórico
+completo, ordena as autoavaliações por unidade, aplica as duas condições de disparo,
+compõe o documento e o envia por correio eletrônico. A condição de queda depende de
+medição anterior persistida e só se torna avaliável a partir da segunda unidade, o que faz
+do volume de medições descrito na subseção 4.2 o limite superior do que essa camada
+consegue detectar. O conjunto sobre o qual a condição pode ser verificada corresponde aos
+49 pares competência × discente com duas ou mais medições.
 
 O envio das mensagens não é persistido em tabela do banco, de modo que o volume entregue
-não dispõe de evidência transacional e não é reportado aqui. O mesmo vale para a emissão dos
-certificados, cujos artefatos residem em serviço de armazenamento em nuvem, fora do domínio
-transacional da aplicação. Ambas as camadas são reportadas como funcionalidades
+não dispõe de evidência transacional e não é reportado aqui. O mesmo vale para a emissão
+dos certificados, cujos artefatos residem em serviço de armazenamento em nuvem, fora do
+domínio transacional da aplicação. Ambas as camadas são reportadas como funcionalidades
 implementadas e demonstradas em operação, sem afirmação de volume — uma escolha de
 enunciação que preserva a correspondência entre o que se afirma e o que a evidência
 disponível sustenta.
@@ -607,138 +742,236 @@ disponível sustenta.
 
 O processo manual que antecedeu a automação consumia 40 minutos por discente, considerando
 a coleta das respostas, o cálculo das médias, a produção do gráfico de perfil e a
-organização do material para o mentor. No ciclo anterior do projeto, a execução automatizada
-do mesmo conjunto de etapas passou a demandar cerca de 12 segundos por discente, redução
-superior a 99% do tempo empregado, e produziu mais de 160 relatórios de perfil. No ciclo de
-2025, o registro das notas de uma autoavaliação completa passou a ocorrer em 2 a 3 segundos,
-e a geração do gráfico com o consequente armazenamento em nuvem, em 12 a 15 segundos. A
-Tabela 3 reúne as medições.
+organização do material para o mentor. No ciclo anterior do projeto, a execução
+automatizada do mesmo conjunto de etapas passou a demandar cerca de 12 segundos por
+discente, redução superior a 99% do tempo empregado, e produziu mais de 160 relatórios de
+perfil. No ciclo de 2025, o registro das notas de uma autoavaliação completa passou a
+ocorrer em 2 a 3 segundos, e a geração do gráfico com o consequente armazenamento em
+nuvem, em 12 a 15 segundos. A Tabela 2 reúne as medições.
 
 
-> ⚠️ IMAGEM AUSENTE: `figuras/tab-04-2.md` — Quadro editável comparando o tempo do processo manual, o tempo do ciclo automatizado anterior e os tempos das etapas do ciclo de 2025. Colunas para a etapa, o tempo e o ciclo a que a medição pertence. Corpo em TNR 10.
 
-**Tabela 3 — Tempo de execução por etapa, do processo manual às etapas automatizadas dos ciclos de 2024 e de 2025. Fonte: dados da pesquisa.**
+**Tabela 2 — Tempo de execução por etapa, do processo manual às etapas automatizadas dos ciclos de 2024 e de 2025.**
+
+| Etapa | Tempo | Ciclo |
+|---|---|---|
+| Consolidação manual das notas, gráficos e material do mentor | 40 min por discente | anterior à automação |
+| Execução automatizada do mesmo conjunto de etapas | ≈ 12 s por discente | 2024 |
+| Registro de uma autoavaliação completa | 2 a 3 s | 2025 |
+| Geração do gráfico de perfil e armazenamento em nuvem | 12 a 15 s | 2025 |
+
+Fonte: dados da pesquisa.
+
 
 
 Os tempos do ciclo de 2025 não são diretamente comparáveis aos 12 segundos do ciclo
 anterior, porque medem etapas distintas de um fluxo que foi reorganizado: o cálculo migrou
-das planilhas para a interface, e a operação de escrita passou a inserir as dez medições em
-lote, dentro de uma única transação. A grandeza que interessa aqui não é o ganho adicional
-sobre a automação anterior, que seria marginal, e sim a preservação da ordem de magnitude
-alcançada em 2024 mesmo com o acréscimo das duas camadas descritas neste trabalho, das
-garantias de integridade referencial e da trilha de auditoria.
+das planilhas para a interface, e a operação de escrita passou a gravar as medições de uma
+autoavaliação dentro de uma única transação. A grandeza que interessa aqui não é o ganho
+adicional sobre a automação anterior, que seria marginal, e sim a preservação da ordem de
+magnitude alcançada em 2024 mesmo com o acréscimo das duas camadas descritas neste
+trabalho, das garantias de integridade referencial e da trilha de auditoria.
 
-Convém delimitar o que essas medições cobrem. Elas dizem respeito ao tempo de execução das
+Essas medições cobrem um recorte específico. Elas dizem respeito ao tempo de execução das
 etapas automatizadas, e não ao tempo total do ciclo avaliativo, que permanece determinado
 pela disponibilidade dos discentes para responder ao formulário e pela decisão humana de
-disparar cada fluxo. O ganho reportado é, portanto, de esforço da equipe, não de duração do
-ciclo formativo. Essa distinção importa porque o processo manual de 40 minutos por discente
-consumia trabalho qualificado de mentores, que passou a ser realocado para a leitura dos
-perfis e para o acompanhamento propriamente dito.
+disparar cada fluxo. O ganho reportado é, portanto, de esforço da equipe, não de duração
+do ciclo formativo. Essa distinção importa porque o processo manual de 40 minutos por
+discente consumia trabalho qualificado de mentores, que passou a ser realocado para a
+leitura dos perfis e para o acompanhamento propriamente dito.
 
 A migração da persistência para a plataforma sem servidor introduziu latência de
 inicialização a frio nas primeiras requisições após período de inatividade, característica
 esperada desse modelo de execução. Como os fluxos são disparados sob demanda e não em
-regime contínuo, essa latência incide com frequência apreciável no início de cada sessão de
-trabalho. Os tempos reportados nesta subseção foram cronometrados em condições correntes de
-uso, sem que a primeira requisição após inatividade fosse isolada das demais, e portanto já
-incorporam a inicialização a frio quando ela ocorreu. Os valores descrevem, assim, o
-comportamento percebido pelo operador, e não o melhor caso com a função previamente ativa.
+regime contínuo, essa latência incide com frequência apreciável no início de cada sessão
+de trabalho. Os tempos reportados nesta subseção foram cronometrados em condições
+correntes de uso, sem que a primeira requisição após inatividade fosse isolada das demais,
+e portanto já incorporam a inicialização a frio quando ela ocorreu. Os valores descrevem,
+assim, o comportamento percebido pelo operador, e não o melhor caso com a função
+previamente ativa.
 
 ### 4.5 Discussão
 
 O conjunto dos resultados delimita com precisão o que foi demonstrado. Há uma base
-constituída em operação real, com 165 notas íntegras, cobertura completa da turma em cinco
-unidades consecutivas e 49 pares competência × discente comparáveis longitudinalmente. Sobre
-essa base, as duas camadas propostas estão implementadas: a de decisão como serviço
-consultável e a de intervenção em execução autônoma até a entrega da mensagem. O que não foi
-demonstrado é a escala, e tampouco o efeito pedagógico da devolutiva sobre o desempenho
-subsequente dos discentes.
+constituída em operação real, com 165 notas reunidas em quinze conjuntos completos de
+medições e 49 pares competência × discente comparáveis longitudinalmente. Sobre essa base,
+as duas camadas propostas estão implementadas: a de decisão como serviço consultável e a
+de intervenção em execução autônoma até a entrega da mensagem. O que não foi demonstrado é
+a escala, e tampouco o efeito pedagógico da devolutiva sobre o desempenho subsequente dos
+discentes.
 
 A separação entre esses dois planos é o que permite avaliar a contribuição sem
 superestimá-la. O ciclo anterior do projeto já havia demonstrado que a produção de
 indicadores é automatizável, com ganho de tempo superior a 99% e mais de 160 relatórios
-gerados. O que os resultados acrescentam é que o encerramento do ciclo formativo, que consiste em decidir
-quem cumpriu o critério e devolver orientação a quem não o cumpriu, depende de uma
-propriedade da camada de dados, e não de sofisticação adicional na camada de orquestração.
-Os 49 pares comparáveis são a forma mensurável dessa dependência.
+gerados. O que os resultados acrescentam é que o encerramento do ciclo formativo, que
+consiste em decidir quem cumpriu o critério e devolver orientação a quem não o cumpriu,
+depende de uma propriedade da camada de dados, e não de sofisticação adicional na camada
+de orquestração. Os 49 pares comparáveis são a forma mensurável dessa dependência.
 
 A regra de certificação, ao ser explicitada como algoritmo, revelou-se mais restritiva do
 que seu enunciado verbal sugere. Exigir salto de dois pontos na escala, tomar a menor
 medição como referência e impor permanência mínima de um ano são decisões que permaneciam
 implícitas enquanto o critério era aplicado por leitura de planilha, e que se tornaram
 auditáveis ao serem codificadas. Esse ganho de explicitação é independente do ganho de
-tempo, e provavelmente o mais relevante para a governança do programa, ainda que o presente
-recorte não permita quantificá-lo. A separação entre a lógica de decisão e o fluxo que a
-executa é tratada na literatura de gestão de processos como condição para que o critério
-possa ser inspecionado e alterado sem que o processo precise ser reconstruído (Bazhenova
-et al., 2019).
+tempo, e provavelmente o mais relevante para a governança do programa, ainda que o
+presente recorte não permita quantificá-lo. A separação entre a lógica de decisão e o
+fluxo que a executa é tratada na literatura de gestão de processos como condição para que
+o critério possa ser inspecionado e alterado sem que o processo precise ser reconstruído
+(Bazhenova et al., 2019).
 
 A divisão de responsabilidades entre orquestração e interface é o que torna o arranjo
 transferível para outro programa formativo. Os fluxos de automação não contêm regra de
-negócio: eles iteram sobre a relação de discentes e formatam a entrega, enquanto o cálculo das médias, a
-agregação das subcompetências e os dois critérios de disparo residem na interface, atrás de
-um contrato documentado em padrão aberto (Fielding, 2000). Substituir a matriz de
-competências ou o limiar de disparo é alteração localizada, que não exige reconstruir os
-fluxos; substituir a ferramenta de orquestração, do mesmo modo, não afeta as regras. Essa
-propriedade não foi testada em segundo contexto e permanece como expectativa de projeto,
-ainda que a revisão sobre adoção de plataformas de baixo código registre que manter a regra
-de negócio fora da ferramenta de orquestração é o que reduz a dependência do fornecedor e
-preserva a possibilidade de migração (Ajimati; Carroll; Maher, 2025).
+negócio: eles iteram sobre a relação de discentes e formatam a entrega, enquanto o cálculo
+das médias, a agregação das subcompetências e os dois critérios de disparo residem na
+interface, atrás de um contrato uniforme que oculta do cliente a implementação do serviço
+consumido (Fielding, 2000) e é publicado em padrão aberto de documentação. Substituir a
+matriz de competências ou o limiar de disparo é alteração localizada, que não exige
+reconstruir os fluxos; substituir a ferramenta de orquestração, do mesmo modo, não afeta
+as regras. Essa propriedade não foi testada em segundo contexto e permanece como
+expectativa de projeto, ainda que a revisão sobre adoção de plataformas de baixo código
+registre que manter a regra de negócio fora da ferramenta de orquestração é o que reduz a
+dependência do fornecedor e preserva a possibilidade de migração (Ajimati; Carroll; Maher,
+2025).
 
-A camada de intervenção, por sua vez, alcança personalização de nível de competência, não de
-nível individual. O sistema identifica corretamente qual competência motivou o apontamento e
-distingue desempenho baixo estável de trajetória de queda, mas o texto entregue é sorteado
-de um banco de práticas organizado por competência. Trata-se de devolutiva dirigida, e não
-adaptativa, distinção que precisa acompanhar qualquer leitura dos resultados desta camada.
-O limite corresponde ao que a literatura de análise da aprendizagem atribui aos painéis de
-natureza descritiva, cuja orientação não decorre de modelo ajustado ao percurso individual
-(Susnjak; Ramaswami; Mathrani, 2022), e que os trabalhos de recomendação explicável
-procuram superar por meio da vinculação entre a orientação entregue e os fatores
-identificados como responsáveis pelo desempenho de cada discente (Afzaal et al., 2021).
+A camada de intervenção, por sua vez, alcança personalização de nível de competência, não
+de nível individual. O sistema identifica corretamente qual competência motivou o
+apontamento e distingue desempenho baixo estável de trajetória de queda, mas o texto
+entregue é sorteado de um banco de práticas organizado por competência. Trata-se de
+devolutiva dirigida, e não adaptativa, distinção que precisa acompanhar qualquer leitura
+dos resultados desta camada. O limite corresponde ao que a literatura de análise da
+aprendizagem atribui aos painéis de natureza descritiva, cuja orientação não decorre de
+modelo ajustado ao percurso individual (Susnjak; Ramaswami; Mathrani, 2022), e que os
+trabalhos de recomendação explicável procuram superar por meio da vinculação entre a
+orientação entregue e os fatores identificados como responsáveis pelo desempenho de cada
+discente (Afzaal et al., 2021).
 
-A integridade referencial por proteção, adotada em todas as chaves estrangeiras, mostrou-se
-compatível com a operação e não produziu bloqueio que exigisse contorno durante o ciclo. A
-recusa de exclusão em cascata é o que garante que nenhuma medição desapareça pela remoção de
-uma competência ou de um vínculo, condição sem a qual a comparação longitudinal ficaria
-sujeita a lacunas silenciosas (Elmasri, 2018). Em um domínio cujo objeto é justamente a
-variação de um valor ao longo do tempo, a preservação do histórico é requisito funcional, e
-não precaução administrativa.
+A integridade referencial por proteção, adotada em todas as chaves estrangeiras,
+mostrou-se compatível com a operação e não produziu bloqueio que exigisse contorno durante
+o ciclo. A recusa de exclusão em cascata é o que garante que nenhuma medição desapareça
+pela remoção de uma competência ou de um vínculo, condição sem a qual a comparação
+longitudinal ficaria sujeita a lacunas silenciosas (Elmasri; Navathe, 2018). Em um domínio
+cujo objeto é justamente a variação de um valor ao longo do tempo, a preservação do
+histórico é requisito funcional, e não precaução administrativa.
 
 ### 4.6 Limitações
 
-A instância analisada serviu simultaneamente à operação e ao desenvolvimento da solução, de
-modo que as contagens de cadastro descrevem o conteúdo da base e não o universo do programa.
-Os valores empregados nas análises desta seção não dependem dessa distinção, porque exigem
-integridade interna do registro para existir: as 165 notas, os quinze conjuntos completos de
-dez itens e os 49 pares competência × discente comparáveis são pisos verificáveis. Nenhuma
-inferência sobre desempenho da turma, sobre efeito da intervenção ou sobre comportamento do
-sistema em volume maior se sustenta sobre essa base, e o que ela demonstra é a viabilidade
-das duas camadas em condições reais de uso.
+A instância analisada serviu simultaneamente à operação e ao desenvolvimento da solução,
+de modo que as contagens de cadastro descrevem o conteúdo da base e não o universo do
+programa. Os valores empregados nas análises desta seção não dependem dessa distinção,
+porque exigem integridade interna do registro para existir: as 165 notas, os quinze
+conjuntos completos de dez itens e os 49 pares competência × discente comparáveis são
+pisos verificáveis. Nenhuma inferência sobre desempenho da turma, sobre efeito da
+intervenção ou sobre comportamento do sistema em volume maior se sustenta sobre essa base,
+e o que ela demonstra é a viabilidade das duas camadas em condições reais de uso.
 
 O instrumento é a autoavaliação, e nenhum mecanismo de controle contra superestimação das
-notas foi implementado. A média de 2,47 e o uso integral da escala, de 0,00 a 4,00, indicam
-que não houve concentração no extremo superior, mas isso não substitui um procedimento de
-validação. A observação textual do mentor, prevista no modelo de dados, oferece o ponto de
-ancoragem para essa validação e não foi explorada neste ciclo.
+notas foi implementado. A média de 2,47 e o uso integral da escala, de 0,00 a 4,00,
+indicam que não houve concentração no extremo superior, mas isso não substitui um
+procedimento de validação. A observação textual do mentor, prevista no modelo de dados,
+oferece o ponto de ancoragem para essa validação e não foi explorada neste ciclo.
 
 O desenho do estudo também impõe limites. Trata-se de relato de uma implantação conduzida
 pela própria equipe que a avalia, sem grupo de comparação e sem instrumento externo de
-verificação, condição usual em pesquisa aplicada sobre sistema em operação, mas que restringe
-as conclusões ao que é diretamente observável nos artefatos e nos dados persistidos. Os
-tempos do processo manual, em particular, provêm do registro do ciclo anterior do projeto e
-não foram remedidos neste ciclo, de modo que funcionam como linha de base histórica, e não
-como medição controlada.
+verificação, condição usual em pesquisa aplicada sobre sistema em operação, mas que
+restringe as conclusões ao que é diretamente observável nos artefatos e nos dados
+persistidos. Os tempos do processo manual, em particular, provêm do registro do ciclo
+anterior do projeto e não foram remedidos neste ciclo, de modo que funcionam como linha de
+base histórica, e não como medição controlada.
 
-O acoplamento entre a camada de decisão e a emissão do certificado não está demonstrado, e a
-apuração dos artefatos emitidos dependeria de contagem de arquivos em serviço de
+O acoplamento entre a camada de decisão e a emissão do certificado não está demonstrado, e
+a apuração dos artefatos emitidos dependeria de contagem de arquivos em serviço de
 armazenamento, não de registro transacional. Somam-se a isso a ausência de agendamento
-periódico nos fluxos, que mantém a periodicidade do ciclo sob controle humano, e a latência
-decorrente da hospedagem da interface e do banco em região geograficamente distante dos
-usuários, para a qual a equipe apontou a hospedagem institucional local como mitigação. O
-orquestrador, por sua vez, foi executado em contêiner instalado em estação de trabalho de um
-integrante da equipe, e não em serviço mantido pela instituição, condição que limita a
-continuidade da operação para além do período do vínculo desse integrante.
+periódico nos fluxos, que mantém a periodicidade do ciclo sob controle humano, e a
+latência decorrente da hospedagem da interface e do banco em região geograficamente
+distante dos usuários, para a qual a equipe apontou a hospedagem institucional local como
+mitigação. O orquestrador, por sua vez, foi executado em contêiner instalado em estação de
+trabalho de um integrante da equipe, e não em serviço mantido pela instituição, condição
+que limita a continuidade da operação para além do período do vínculo desse integrante.
+
+## 5 Conclusão
+
+Este trabalho teve por objetivo descrever e avaliar a solução construída no ciclo de 2025
+do projeto de automação do programa Capacitação 4.0. A solução estendeu a automação de
+indicadores já existente com uma camada de decisão e uma camada de intervenção assentadas
+sobre persistência relacional com rastreabilidade histórica. A introdução indagava quais
+componentes uma automação de ciclo formativo precisa incorporar para que a certificação e
+a devolutiva ao discente deixem de depender de leitura manual de indicadores, e que
+condições de persistência essas duas camadas impõem à arquitetura.
+
+A resposta ao primeiro termo da pergunta está nos componentes descritos na seção 3. O
+modelo de dados separa o evento de avaliação do valor medido e recusa a exclusão em
+cascata em todas as chaves estrangeiras, de modo que nenhuma medição desaparece pela
+remoção de uma competência ou de um vínculo. O critério de certificação foi formalizado
+como algoritmo e exposto em endpoint autenticado, e o fluxo de recomendação pedagógica
+percorre o histórico de cada discente, aplica as duas condições de disparo e entrega o
+documento por correio eletrônico sem intervenção humana no percurso.
+
+A base constituída durante a operação sustenta o que foi afirmado sobre viabilidade. A
+consulta agregada de 27 de julho de 2026 encontrou 33 discentes cadastrados, 177 registros
+de autoavaliação distribuídos em nove unidades e 165 notas reunidas em quinze conjuntos
+completos de medições, concentrados em sete discentes. A média das notas ficou em 2,47 numa
+escala de 0,00 a 4,00. Os 49 pares competência × discente com duas ou mais medições são o
+insumo longitudinal que o algoritmo de certificação consome, e sua existência demonstra
+que a estrutura de persistência produz, em operação real, aquilo que a regra exige.
+
+Os tempos medidos preservam a ordem de magnitude alcançada no ciclo anterior. O processo
+manual consumia 40 minutos por discente e passou a cerca de 12 segundos com a automação de
+2024. No ciclo de 2025, o registro de uma autoavaliação completa ocorre em 2 a 3 segundos,
+e a geração do gráfico com o consequente armazenamento em nuvem, em 12 a 15 segundos. O
+acréscimo das duas camadas, somado às garantias de integridade referencial e de auditoria,
+não devolveu o custo de tempo ao patamar anterior.
+
+O segundo termo da pergunta encontra resposta na comparação com o arranjo que antecedeu a
+solução. A planilha que sobrescreve a nota a cada unidade preserva apenas o estado
+corrente e reduz a zero o conjunto de medições comparáveis, por mais avaliações que o
+programa venha a conduzir. O registro de cada medição como linha própria, vinculada ao
+discente e à competência que a originaram, é o que torna a regra executável. A
+contribuição deste ciclo está, assim, menos na sofisticação da orquestração do que na
+propriedade da camada de dados que a sustenta.
+
+Os limites do que foi demonstrado acompanham essa afirmação. As notas lançadas
+concentram-se em sete discentes, de modo que o resultado é de viabilidade em condições
+reais de uso e não autoriza afirmação sobre escala nem sobre o efeito pedagógico da
+devolutiva no desempenho posterior. A versão exportada do fluxo de emissão consome a
+listagem geral de discentes, e o acoplamento entre a camada de decisão e a emissão do
+certificado permanece sem demonstração. O instrumento é a autoavaliação, sem mecanismo de
+controle contra superestimação das notas, e o relato foi conduzido pela própria equipe que
+implantou a solução.
+
+Os desdobramentos previstos para os ciclos seguintes decorrem desses limites. O consumo do
+endpoint de aptidão pelo fluxo de emissão fecharia o acoplamento entre decidir e emitir, e
+o registro dos eventos de emissão e de envio daria evidência transacional a um volume hoje
+apurável somente por contagem de artefatos em serviço de armazenamento. A hospedagem da
+interface e do banco em infraestrutura institucional reduziria a latência decorrente da
+distância geográfica e retiraria o orquestrador da estação de trabalho em que foi
+executado. A observação textual do mentor, prevista no modelo de dados e não explorada
+neste ciclo, oferece o ponto de ancoragem para validar as notas autoatribuídas.
+
+A extensão do recorte a turmas sucessivas permitiria substituir a demonstração de
+viabilidade por evidência de escala, e converter a série acumulada de medições em
+avaliação do efeito da recomendação sobre as unidades seguintes. Por meio da manutenção
+das regras fora da ferramenta de orquestração e documentadas em contrato aberto, a
+transposição do arranjo para outro programa formativo se reduz à substituição da matriz de
+competências e dos limiares de disparo, sem reconstrução dos fluxos.
+
+## Agradecimentos
+
+Agradece-se aos demais integrantes da equipe do projeto de automação, cujo trabalho de
+desenvolvimento e de operação ao longo dos dois ciclos sustentou as atividades relatadas
+neste artigo, e aos mentores do programa de capacitação, responsáveis pelo acompanhamento
+dos discentes durante as unidades avaliativas. A leitura crítica dos relatórios produzidos
+pela solução, conduzida por esses mentores ao longo de sucessivas iterações, orientou a
+forma de apresentação dos indicadores devolvidos ao programa; o reconhecimento nominal da
+equipe foi omitido desta versão do manuscrito em razão do procedimento de avaliação cega
+adotado pelo periódico.
+
+## Financiamento
+
+Esta pesquisa não recebeu financiamento.
+
+## Conflito de interesses
+
+Os autores declaram não haver conflito de interesses.
 
 # REFERÊNCIAS
 

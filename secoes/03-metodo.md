@@ -38,7 +38,7 @@ elas seguem o manual de operação do programa (Embrapii, 2021), que estabelece 
 competências socioemocionais macro e quatro subcompetências vinculadas à inteligência
 emocional. No fluxo de recomendação, a competência inteligência emocional é substituída
 por suas quatro subcompetências, o que produz o conjunto de dez itens comparáveis
-apresentado na [[@TAB:03-1]]. A regra de certificação agrega as subcompetências por média
+apresentado no [[@TAB:03-1]]. A regra de certificação agrega as subcompetências por média
 e conta as competências avaliadas sobre as sete da matriz, conforme detalhado na subseção
 3.4. As duas formas de agrupamento derivam do mesmo registro
 persistido, e é a preservação simultânea dos dois níveis na base que permite alternar
@@ -46,7 +46,8 @@ entre elas sem nova coleta.
 
 [[TAB:03-1
   tipo: tabela
-  status: criar
+  rotulo: quadro
+  status: pronto
   origem: nó "Definir competências" do workflow "Gera recomendações" (exportação de set/2025) cruzado com o manual de operação do programa
   dados: mapa-de-fatos §5
   descricao: Quadro editável com as dez competências avaliadas, indicando quais são macro e quais são subcompetências de inteligência emocional. Corpo em TNR 10.
@@ -80,7 +81,7 @@ de automação, o que impedia auditar por que um determinado valor havia sido pr
 
 [[FIG:03-1
   tipo: diagrama-arquitetura
-  status: criar
+  status: pronto
   origem: elaborado a partir das quatro exportações de workflow em api-repo/n8n_files/ e do código da API em api-repo/automacao-deploy-main/
   dados: mapa-de-fatos §4, §14
   descricao: Diagrama esquemático em três faixas. Entrada, formulário e planilha de respostas. Orquestração, os quatro fluxos do n8n auto-hospedado. Núcleo, a API Django sobre PostgreSQL gerenciado. Saída, planilhas, gráficos, certificados em PDF no Drive e mensagens de correio eletrônico. Sem captura de tela e sem hostname. Texto interno em TNR 18 ou maior.
@@ -116,7 +117,7 @@ inicialização a frio nas primeiras requisições após período de inatividade
 
 ### 3.3 Modelo de dados e rastreabilidade histórica
 
-O modelo relacional organiza-se em torno de sete entidades, apresentadas na [[@FIG:03-2]].
+O modelo relacional organiza-se em torno de oito entidades, apresentadas na [[@FIG:03-2]].
 Discente e mentor concentram a identificação institucional dos participantes. A entidade
 projeto classifica a iniciativa entre real e espelho e vincula-a a um mentor responsável.
 A entidade associativa entre discente e projeto registra o tipo de vínculo e a data de
@@ -127,10 +128,10 @@ flexibilidade para expansões futuras da matriz sem alteração de esquema.
 
 [[FIG:03-2
   tipo: diagrama-arquitetura
-  status: criar
+  status: pronto
   origem: redesenhado a partir dos modelos em api-repo/automacao-deploy-main/capacitacao/models/ (Figura 1 do relatório de estágio, não reutilizada por ser documento interno)
   dados: mapa-de-fatos §4, §14
-  descricao: Diagrama entidade-relacionamento das sete entidades do domínio, com cardinalidades e a indicação dos campos de auditoria. Redesenhar, não capturar tela de ferramenta. Omitir os atributos que armazenam dado pessoal identificável, representando-os como "dados de identificação". Texto interno em TNR 18 ou maior.
+  descricao: Diagrama entidade-relacionamento das oito entidades do domínio, com cardinalidades e a indicação dos campos de auditoria. Redesenhar, não capturar tela de ferramenta. Omitir os atributos que armazenam dado pessoal identificável, representando-os como "dados de identificação". Texto interno em TNR 18 ou maior.
   legenda: Figura 2 — Modelo entidade-relacionamento do domínio de avaliação de competências socioemocionais. Fonte: elaborado pelos autores.
   largura: 1col
   altura_cm: 9

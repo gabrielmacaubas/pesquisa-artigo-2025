@@ -6,20 +6,18 @@
 
 ## Situação atual
 
-**Etapa:** 3 — escrita **concluída**. **As sete seções estão em rascunho**, todas revisadas,
-todas sem lacuna. Gate: 1 pendência (exit 2).
-**Atualizado:** 20/09/2026 (sessão 11 — resumo e abstract)
-**Próxima ação:** **produzir as cinco figuras** (`python3 scripts/gate.py --figuras` lista o
-que falta), ou **`/revisar-artigo`** se preferir uma segunda passada de review sobre o texto
-completo agora que o resumo existe. As duas `FIG` são diagramas a desenhar; as três `TAB` são
-markdown editável e podem ser escritas direto no repositório.
+**Etapa:** 4 — **o artigo existe inteiro**. Sete seções escritas, **cinco figuras
+produzidas**, `.docx` e `.pdf` gerados. Gate: 1 pendência (exit 2).
+**Atualizado:** 20/09/2026 (sessão 12 — figuras produzidas e build completo)
+**Próxima ação:** **`/revisar-artigo`** — segunda passada de review sobre o artigo completo,
+agora com resumo e figuras. Depois dela, mandar `build/artigo.pdf` para a orientadora.
 
-**O autor precisa decidir:** se corta ~0,4 página de folga antes de mandar o texto para a
-orientadora (ver **Orçamento**, abaixo). Não há bloqueio.
+**O autor precisa decidir:** duas coisas, nenhuma bloqueante. (a) Se aceita a fonte interna
+das figuras (ver **Figuras**). (b) Se manda o PDF para a orientadora agora ou só depois do
+review.
 
-⚠️ **O `build/` está desatualizado desde 03/09/2026** — não contém a conclusão, as
-declarações nem o resumo. Rodar `bash scripts/build.sh` antes de qualquer leitura completa,
-inclusive antes de mandar o texto para a orientadora.
+✅ **`build/` regerado em 20/09/2026** com tudo dentro: `build/artigo.docx` e
+`build/artigo.pdf`, **17 páginas reais**.
 
 ## O artigo
 
@@ -104,14 +102,15 @@ exige parágrafo único — é esperado, não é desvio.
 | Texto (9.136 palavras) | 13,0 |
 | Figuras (5) | 1,9 |
 | Referências (15) | 3,0 |
-| **Estimado** | **17,98** |
+| **Estimado pelo gate** | **17,98** |
+| **Real, no PDF de 20/09/2026** | **17** |
 
-Dentro da janela de 12 a 18, **acima do alvo de 16**, e é isso que o gate acusa. O teto foi
-raspado por 0,02 página: o resumo custou 0,87 em vez dos 0,8 projetados, e a estimativa de
-referências do `ESTADO.md` anterior estava errada (15 refs = 3,0 páginas, não 1,2).
+O número que vale é o do documento formatado: **17 páginas reais**, dentro da janela de 12 a
+18. A estimativa do gate (17,98) é conservadora e erra para cima em cerca de uma página —
+agora que existe um PDF completo, dá para calibrar essa diferença, se valer a pena.
 
-**Não há folga para a revisão da orientadora.** Qualquer acréscimo estoura o teto e vira
-bloqueante no gate. Fontes de folga, por ordem de menor dano:
+**A folga real é de ~1 página**, não de 0,02. Ainda assim o gate vai acusar pendência
+enquanto a estimativa passar de 16. Fontes de corte, se a orientadora pedir espaço:
 
 1. `FIG:03-2` (DER) de 9 cm para 7 cm → **0,08 pág**
 2. Conclusão, 47 palavras acima do alvo → **0,07 pág**
@@ -120,18 +119,28 @@ bloqueante no gate. Fontes de folga, por ordem de menor dano:
 As três juntas trazem o artigo para ~17,6. A fonte prevista antes (fundir `FIG:04-1`) já foi
 usada em D-29.
 
-## Figuras — 5 declaradas, **nenhuma produzida**
+## Figuras — 5 declaradas, **5 prontas**
 
-| ID | O que é | Onde | Tamanho |
+| ID | Rótulo no artigo | Arquivo | O que é |
 |---|---|---|---|
-| `TAB:03-1` | Quadro editável das 10 competências avaliadas | 03 | 1col, 7 cm |
-| `FIG:03-1` | Diagrama de arquitetura (n8n + API + banco + Google Workspace) | 03 | 1col, 8 cm |
-| `FIG:03-2` | DER das 7 entidades do domínio | 03 | 1col, 9 cm |
-| `TAB:04-1` | Snapshot agregado do banco em 27/07/2026, **incluindo a distribuição pelas 9 unidades** (33×5, depois 7, 3, 1, 1) | 04 | 1col, 9 cm |
-| `TAB:04-2` | Tempos: manual 40 min · 2024 ≈12 s · registro 2–3 s · gráfico 12–15 s | 04 | 1col, 6 cm |
+| `TAB:03-1` | **Quadro 1** | `figuras/tab-03-1.md` | As 10 competências avaliadas, macro e subcompetências |
+| `FIG:03-1` | **Figura 1** | `figuras/fig-03-1.png` | Arquitetura em quatro faixas: entrada, fluxos, núcleo, saída |
+| `FIG:03-2` | **Figura 2** | `figuras/fig-03-2.png` | DER das 8 entidades, com cardinalidades e nota de auditoria |
+| `TAB:04-1` | **Tabela 1** | `figuras/tab-04-1.md` | Snapshot agregado de 27/07/2026, com a distribuição pelas 9 unidades |
+| `TAB:04-2` | **Tabela 2** | `figuras/tab-04-2.md` | Tempos: manual 40 min · 2024 ≈12 s · registro 2–3 s · gráfico 12–15 s |
 
-No PDF elas aparecem como blocos "IMAGEM AUSENTE" com a descrição do que produzir.
-⚠️ 300 dpi e texto interno em TNR ≥18. As três `TAB` são markdown editável, nunca imagem.
+As três `TAB` são markdown editável, nunca imagem — exigência da revista. Os dois `.png`
+saem de `python3 scripts/figuras.py`, que os regera do zero em **300 dpi**, com texto
+interno em **18,2 pt** (o mínimo da revista é 18).
+
+⚠️ **Decisão do autor:** o texto interno das figuras está em **Liberation Serif**, que é
+metricamente compatível com a Times New Roman mas não é ela. A TNR não está instalada nesta
+máquina. Ou se aceita a substituição, ou se regera `scripts/figuras.py` em máquina com a
+fonte, trocando as constantes `REG` e `BOL`.
+
+**Quadro e tabela têm sequências próprias** no artigo, como a revista exige: o quadro de
+competências é Quadro 1, e as duas da seção 4 são Tabela 1 e Tabela 2. O bloco declara isso
+pelo campo `rotulo:`.
 
 ## Referências — 15 entradas, todas citadas
 
@@ -161,8 +170,12 @@ bash scripts/build.sh        # gate → build/artigo.md → .docx → .pdf (com 
 bash scripts/build.sh --md   # só o markdown consolidado
 ```
 
-⚠️ Os artefatos em `build/` são de 03/09/2026 e **não contêm a conclusão, as declarações nem
-o resumo**. Regerar antes de qualquer leitura completa.
+✅ Regerado em 20/09/2026 com o artigo inteiro: **17 páginas reais**, 7 seções, 5
+figuras/tabelas, 15 referências. `build/artigo.pdf` é o arquivo para mandar à orientadora.
+
+- `scripts/figuras.py` — gera os dois `.png` em 300 dpi; rodar de novo se algo mudar
+- `scripts/build.py` — tabela e quadro entram como markdown editável, com título acima e
+  `Fonte:` abaixo; figura leva o título abaixo (NBR 14724)
 
 - `scripts/reference-abnt.docx` — estilos do build: TNR 11, espaçamento simples, recuo 1 cm
 - `scripts/formato_principia.py` — injeta A4 e margens no `.docx`; o pandoc 2.9 não copia o
@@ -181,7 +194,8 @@ o resumo**. Regerar antes de qualquer leitura completa.
   procedência.
 - **A API corrigida (D-15) segue sem validação em ambiente com Django.** Não importa mais
   para o artigo, porque D-21 a manteve fora do texto.
-- **O teto de páginas está raspado.** Ver Orçamento.
+- **A estimativa do gate fica acima do alvo de 16** enquanto o texto tiver este tamanho.
+  O PDF real tem 17 páginas, dentro da janela.
 
 ## Git
 

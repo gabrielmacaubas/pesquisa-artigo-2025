@@ -37,7 +37,7 @@ A [[@TAB:04-1]] consolida o conjunto.
 
 [[TAB:04-1
   tipo: tabela
-  status: criar
+  status: pronto
   origem: consulta agregada ao banco de produção em 27/07/2026, registrada em mapa-de-fatos §6
   dados: mapa-de-fatos §6
   descricao: Quadro editável com as métricas agregadas do banco em 27/07/2026, em duas colunas, métrica e valor. Linhas: discentes cadastrados, registros de autoavaliação, conjuntos completos de medições, discentes com notas lançadas, notas por tipo, faixa e média das notas, pares competência x discente com duas ou mais medições, mentores, projetos e registros de auditoria. Acrescentar uma linha com a distribuição dos registros pelas nove unidades (33, 33, 33, 33, 33, 7, 3, 1, 1), que substitui o gráfico de barras antes previsto. Nenhum dado individual. Corpo em TNR 10.
@@ -165,7 +165,7 @@ nuvem, em 12 a 15 segundos. A [[@TAB:04-2]] reúne as medições.
 
 [[TAB:04-2
   tipo: tabela
-  status: criar
+  status: pronto
   origem: manuscrito do ciclo anterior do projeto (processo manual e ciclo de 2024) e medições da equipe durante a operação de 2025, registradas em mapa-de-fatos §9
   dados: mapa-de-fatos §9
   descricao: Quadro editável comparando o tempo do processo manual, o tempo do ciclo automatizado anterior e os tempos das etapas do ciclo de 2025. Colunas para a etapa, o tempo e o ciclo a que a medição pertence. Corpo em TNR 10.

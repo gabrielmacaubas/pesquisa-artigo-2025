@@ -27,18 +27,28 @@ from gate import (RE_FIG_BLOCO, RE_FIG_REF, RE_FRONTMATTER, RE_REF_CHAVE,
                   RE_REF_CAMPO, RE_CIT_PAREN, RE_CIT_NARR, ler, sem_codigo)
 
 ROTULO = {'FIG': 'Figura', 'TAB': 'Tabela'}
+# a revista distingue tabela (dado numérico) de quadro (informação textual), e cada
+# uma tem sua própria sequência. O bloco declara `rotulo: quadro` quando for o caso.
+ROTULOS_VALIDOS = {'figura': 'Figura', 'tabela': 'Tabela', 'quadro': 'Quadro'}
+
+
+def rotulo_do_bloco(tipo, corpo):
+    campos = campos_do_bloco(corpo)
+    pedido = campos.get('rotulo', '').strip().lower()
+    return ROTULOS_VALIDOS.get(pedido, ROTULO[tipo])
 
 
 def numerar(secoes):
-    """Percorre na ordem final e atribui número a cada FIG/TAB."""
+    """Percorre na ordem final e numera cada elemento dentro da sua sequência."""
     numeros = {}
-    contador = {'FIG': 0, 'TAB': 0}
+    contador = {}
     for _, texto in secoes:
         for m in RE_FIG_BLOCO.finditer(texto):
             tipo, ident = m.group(1), m.group(2)
             if (tipo, ident) not in numeros:
-                contador[tipo] += 1
-                numeros[(tipo, ident)] = contador[tipo]
+                rotulo = rotulo_do_bloco(tipo, m.group(3))
+                contador[rotulo] = contador.get(rotulo, 0) + 1
+                numeros[(tipo, ident)] = (rotulo, contador[rotulo])
     return numeros
 
 
@@ -51,22 +61,35 @@ def campos_do_bloco(corpo):
     return campos
 
 
-def render_figura(tipo, ident, campos, numero):
-    rotulo = ROTULO[tipo]
+def render_figura(tipo, ident, campos, numerado):
+    rotulo, numero = numerado
     legenda = campos.get('legenda', '')
     # normaliza "Figura 3 — ..." para o número real
     legenda = re.sub(r'^(Figura|Tabela|Quadro)\s*\d*\s*[—-]\s*', '', legenda).strip()
+    # a legenda guarda título e fonte na mesma linha; a ABNT quer a fonte embaixo
+    titulo, fonte = legenda, ''
+    m = re.search(r'\s*(Fonte:.*)$', legenda)
+    if m:
+        titulo = legenda[:m.start()].strip()
+        fonte = m.group(1).strip()
     arquivo = campos.get('arquivo', '')
     caminho = os.path.join(RAIZ, arquivo)
-    partes = ['', '**%s %d — %s**' % (rotulo, numero, legenda), '']
-    if arquivo and os.path.exists(caminho):
-        partes.insert(1, '![](%s)' % arquivo)
-        partes.insert(2, '')
+    cabeca = '**%s %d — %s**' % (rotulo, numero, titulo)
+
+    if not (arquivo and os.path.exists(caminho)):
+        corpo = ('> ⚠️ IMAGEM AUSENTE: `%s` — %s'
+                 % (arquivo or '(sem caminho)', campos.get('descricao', '')))
+    elif arquivo.endswith('.md'):
+        # tabela/quadro editável: entra como markdown, nunca como imagem
+        corpo = ler(caminho).strip()
     else:
-        partes.insert(1, '> ⚠️ IMAGEM AUSENTE: `%s` — %s'
-                      % (arquivo or '(sem caminho)', campos.get('descricao', '')))
-        partes.insert(2, '')
-    return '\n'.join(partes)
+        corpo = '![](%s)' % arquivo
+
+    # tabela e quadro levam o título acima; figura, abaixo (NBR 14724)
+    ordem = [cabeca, corpo] if tipo == 'TAB' else [corpo, cabeca]
+    if fonte:
+        ordem.append(fonte)
+    return '\n\n'.join([''] + ordem + [''])
 
 
 def processar(texto, numeros):
@@ -75,14 +98,15 @@ def processar(texto, numeros):
     def sub_bloco(m):
         tipo, ident = m.group(1), m.group(2)
         campos = campos_do_bloco(m.group(3))
-        return render_figura(tipo, ident, campos, numeros.get((tipo, ident), 0))
+        return render_figura(tipo, ident, campos,
+                             numeros.get((tipo, ident), (ROTULO[tipo], 0)))
 
     texto = RE_FIG_BLOCO.sub(sub_bloco, texto)
 
     def sub_ref(m):
         tipo, ident = m.group(1), m.group(2)
         n = numeros.get((tipo, ident))
-        return '%s %d' % (ROTULO[tipo], n) if n else '%s ??' % ROTULO[tipo]
+        return '%s %d' % n if n else '%s ??' % ROTULO[tipo]
 
     return RE_FIG_REF.sub(sub_ref, texto).strip()
 
