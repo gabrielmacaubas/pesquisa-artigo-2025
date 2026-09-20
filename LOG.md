@@ -1003,3 +1003,74 @@ Com as três correções o modelo dá 17,9 contra 18 reais. Antes dava 17,0 cont
 
 `/revisar-artigo`. O `build/artigo.pdf` de 20/09/2026 é a versão para ler e para mandar à
 orientadora.
+
+### 2026-09-20 — Sessão 14: as figuras sintéticas saíram, entraram quatro artefatos reais
+
+O autor determinou a troca: retirar as duas imagens que eu havia desenhado (gráfico de
+perfil e certificado) e pôr no lugar material de verdade, já existente no acervo do
+projeto, mais o fluxo de certificação do n8n.
+
+#### O que entrou, e de onde
+
+| Figura | Origem | Largura · dpi |
+|---|---|---|
+| **Figura 3** — fluxo de emissão no n8n | `docs/tcc_juliana.pdf`, p. 20 | 15,5 cm · 302 dpi |
+| **Figura 4** — relatório de perfil (radar + níveis) | `docs/ARTIGO - PROJETO 2024`, p. 17 | 13,0 cm · 313 dpi |
+| **Figura 5** — frente do modelo de certificado | `docs/tcc_juliana.pdf`, p. 22 | 11,5 cm · 309 dpi |
+| **Figura 6** — verso do modelo de certificado | `docs/tcc_juliana.pdf`, p. 22 | 11,5 cm · 309 dpi |
+
+As imagens foram **extraídas embutidas** com `pdfimages`, sem rasterizar a página, o que
+preserva a resolução original e mantém as quatro acima dos 300 dpi exigidos. Tudo isso vive
+em `scripts/figuras_reais.py`, que refaz o trabalho inteiro por comando.
+
+#### O que foi suprimido antes de publicar
+
+Nenhuma das quatro podia entrar como estava.
+
+- **Nome do discente** nos dois cabeçalhos do relatório de perfil. O manuscrito de 2024 já
+  o havia borrado; borrão não é supressão, então entrou tarja opaca.
+- **Instituição, cidade e nome do diretor** na frente do certificado; **cidade e os nomes
+  dos dois tutores** no verso; **logotipo institucional** em ambos. Não é preciosismo de
+  privacidade: é a **avaliação cega**. O corpo do artigo diz "um instituto federal e uma
+  agência de fomento" justamente para não identificar os autores, e um certificado com o
+  brasão e o nome da instituição desfaria isso em uma página.
+- **Endereços de endpoint** nos dois primeiros nós do fluxo do n8n, por
+  `dados-e-privacidade.md`, regra 4.
+
+O modelo de certificado é reproduzido **em branco**, com `{{nome}}` e `{{cpf}}` ainda no
+lugar dos dados. Não há dado de discente nele, e isso ficou dito na legenda e no corpo.
+
+#### A contradição que a troca revelou
+
+A subseção 3.6 afirmava que "as ilustrações foram redesenhadas como diagramas esquemáticos
+em lugar de capturas de tela, justamente para eliminar a via mais provável de exposição
+acidental". Com três capturas no artigo, a frase virou falsa — e era exatamente o tipo de
+frase que um avaliador confere contra a figura ao lado. Reescrita para descrever o que de
+fato foi feito: as capturas foram tratadas, com supressão nominal e de identificação
+institucional.
+
+#### D-30 — Teto de páginas elevado a 20
+
+- **Questão:** as quatro imagens reais custam mais espaço do que as duas sintéticas que
+  saíram, e o documento passou de 18 para 19 páginas.
+- **Escolha do autor:** aceitar até 20 páginas para manter as imagens.
+- **Motivo:** mostrar o produto real da automação vale o espaço.
+- **Impacto:** ⚠️ **A Revista Principia rejeita acima de 18 páginas, na triagem, sem
+  avaliar** — "trabalhos que não seguirem as instruções de formatação serão automaticamente
+  rejeitados". O `gate.py` deixou de bloquear em 18, mas entre 18 e 20 emite pendência
+  dizendo isso com todas as letras. O caminho de volta está no `ESTADO.md`: dispensar o
+  diagrama de arquitetura (0,40 pág) e cortar da seção 4 resolve.
+
+#### Pendente
+
+- **19 páginas reais.** Fora da norma do veículo até que se corte, por decisão registrada.
+- **Texto interno das capturas abaixo de 18 pt.** A revista pede 18 para figura; captura de
+  tela não atende, e a regra em `figuras.md` prevê isso ("inviabiliza a maioria dos
+  screenshots"). O manuscrito de 2024 do mesmo grupo foi submetido com capturas nas mesmas
+  condições. Fica como risco declarado, não como defeito escondido.
+- **`master` está 8 commits à frente de `origin/master`.**
+
+#### Próximo
+
+`/revisar-artigo`. O review agora tem de olhar as figuras novas com a lente do §6 do
+checklist: identificação de autoria e dado individual de discente.

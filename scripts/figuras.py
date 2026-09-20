@@ -218,98 +218,10 @@ def modelo():
     salvar(img, 'fig-03-2.png')
 
 
-# --- FIG:04-1 gráfico de perfil ----------------------------------------------
-def perfil():
-    """Radar de perfil, com dados SINTÉTICOS — nenhuma nota real de discente."""
-    import math
-    print('FIG:04-1 gráfico de perfil (dados sintéticos)')
-    img, d = tela(16, 9)
-    W, H = img.width, img.height
-
-    cx, cy, raio = W // 2, 470, 360
-    eixos = 7
-    # dados sintéticos, declarados como tal na legenda e no corpo do artigo
-    series = [('Unidade 1', [2, 1, 2, 3, 1, 2, 2], (120, 120, 120), 6),
-              ('Unidade 2', [3, 2, 2, 4, 3, 3, 2], (17, 17, 17), 9)]
-
-    def ponto(i, valor):
-        ang = -math.pi / 2 + 2 * math.pi * i / eixos
-        r = raio * valor / 4.0
-        return (cx + r * math.cos(ang), cy + r * math.sin(ang))
-
-    for anel in (1, 2, 3, 4):
-        d.polygon([ponto(i, anel) for i in range(eixos)],
-                  outline=(176, 176, 176), width=3)
-    for i in range(eixos):
-        d.line([(cx, cy), ponto(i, 4)], fill=(176, 176, 176), width=3)
-        rotulo = ponto(i, 4.55)
-        d.text(rotulo, str(i + 1), font=TITULO, fill=TINTA, anchor='mm')
-    # escala à esquerda, na direção em que não há eixo, para não colidir com os
-    # números das competências
-    for anel in (2, 4):
-        d.text((cx - raio * anel / 4.0 - 46, cy), str(anel), font=CORPO,
-               fill=(90, 90, 90), anchor='mm')
-
-    for _, valores, cor, esp in series:
-        d.polygon([ponto(i, v) for i, v in enumerate(valores)], outline=cor, width=esp)
-
-    y = H - 150
-    x = 300
-    for nome, _, cor, esp in series:
-        d.line([(x, y), (x + 150, y)], fill=cor, width=esp)
-        d.text((x + 180, y), nome, font=CORPO, fill=TINTA, anchor='lm')
-        x += 620
-    d.text((W // 2, H - 60), 'Escala de 0 a 4 · eixos numerados conforme o Quadro 1',
-           font=CORPO, fill=TINTA, anchor='mm')
-
-    salvar(img, 'fig-04-1.png')
-
-
-# --- FIG:04-2 produtos das duas camadas --------------------------------------
-def produtos():
-    """Certificado e mensagem de recomendação, ambos SINTÉTICOS."""
-    print('FIG:04-2 produtos das camadas (exemplos sintéticos)')
-    img, d = tela(16, 7)
-    W, H = img.width, img.height
-    margem, vao = 30, 60
-    largura = (W - 2 * margem - vao) // 2
-    topo, altura = 30, H - 60
-
-    def painel(x, titulo, linhas, centralizado=False):
-        d.rectangle([x, topo, x + largura, topo + altura], fill=FUNDO,
-                    outline=TRACO, width=LARGURA_TRACO)
-        d.rectangle([x, topo, x + largura, topo + 130], fill=CAIXA,
-                    outline=TRACO, width=LARGURA_TRACO)
-        d.text((x + largura // 2, topo + 65), titulo, font=TITULO, fill=TINTA,
-               anchor='mm')
-        y = topo + 190
-        for linha, destaque in linhas:
-            fonte = TITULO if destaque else CORPO
-            if centralizado:
-                d.text((x + largura // 2, y), linha, font=fonte, fill=TINTA, anchor='mm')
-            else:
-                d.text((x + 40, y), linha, font=fonte, fill=TINTA, anchor='lm')
-            y += ALTURA_LINHA
-
-    painel(margem, 'CERTIFICADO', [
-        ('Certificamos que', False),
-        ('A. B. C. (nome fictício)', True),
-        ('participou do programa', False),
-        ('Capacitação 4.0, com', False),
-        ('cinco unidades avaliadas.', False),
-    ], centralizado=True)
-
-    painel(margem + largura + vao, 'RECOMENDAÇÃO', [
-        ('Competência: liderança', False),
-        ('Motivo: queda em relação', False),
-        ('à unidade anterior', False),
-        ('Prática sugerida: conduzir', False),
-        ('uma reunião de equipe do', False),
-        ('projeto e relatar o', False),
-        ('resultado ao mentor.', False),
-    ])
-
-    salvar(img, 'fig-04-2.png')
+# As figuras 04-1 e 04-2 já foram geradas aqui, com dados sintéticos, e foram
+# substituídas em 20/09/2026 por artefatos reais do projeto — ver scripts/figuras_reais.py.
+# As funções que as desenhavam saíram daqui para que uma execução distraída deste script
+# não sobrescreva `figuras/fig-04-1.png` e `figuras/fig-04-2.png`.
 
 
 if __name__ == '__main__':
@@ -318,7 +230,3 @@ if __name__ == '__main__':
         arquitetura()
     if alvo in ('todas', '03-2'):
         modelo()
-    if alvo in ('todas', '04-1'):
-        perfil()
-    if alvo in ('todas', '04-2'):
-        produtos()

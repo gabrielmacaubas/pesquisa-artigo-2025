@@ -99,20 +99,22 @@ correspondente computável. A existência do conjunto demonstra que a estrutura 
 persistência descrita na subseção 3.3 produz, em operação real, o insumo longitudinal que
 a camada de decisão consome.
 
-A forma como essa comparação chega ao mentor está reproduzida na [[@FIG:04-1]],
-construída com dados sintéticos: o gráfico de perfil sobrepõe as medições de duas
-unidades sucessivas sobre os mesmos eixos, e é dessa sobreposição que tanto a leitura
-humana quanto as duas regras extraem a variação de cada competência.
+A forma como essa comparação chega ao mentor está na [[@FIG:04-1]], um relatório
+efetivamente produzido pelo fluxo de geração de gráficos, aqui em uma execução de outubro
+de 2024. As avaliações sucessivas de um mesmo discente aparecem sobrepostas nos mesmos
+eixos, e a tabela ao lado converte cada medição no nível qualitativo correspondente. É
+dessa sobreposição que tanto a leitura humana quanto as duas regras extraem a variação de
+cada competência.
 
 [[FIG:04-1
-  tipo: grafico-linhas
+  tipo: screenshot
   status: pronto
-  origem: elaborado a partir do formato de saída do fluxo "graficos", com valores sintéticos construídos para este artigo
-  dados: valores sintéticos; a numeração dos eixos segue o Quadro 1
-  descricao: Gráfico radar com os sete eixos das competências macro, numerados conforme o Quadro 1, e duas unidades sobrepostas em escala de 0 a 4. Sem nome e sem dado de discente real.
-  legenda: Figura 3 — Gráfico de perfil de competências macro, com duas unidades sucessivas sobrepostas em escala de 0 a 4. Exemplo sintético, construído para ilustrar o formato da saída, sem dado de discente. Fonte: elaborado pelos autores.
+  origem: relatório de perfil gerado pelo fluxo de gráficos em execução de out/2024, conservado no acervo do projeto
+  dados: dados operacionais do programa; nenhuma nota individual é transcrita para o texto
+  descricao: Relatório de perfil em duas metades. Acima, os radares das competências macro e das subcompetências com três avaliações sobrepostas. Abaixo, a tabela dos níveis qualitativos correspondentes. O nome do discente foi suprimido em ambas as metades.
+  legenda: Figura 4 — Relatório de perfil produzido pelo fluxo de geração de gráficos, com três avaliações sucessivas sobrepostas nos eixos das competências e a tabela dos níveis qualitativos correspondentes. Nome do discente suprimido. Fonte: dados da pesquisa.
   largura: 1col
-  altura_cm: 9
+  altura_cm: 8
   arquivo: figuras/fig-04-1.png
 ]]
 
@@ -153,22 +155,36 @@ do volume de medições descrito na subseção 4.2 o limite superior do que essa
 consegue detectar. O conjunto sobre o qual a condição pode ser verificada corresponde aos
 49 pares competência × discente com duas ou mais medições.
 
-Os artefatos que as duas camadas entregam estão reproduzidos na [[@FIG:04-2]], também
-em exemplos sintéticos, uma vez que nenhum documento emitido para discente real pode ser
-reproduzido em publicação aberta. O certificado registra a participação no programa, e a
-mensagem de recomendação nomeia a competência apontada, a condição que disparou o
-apontamento e a prática sugerida.
+O documento que a camada de emissão produz está na [[@FIG:04-2]] e na [[@FIG:04-3]], que
+reproduzem a frente e o verso do modelo preenchido pelo fluxo. O que aparece nos campos é
+a marcação que o fluxo substitui pelos dados de cada discente no momento da emissão, e não
+um certificado emitido: reproduzir um documento já preenchido exporia nome e número de
+inscrição no cadastro de pessoas físicas. A frente registra a participação no programa e o
+projeto ao qual o discente esteve vinculado, e o verso enumera as competências
+socioemocionais trabalhadas no percurso.
 
 [[FIG:04-2
-  tipo: diagrama-arquitetura
+  tipo: screenshot
   status: pronto
-  origem: elaborado a partir do modelo de documento do workflow "Certificados" e do template HTML do workflow "Gera recomendações"
-  dados: exemplos sintéticos construídos para este artigo
-  descricao: Dois painéis lado a lado, esquemáticos. À esquerda o certificado de participação, com nome fictício declarado como tal. À direita a mensagem de recomendação, com competência, motivo do disparo e prática sugerida. Sem dado de discente real.
-  legenda: Figura 4 — Certificado de participação e mensagem de recomendação pedagógica, os dois artefatos entregues pelas camadas de decisão e de intervenção. Exemplos sintéticos, sem dado de discente. Fonte: elaborado pelos autores.
+  origem: modelo de certificado mantido em nuvem e preenchido pelo fluxo "Certificados", conservado no acervo do projeto
+  dados: nenhum; o modelo traz marcações de substituição, não dados de discente
+  descricao: Frente do modelo de certificado, com as marcações de nome, inscrição, projeto, data e mentor. Instituição, cidade e nome de servidor suprimidos por causa da avaliação cega.
+  legenda: Figura 5 — Frente do modelo de certificado preenchido pelo fluxo de emissão. Os campos entre chaves são substituídos pelos dados do discente na emissão. Identificação institucional suprimida em razão da avaliação cega. Fonte: dados da pesquisa.
   largura: 1col
-  altura_cm: 7
+  altura_cm: 8
   arquivo: figuras/fig-04-2.png
+]]
+
+[[FIG:04-3
+  tipo: screenshot
+  status: pronto
+  origem: modelo de certificado mantido em nuvem e preenchido pelo fluxo "Certificados", conservado no acervo do projeto
+  dados: nenhum; o modelo traz marcações de substituição, não dados de discente
+  descricao: Verso do modelo de certificado, com a relação das sete competências socioemocionais do programa. Instituição, cidade e nomes de servidores suprimidos por causa da avaliação cega.
+  legenda: Figura 6 — Verso do modelo de certificado, com a relação das competências socioemocionais trabalhadas no percurso formativo. Identificação institucional suprimida em razão da avaliação cega. Fonte: dados da pesquisa.
+  largura: 1col
+  altura_cm: 8
+  arquivo: figuras/fig-04-3.png
 ]]
 
 O envio das mensagens não é persistido em tabela do banco, de modo que o volume entregue

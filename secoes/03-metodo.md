@@ -214,9 +214,9 @@ critério mede, portanto, a amplitude entre o pior desempenho e os demais, não 
 estritamente cronológica. O filtro de permanência mínima de um ano no programa, por fim,
 opera sobre a data de entrada do vínculo mais recente do discente com um projeto.
 
-A emissão do documento é conduzida pelo quarto fluxo de automação. Após autenticar-se na
-interface, o fluxo percorre a relação de discentes em lote e normaliza a capitalização do
-nome, que é armazenado em caixa baixa na origem. Em seguida preenche um modelo de
+A emissão do documento é conduzida pelo quarto fluxo de automação, reproduzido na
+[[@FIG:03-3]]. Após autenticar-se na interface, o fluxo percorre a relação de discentes em
+lote e normaliza a capitalização do nome, que é armazenado em caixa baixa na origem. Em seguida preenche um modelo de
 documento mantido em nuvem, converte o resultado em PDF e concede aos orientadores
 permissão de edição sobre a versão editável do arquivo. O alcance dessa etapa precisa ser
 explicitado. A versão exportada do fluxo consome a listagem geral de discentes, e não o
@@ -224,6 +224,18 @@ endpoint que aplica a regra de dois terços, de forma que os documentos emitidos
 certificados de participação. A camada de decisão está implementada e disponível como
 serviço, mas seu acoplamento ao fluxo de emissão não está demonstrado pela evidência
 reunida.
+
+[[FIG:03-3
+  tipo: screenshot
+  status: pronto
+  origem: tela do fluxo "Certificados" no n8n, registrada durante a operação de 2025 e conservada no acervo do projeto
+  dados: nenhum; o que a figura mostra é a topologia do fluxo, não dados de discente
+  descricao: Onze nós do fluxo de emissão, do gatilho manual à mesclagem final. Os dois endereços de endpoint foram suprimidos, conforme a regra de dados e privacidade.
+  legenda: Figura 3 — Fluxo de emissão de certificados construído na ferramenta de automação, do gatilho manual à conversão em PDF e à concessão de permissões. Endereços de serviço suprimidos. Fonte: dados da pesquisa.
+  largura: 1col
+  altura_cm: 4
+  arquivo: figuras/fig-03-3.png
+]]
 
 ### 3.5 Camada de intervenção: a regra de recomendação pedagógica
 
@@ -263,8 +275,9 @@ para finalidade de pesquisa com seres humanos.
 
 Toda extração empregada na redação deste artigo foi conduzida por consultas agregadas, com
 funções de contagem, média e valores extremos, sem recuperação de linhas individuais.
-Nenhum dado individual de discente é reportado no texto, nas tabelas ou nas figuras, e as
-ilustrações foram redesenhadas como diagramas esquemáticos em lugar de capturas de tela,
-justamente para eliminar a via mais provável de exposição acidental. Os identificadores de
-infraestrutura, como nomes de servidor e credenciais de acesso, permanecem em variáveis de
-ambiente e não são reproduzidos aqui.
+Nenhum dado individual de discente é reportado no texto, nas tabelas ou nas figuras. As
+capturas de tela reproduzidas foram tratadas antes de entrar no artigo, com supressão do
+nome do discente no relatório de perfil, e o modelo de certificado aparece com as marcações
+de substituição ainda no lugar dos dados que o fluxo insere na emissão. Os identificadores
+de infraestrutura, como nomes de servidor e credenciais de acesso, permanecem em variáveis
+de ambiente e foram suprimidos das figuras em que apareciam.

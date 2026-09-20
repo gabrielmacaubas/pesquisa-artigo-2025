@@ -532,9 +532,9 @@ critério mede, portanto, a amplitude entre o pior desempenho e os demais, não 
 estritamente cronológica. O filtro de permanência mínima de um ano no programa, por fim,
 opera sobre a data de entrada do vínculo mais recente do discente com um projeto.
 
-A emissão do documento é conduzida pelo quarto fluxo de automação. Após autenticar-se na
-interface, o fluxo percorre a relação de discentes em lote e normaliza a capitalização do
-nome, que é armazenado em caixa baixa na origem. Em seguida preenche um modelo de
+A emissão do documento é conduzida pelo quarto fluxo de automação, reproduzido na
+Figura 3. Após autenticar-se na interface, o fluxo percorre a relação de discentes em
+lote e normaliza a capitalização do nome, que é armazenado em caixa baixa na origem. Em seguida preenche um modelo de
 documento mantido em nuvem, converte o resultado em PDF e concede aos orientadores
 permissão de edição sobre a versão editável do arquivo. O alcance dessa etapa precisa ser
 explicitado. A versão exportada do fluxo consome a listagem geral de discentes, e não o
@@ -542,6 +542,20 @@ endpoint que aplica a regra de dois terços, de forma que os documentos emitidos
 certificados de participação. A camada de decisão está implementada e disponível como
 serviço, mas seu acoplamento ao fluxo de emissão não está demonstrado pela evidência
 reunida.
+
+
+
+![](figuras/fig-03-3.png)
+
+::: {custom-style="Legenda"}
+Figura 3 — Fluxo de emissão de certificados construído na ferramenta de automação, do gatilho manual à conversão em PDF e à concessão de permissões. Endereços de serviço suprimidos.
+:::
+
+::: {custom-style="FonteIlustracao"}
+Fonte: dados da pesquisa.
+:::
+
+
 
 ### 3.5 Camada de intervenção: a regra de recomendação pedagógica
 
@@ -581,11 +595,12 @@ para finalidade de pesquisa com seres humanos.
 
 Toda extração empregada na redação deste artigo foi conduzida por consultas agregadas, com
 funções de contagem, média e valores extremos, sem recuperação de linhas individuais.
-Nenhum dado individual de discente é reportado no texto, nas tabelas ou nas figuras, e as
-ilustrações foram redesenhadas como diagramas esquemáticos em lugar de capturas de tela,
-justamente para eliminar a via mais provável de exposição acidental. Os identificadores de
-infraestrutura, como nomes de servidor e credenciais de acesso, permanecem em variáveis de
-ambiente e não são reproduzidos aqui.
+Nenhum dado individual de discente é reportado no texto, nas tabelas ou nas figuras. As
+capturas de tela reproduzidas foram tratadas antes de entrar no artigo, com supressão do
+nome do discente no relatório de perfil, e o modelo de certificado aparece com as marcações
+de substituição ainda no lugar dos dados que o fluxo insere na emissão. Os identificadores
+de infraestrutura, como nomes de servidor e credenciais de acesso, permanecem em variáveis
+de ambiente e foram suprimidos das figuras em que apareciam.
 
 ## 4 Resultados e discussões
 
@@ -692,21 +707,23 @@ correspondente computável. A existência do conjunto demonstra que a estrutura 
 persistência descrita na subseção 3.3 produz, em operação real, o insumo longitudinal que
 a camada de decisão consome.
 
-A forma como essa comparação chega ao mentor está reproduzida na Figura 3,
-construída com dados sintéticos: o gráfico de perfil sobrepõe as medições de duas
-unidades sucessivas sobre os mesmos eixos, e é dessa sobreposição que tanto a leitura
-humana quanto as duas regras extraem a variação de cada competência.
+A forma como essa comparação chega ao mentor está na Figura 4, um relatório
+efetivamente produzido pelo fluxo de geração de gráficos, aqui em uma execução de outubro
+de 2024. As avaliações sucessivas de um mesmo discente aparecem sobrepostas nos mesmos
+eixos, e a tabela ao lado converte cada medição no nível qualitativo correspondente. É
+dessa sobreposição que tanto a leitura humana quanto as duas regras extraem a variação de
+cada competência.
 
 
 
 ![](figuras/fig-04-1.png)
 
 ::: {custom-style="Legenda"}
-Figura 3 — Gráfico de perfil de competências macro, com duas unidades sucessivas sobrepostas em escala de 0 a 4. Exemplo sintético, construído para ilustrar o formato da saída, sem dado de discente.
+Figura 4 — Relatório de perfil produzido pelo fluxo de geração de gráficos, com três avaliações sucessivas sobrepostas nos eixos das competências e a tabela dos níveis qualitativos correspondentes. Nome do discente suprimido.
 :::
 
 ::: {custom-style="FonteIlustracao"}
-Fonte: elaborado pelos autores.
+Fonte: dados da pesquisa.
 :::
 
 
@@ -748,22 +765,38 @@ do volume de medições descrito na subseção 4.2 o limite superior do que essa
 consegue detectar. O conjunto sobre o qual a condição pode ser verificada corresponde aos
 49 pares competência × discente com duas ou mais medições.
 
-Os artefatos que as duas camadas entregam estão reproduzidos na Figura 4, também
-em exemplos sintéticos, uma vez que nenhum documento emitido para discente real pode ser
-reproduzido em publicação aberta. O certificado registra a participação no programa, e a
-mensagem de recomendação nomeia a competência apontada, a condição que disparou o
-apontamento e a prática sugerida.
+O documento que a camada de emissão produz está na Figura 5 e na Figura 6, que
+reproduzem a frente e o verso do modelo preenchido pelo fluxo. O que aparece nos campos é
+a marcação que o fluxo substitui pelos dados de cada discente no momento da emissão, e não
+um certificado emitido: reproduzir um documento já preenchido exporia nome e número de
+inscrição no cadastro de pessoas físicas. A frente registra a participação no programa e o
+projeto ao qual o discente esteve vinculado, e o verso enumera as competências
+socioemocionais trabalhadas no percurso.
 
 
 
 ![](figuras/fig-04-2.png)
 
 ::: {custom-style="Legenda"}
-Figura 4 — Certificado de participação e mensagem de recomendação pedagógica, os dois artefatos entregues pelas camadas de decisão e de intervenção. Exemplos sintéticos, sem dado de discente.
+Figura 5 — Frente do modelo de certificado preenchido pelo fluxo de emissão. Os campos entre chaves são substituídos pelos dados do discente na emissão. Identificação institucional suprimida em razão da avaliação cega.
 :::
 
 ::: {custom-style="FonteIlustracao"}
-Fonte: elaborado pelos autores.
+Fonte: dados da pesquisa.
+:::
+
+
+
+
+
+![](figuras/fig-04-3.png)
+
+::: {custom-style="Legenda"}
+Figura 6 — Verso do modelo de certificado, com a relação das competências socioemocionais trabalhadas no percurso formativo. Identificação institucional suprimida em razão da avaliação cega.
+:::
+
+::: {custom-style="FonteIlustracao"}
+Fonte: dados da pesquisa.
 :::
 
 

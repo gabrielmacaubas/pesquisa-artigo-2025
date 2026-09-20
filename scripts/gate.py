@@ -30,7 +30,13 @@ RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECOES = os.path.join(RAIZ, 'secoes')
 REFS = os.path.join(RAIZ, 'refs.md')
 
-TETO_PAGINAS = 18.0
+# 18 é o teto da Revista Principia, e passar dele é rejeição automática na triagem.
+# O autor decidiu em 20/09/2026 (D-30) aceitar até 20 páginas para caber as figuras
+# vindas de artefato real. O gate deixa de bloquear em 18, mas nunca deixa de avisar:
+# entre 18 e 20 a pendência diz, com todas as letras, que o manuscrito está fora da
+# norma do veículo.
+TETO_REVISTA = 18.0
+TETO_PAGINAS = 20.0
 MIN_PAGINAS = 12.0
 ALVO_PAGINAS = 16.0
 PALAVRAS_POR_PAGINA = 700.0
@@ -317,6 +323,12 @@ def orcamento(secoes, figuras, refs):
              '(cortar ~%d palavras)'
              % (total, TETO_PAGINAS,
                 int((total - ALVO_PAGINAS) * PALAVRAS_POR_PAGINA)))
+    elif total > TETO_REVISTA:
+        aviso('%.1f pág — ACIMA DAS %.0f DA REVISTA. A Principia rejeita na triagem '
+              'sem avaliar. Só continue assim por decisão consciente (D-30); para '
+              'voltar à norma, cortar ~%d palavras ou uma figura'
+              % (total, TETO_REVISTA,
+                 int((total - TETO_REVISTA) * PALAVRAS_POR_PAGINA)))
     elif total > ALVO_PAGINAS:
         aviso('orçamento em %.1f pág — acima do alvo de %.0f, sem folga para revisão'
               % (total, ALVO_PAGINAS))

@@ -6,16 +6,20 @@
 
 ## Situação atual
 
-**Etapa:** 4 — **o artigo existe inteiro e o PDF está diagramado**. Sete seções, **sete
+**Etapa:** 4 — **o artigo existe inteiro e o PDF está diagramado**. Sete seções, **nove
 figuras/quadros/tabelas**, `.docx` e `.pdf` gerados. Gate: 1 pendência (exit 2).
-**Atualizado:** 20/09/2026 (sessão 13 — defeitos de diagramação corrigidos e produtos ilustrados)
+**Atualizado:** 20/09/2026 (sessão 14 — figuras sintéticas trocadas por artefatos reais)
 **Próxima ação:** **`/revisar-artigo`** — segunda passada de review sobre o artigo completo.
 Depois dela, mandar `build/artigo.pdf` para a orientadora.
 
 **O autor precisa decidir:** se aceita a fonte interna das figuras (ver **Figuras**). Só
 isso, e não bloqueia nada.
 
-✅ **`build/artigo.pdf` regerado em 20/09/2026: 18 páginas reais**, no teto da revista.
+⚠️ **`build/artigo.pdf` regerado em 20/09/2026: 19 páginas reais — uma acima do teto da
+revista.** É consequência direta de D-30, decisão consciente do autor para caber as quatro
+imagens de artefato real. **Como está, a Principia rejeita na triagem sem avaliar.** Para
+voltar às 18: cortar ~460 palavras, ou dispensar uma figura (a `FIG:03-1`, diagrama de
+arquitetura, é a candidata — o fluxo real em `FIG:03-3` cobre parte do que ela mostra).
 
 ## O artigo
 
@@ -61,6 +65,7 @@ isso, e não bloqueia nada.
 | D-27 | **Financiamento:** repete "Esta pesquisa não recebeu financiamento" de 2024; os editais são vínculo, não repasse |
 | D-28 | Pseudocódigo de 3.4 **corrigido** para espelhar o código, sem parágrafo explicativo; 4.5 permanece |
 | D-29 | **`FIG:04-1` fundida em `TAB:04-1`** — cinco figuras; libera 0,3 pág que as correções consumiram |
+| D-30 | **Teto de páginas elevado a 20** para caber quatro imagens de artefato real, e as duas figuras sintéticas foram descartadas. ⚠️ Diverge da norma do veículo, que rejeita acima de 18 |
 
 ## Decisões pendentes
 
@@ -100,21 +105,24 @@ exige parágrafo único — é esperado, não é desvio.
 | Texto (9.136 palavras) | 13,0 |
 | Figuras (5) | 1,9 |
 | Referências (15) | 3,0 |
-| **Estimado pelo gate** | **17,9** |
-| **Real, no PDF de 20/09/2026** | **18** |
+| **Estimado pelo gate** | **18,7** |
+| **Real, no PDF de 20/09/2026** | **19** |
 
-O número que vale é o do documento formatado: **18 páginas reais**, que é exatamente o teto
-da revista. O modelo do gate foi calibrado contra esse PDF nesta sessão e agora bate com ele
+O número que vale é o do documento formatado: **19 páginas reais**, uma acima do teto da
+revista, por D-30. O modelo do gate foi calibrado contra esse PDF nesta sessão e agora bate com ele
 (17,9 contra 18): as referências passaram de 5 para 15 por página, que é o que elas
 realmente ocupam, e entrou uma linha explícita de **folga de diagramação, 1,2 página** — o
 espaço que figura empurrada para a página seguinte, linha órfã e respiro de título consomem
 e que o modelo antes ignorava.
 
-**Não há folga.** Qualquer acréscimo passa de 18 e é rejeitado na triagem. Fontes de corte:
+**O manuscrito está fora da norma enquanto tiver 19 páginas.** Para voltar às 18, em ordem
+de menor dano:
 
-1. Conclusão, 47 palavras acima do alvo → **0,07 pág**
-2. Seção 4, ainda 144 palavras acima do alvo → **0,21 pág**
-3. `FIG:03-2` (DER) redesenhada mais baixa → **0,08 pág**
+1. Dispensar a `FIG:03-1`, o diagrama de arquitetura → **0,40 pág**. O fluxo real da
+   `FIG:03-3` cobre parte do que ela mostra, e a arquitetura está descrita em prosa
+2. Seção 4, 203 palavras acima do alvo → **0,29 pág**
+3. Conclusão, 47 palavras acima do alvo → **0,07 pág**
+4. Reduzir a largura de impressão das três capturas, que hoje sobram em dpi → **~0,10 pág**
 
 Nesta sessão já foram usadas duas fontes: o Quadro 1 e a Tabela 1 foram remontados em dois
 pares de colunas (de 12 e 16 cm para 7 e 8 cm), e um parágrafo de 93 palavras saiu de 4.1. A fonte prevista antes (fundir `FIG:04-1`) já foi
@@ -129,12 +137,25 @@ usada em D-29.
 | `FIG:03-2` | **Figura 2** | `figuras/fig-03-2.png` | DER das 8 entidades, com cardinalidades e nota de auditoria |
 | `TAB:04-1` | **Tabela 1** | `figuras/tab-04-1.md` | Snapshot agregado de 27/07/2026, com a distribuição pelas 9 unidades |
 | `TAB:04-2` | **Tabela 2** | `figuras/tab-04-2.md` | Tempos: manual 40 min · 2024 ≈12 s · registro 2–3 s · gráfico 12–15 s |
-| `FIG:04-1` | **Figura 3** | `figuras/fig-04-1.png` | Gráfico de perfil com duas unidades sobrepostas — **dados sintéticos** |
-| `FIG:04-2` | **Figura 4** | `figuras/fig-04-2.png` | Certificado e mensagem de recomendação — **exemplos sintéticos** |
+| `FIG:03-3` | **Figura 3** | `figuras/fig-03-3.png` | Fluxo de emissão no n8n — **captura real**, endpoints suprimidos |
+| `FIG:04-1` | **Figura 4** | `figuras/fig-04-1.png` | Relatório de perfil gerado pelo fluxo — **real**, nome do discente suprimido |
+| `FIG:04-2` | **Figura 5** | `figuras/fig-04-2.png` | Frente do modelo de certificado — **real**, identificação institucional suprimida |
+| `FIG:04-3` | **Figura 6** | `figuras/fig-04-3.png` | Verso do modelo de certificado — **real**, idem |
 
-As duas últimas são o produto que as camadas entregam, e foram pedidas pelo autor em
-20/09/2026. São sintéticas por obrigação: `dados-e-privacidade.md` proíbe reproduzir
-documento de discente real, e a legenda de cada uma declara isso.
+As quatro últimas vêm de **artefato real do projeto** (D-30), extraídas dos PDFs em `docs/`
+por `scripts/figuras_reais.py`, que também aplica as supressões. Substituíram as duas
+figuras sintéticas da sessão 13, que foram descartadas.
+
+⚠️ **O que foi suprimido, e por quê:** nome de discente no relatório de perfil
+(`dados-e-privacidade.md`); nome da instituição, cidade e nomes de servidores no certificado
+(**avaliação cega** — sem isso o manuscrito identifica os autores); endereços de endpoint no
+fluxo do n8n (`dados-e-privacidade.md`, regra 4). O modelo de certificado é reproduzido com
+as marcações `{{nome}}` e `{{cpf}}` no lugar, e não preenchido — não há dado de discente
+nele.
+
+⚠️ **Risco que fica:** as três capturas têm texto interno bem abaixo dos 18 pt que a revista
+exige para figura. O manuscrito de 2024, do mesmo grupo, usou capturas nas mesmas condições
+e foi submetido assim.
 
 As três `TAB` são markdown editável, nunca imagem — exigência da revista. Os dois `.png`
 saem de `python3 scripts/figuras.py`, que os regera do zero em **300 dpi**, com texto
@@ -180,7 +201,11 @@ bash scripts/build.sh --md   # só o markdown consolidado
 ✅ Regerado em 20/09/2026 com o artigo inteiro: **17 páginas reais**, 7 seções, 5
 figuras/tabelas, 15 referências. `build/artigo.pdf` é o arquivo para mandar à orientadora.
 
-- `scripts/figuras.py` — gera os quatro `.png` em 300 dpi; rodar de novo se algo mudar
+- `scripts/figuras.py` — gera os dois diagramas em 300 dpi (arquitetura e DER)
+- `scripts/figuras_reais.py` — **novo**, extrai as quatro imagens de artefato real dos PDFs
+  em `docs/`, aplica as supressões e grava com o dpi que dá a largura de impressão desejada.
+  É o único lugar onde as supressões existem: refazer a figura sem ele republica o que foi
+  suprimido
 - `scripts/build.py` — tabela e quadro entram como markdown editável, com título acima e
   `Fonte:` abaixo; figura leva o título abaixo (NBR 14724)
 - `scripts/preparar_reference.py` — **novo**, injeta no `reference-abnt.docx` os estilos que
