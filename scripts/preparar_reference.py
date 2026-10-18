@@ -6,6 +6,8 @@ não tinha. Idempotente: rodar de novo não duplica nada.
 
   Legenda           título de figura, tabela e quadro — TNR 10, centralizado
   FonteIlustracao   a linha "Fonte: ..." — TNR 8, centralizado
+  TituloArtigo      o título do artigo, em português e em inglês — TNR 12 negrito, que
+                    é o que a revista pede e o que o orientador aplicou na revisão
   AbstractEN        o abstract e as keywords — a revista os exige em itálico
   SourceCode        bloco de pseudocódigo — monoespaçada 9, alinhado à esquerda
 
@@ -15,8 +17,10 @@ e corrige dois estilos que já existiam e vinham do default do pandoc:
   Table             margem de célula 0 em cima e embaixo; passa a 80 twips
   VerbatimChar      vinha em Consolas 11, fonte que não existe no Linux e cai em
                     substituta larga; passa a Liberation Mono 9, que é o que faz o
-                    pseudocódigo caber na largura da página
-  Compact           é o estilo do texto DENTRO da célula, e herdava o recuo de
+                    algoritmo caber na largura; 10 pt para acompanhar a tabela da página
+  Compact           além do recuo, herdava o CORPO em 11 pt; a revista exige 10 pt
+                    dentro de tabela e quadro, e foi o que o orientador aplicou
+  Compact (recuo)   é o estilo do texto DENTRO da célula, e herdava o recuo de
                     primeira linha de 1 cm do corpo — o que empurrava a primeira
                     linha de cada célula para a direita e forçava quebra
 
@@ -51,6 +55,14 @@ ESTILOS = {
         '<w:spacing w:before="60" w:after="180" w:line="240" w:lineRule="auto"/>'
         '<w:ind w:firstLine="0"/><w:jc w:val="center"/></w:pPr>'
         '<w:rPr><w:sz w:val="16"/><w:szCs w:val="16"/></w:rPr></w:style>'
+    ),
+    'TituloArtigo': (
+        '<w:style w:type="paragraph" w:customStyle="1" w:styleId="TituloArtigo">'
+        '<w:name w:val="Título do artigo"/><w:basedOn w:val="Normal"/>'
+        '<w:pPr><w:keepNext/>'
+        '<w:spacing w:before="0" w:after="240" w:line="240" w:lineRule="auto"/>'
+        '<w:ind w:firstLine="0"/><w:jc w:val="left"/></w:pPr>'
+        '<w:rPr><w:b/><w:bCs/><w:sz w:val="24"/><w:szCs w:val="24"/></w:rPr></w:style>'
     ),
     'AbstractEN': (
         '<w:style w:type="paragraph" w:customStyle="1" w:styleId="AbstractEN">'
@@ -93,7 +105,7 @@ def corrigir(xml):
                              '<w:rFonts w:ascii="Liberation Mono"'
                              ' w:hAnsi="Liberation Mono" w:cs="Liberation Mono" />')
         novo = novo.replace('<w:sz w:val="22" />',
-                            '<w:sz w:val="18" /><w:szCs w:val="18" />')
+                            '<w:sz w:val="20" /><w:szCs w:val="20" />')
         if novo != bloco:
             xml = xml[:i] + novo + xml[fim:]
             mudou.append('VerbatimChar em Liberation Mono 9')
@@ -107,6 +119,9 @@ def corrigir(xml):
             novo = bloco.replace('<w:spacing w:before="36" w:after="36" />',
                                  '<w:spacing w:before="36" w:after="36" />'
                                  '<w:ind w:firstLine="0"/><w:jc w:val="left"/>')
+            # corpo de tabela em 10 pt (sz é meio-ponto): exigência da revista
+            novo = novo.replace('</w:style>', '')
+            novo += '<w:rPr><w:sz w:val="20"/><w:szCs w:val="20"/></w:rPr>'
             xml = xml[:i] + novo + xml[fim:]
             mudou.append('Compact sem recuo')
 

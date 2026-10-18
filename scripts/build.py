@@ -29,7 +29,8 @@ from gate import (RE_FIG_BLOCO, RE_FIG_REF, RE_FRONTMATTER, RE_REF_CHAVE,
 ROTULO = {'FIG': 'Figura', 'TAB': 'Tabela'}
 # a revista distingue tabela (dado numérico) de quadro (informação textual), e cada
 # uma tem sua própria sequência. O bloco declara `rotulo: quadro` quando for o caso.
-ROTULOS_VALIDOS = {'figura': 'Figura', 'tabela': 'Tabela', 'quadro': 'Quadro'}
+ROTULOS_VALIDOS = {'figura': 'Figura', 'tabela': 'Tabela', 'quadro': 'Quadro',
+                   'algoritmo': 'Algoritmo'}
 
 
 def rotulo_do_bloco(tipo, corpo):
@@ -69,7 +70,8 @@ def render_figura(tipo, ident, campos, numerado):
     rotulo, numero = numerado
     legenda = campos.get('legenda', '')
     # normaliza "Figura 3 — ..." para o número real
-    legenda = re.sub(r'^(Figura|Tabela|Quadro)\s*\d*\s*[—-]\s*', '', legenda).strip()
+    legenda = re.sub(r'^(Figura|Tabela|Quadro|Algoritmo)\s*\d*\s*[—-]\s*', '',
+                     legenda).strip()
     # a legenda guarda título e fonte na mesma linha; a ABNT quer a fonte embaixo
     titulo, fonte = legenda, ''
     m = re.search(r'\s*(Fonte:.*)$', legenda)

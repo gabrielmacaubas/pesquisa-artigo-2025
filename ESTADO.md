@@ -6,26 +6,26 @@
 
 ## Situação atual
 
-**Etapa:** 4 — **o artigo existe inteiro e o PDF está diagramado**. Sete seções, **nove
-figuras/quadros/tabelas**, `.docx` e `.pdf` gerados. Gate: 1 pendência (exit 2).
-**Atualizado:** 20/09/2026 (sessão 15 — review completo, correções aplicadas)
-**Próxima ação:** **mandar `build/artigo.pdf` para a orientadora.** O review de 20/09 está
-em `build/review-2026-09-20.md`; o que dependia de redação já foi corrigido.
+**Etapa:** 6 — **revisão do orientador aplicada**. Sete seções, **dez elementos**
+(1 algoritmo, 1 quadro, 2 tabelas, 6 figuras), **18 páginas**. Gate: 3 pendências (exit 2).
+**Atualizado:** 18/10/2026 (sessão 16 — revisão de Francisco Petrônio aplicada)
+**Próxima ação:** **mandar `build/artigo.docx` para ele e para a orientadora.** O texto
+gerado aqui é **idêntico** ao da revisão dele — `python3 scripts/conferir_docx.py` confere
+isso a cada build.
 
-**O autor precisa decidir:** três riscos aceitos, todos listados no review — as 19 páginas
-(C-1, D-30), o texto interno das capturas abaixo de 18 pt (M-4) e o reuso de imagem do
-relatório de estágio protocolado (M-5). Nenhum deles é corrigível sem retirar conteúdo.
+**O autor precisa levar a ele:** os quatro ajustes da revisão que introduzem erro, listados
+no `LOG.md` da sessão 16, aplicados assim mesmo por D-33, mais a inconsistência entre
+"container" (3.2) e "contêiner" (4.6).
 
-⚠️ **`build/artigo.pdf` regerado em 20/09/2026: 19 páginas reais — uma acima do teto da
-revista.** É consequência direta de D-30, decisão consciente do autor para caber as quatro
-imagens de artefato real. **Como está, a Principia rejeita na triagem sem avaliar.** Para
-voltar às 18: cortar ~460 palavras, ou dispensar uma figura (a `FIG:03-1`, diagrama de
-arquitetura, é a candidata — o fluxo real em `FIG:03-3` cobre parte do que ela mostra).
+✅ **`build/artigo.docx` e `.pdf` regerados em 18/10/2026: 18 páginas reais**, dentro da
+norma. As quatro imagens de artefato real continuam todas no texto: o caminho de 20 para 18
+veio de diagramação (tabelas compactas e títulos de seção em 6/0, como a norma exige) e de
+450 palavras de repetição entre seções, não de corte de figura.
 
 ## O artigo
 
 - **Veículo:** Revista Principia — artigo original · **12 a 18 páginas** (alvo 16)
-- **Título (D-18):** "Automação de certificação e recomendação pedagógica em programa de capacitação profissional: da geração de indicadores à camada de decisão" · EN: "Automating certification and pedagogical recommendation in a professional training program: from indicator generation to the decision layer"
+- **Título (D-31, sugestão do orientador):** "Automação da avaliação longitudinal de competências socioemocionais na educação profissional: certificação baseada em regras e apoio à decisão" · EN: "Automating the longitudinal assessment of socioemotional skills in professional education: rule-based certification and decision support"
 - **Prazo:** fluxo contínuo, sem data-limite (D-20)
 - **Tese:** aprovada — automação do ciclo formativo exige camada de decisão
   (certificação) e de intervenção (recomendação) sobre persistência estruturada
@@ -66,7 +66,10 @@ arquitetura, é a candidata — o fluxo real em `FIG:03-3` cobre parte do que el
 | D-27 | **Financiamento:** repete "Esta pesquisa não recebeu financiamento" de 2024; os editais são vínculo, não repasse |
 | D-28 | Pseudocódigo de 3.4 **corrigido** para espelhar o código, sem parágrafo explicativo; 4.5 permanece |
 | D-29 | **`FIG:04-1` fundida em `TAB:04-1`** — cinco figuras; libera 0,3 pág que as correções consumiram |
-| D-30 | **Teto de páginas elevado a 20** para caber quatro imagens de artefato real, e as duas figuras sintéticas foram descartadas. ⚠️ Diverge da norma do veículo, que rejeita acima de 18 |
+| D-30 | **Teto de páginas elevado a 20** para caber quatro imagens de artefato real, e as duas figuras sintéticas foram descartadas. ⚠️ Diverge da norma do veículo — **superada por D-32** |
+| D-31 | **Título novo**, sugerido pelo orientador: "Automação da avaliação longitudinal de competências socioemocionais na educação profissional: certificação baseada em regras e apoio à decisão". Versão em inglês refeita para acompanhar |
+| D-32 | **De volta às 18 páginas**, por exigência do orientador. Teto do gate volta a 18 e a folga de diagramação do modelo é recalibrada para 0,4 |
+| D-33 | **Alterações do orientador aplicadas literalmente**, inclusive as quatro que introduzem erro gramatical ou semântico. Ficam registradas no `LOG.md` para serem levadas a ele |
 
 ## Decisões pendentes
 
@@ -237,6 +240,24 @@ figuras/tabelas, 15 referências. `build/artigo.pdf` é o arquivo para mandar à
 **Permanecem, por decisão:** C-1 (19 páginas), M-4 (texto interno das capturas abaixo de
 18 pt) e M-5 (reuso de imagem de relatório protocolado, sujeito a verificação de
 similaridade).
+
+## Revisão do orientador — 09/10/2026
+
+Chegou em `.docx` com controle de alterações, arquivada em
+`docs/revisao-orientador-2026-10-09.docx`. **Todas as 21 alterações de texto foram
+aplicadas**, e cada correção de diagramação virou regra do build:
+
+| O que ele corrigiu | Onde passou a viver |
+|---|---|
+| Corpo de tabela em 10 pt | estilo `Compact`, no `reference-abnt.docx` |
+| Cabeçalho de tabela em negrito | `formato_principia.py` |
+| Tabela centralizada | `formato_principia.py` |
+| Título do artigo em 12 pt negrito | estilo `TituloArtigo` |
+| Pseudocódigo como **Algoritmo 1**, tabela numerada e editável | `figuras/tab-03-2.md` + `rotulo: algoritmo` no `build.py` |
+
+**`python3 scripts/conferir_docx.py`** compara o documento gerado com o dele, parágrafo a
+parágrafo, e roda a cada build. Hoje imprime *TEXTO IDÊNTICO*. As divergências deliberadas
+estão listadas no próprio script, cada uma com o motivo.
 
 ## Bloqueios
 

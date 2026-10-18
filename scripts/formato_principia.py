@@ -14,6 +14,12 @@ Aplica ao build/artigo.docx o que o reference-doc do pandoc não carrega.
    menos a primeira coluna. Aqui a tabela recebe 100% da largura útil e uma grade
    proporcional ao conteúdo de cada coluna.
 
+3. Identificação de autoria nas propriedades do arquivo. A submissão é duplo-cega e
+   as Diretrizes mandam limpar as Propriedades do Arquivo. O pandoc já emite os campos
+   vazios, mas qualquer passagem por Word ou LibreOffice grava o nome de quem salvou —
+   foi o que aconteceu com o arquivo revisado pelo orientador, que chegou com
+   `lastModifiedBy`. Aqui os campos de autoria são zerados de novo, sempre.
+
   python3 scripts/formato_principia.py [caminho.docx]
 """
 
@@ -81,9 +87,12 @@ def ajustar_tabelas(xml):
             '<w:gridCol w:w="%d"/>' % l for l in larguras)
         tabela = re.sub(r'<w:tblGrid\s*/>|<w:tblGrid>.*?</w:tblGrid>', grade,
                         tabela, count=1, flags=re.S)
-        # sem tblLayout fixed o LibreOffice recalcula as colunas e ignora a grade
+        # sem tblLayout fixed o LibreOffice recalcula as colunas e ignora a grade.
+        # jc=center: a tabela fica centralizada no bloco de texto, como o orientador
+        # formatou na revisão de 09/10/2026
         tabela = re.sub(r'<w:tblW[^/]*/>',
                         '<w:tblW w:type="pct" w:w="5000"/>'
+                        '<w:jc w:val="center"/>'
                         '<w:tblLayout w:type="fixed"/>', tabela, count=1)
         # cada célula declara a sua largura, senão o LibreOffice ignora a grade
         def celula(mc):
@@ -100,12 +109,35 @@ def ajustar_tabelas(xml):
         tabela = tabela.replace('<w:trPr>', '<w:trPr><w:cantSplit/>')
         tabela = re.sub(r'<w:tr>(?!<w:trPr>)', '<w:tr><w:trPr><w:cantSplit/></w:trPr>',
                         tabela)
+        # negrito só quando a primeira linha é mesmo cabeçalho: o pandoc marca essas
+        # com cnfStyle firstRow. A tabela do algoritmo não tem cabeçalho, e sem essa
+        # checagem o passo 1 do algoritmo saía em negrito.
+        primeira = re.search(r'<w:tr>.*?</w:tr>', tabela, re.S)
+        if primeira and 'w:firstRow="1"' in primeira.group(0):
+            cab = primeira.group(0)
+            novo_cab = re.sub(r'<w:rPr>', '<w:rPr><w:b/><w:bCs/>', cab)
+            novo_cab = re.sub(r'<w:r>(?!<w:rPr>)', '<w:r><w:rPr><w:b/><w:bCs/></w:rPr>',
+                              novo_cab)
+            tabela = tabela.replace(cab, novo_cab, 1)
         ajustadas += 1
         return tabela
+
 
     xml = re.sub(r'<w:tbl>.*?</w:tbl>', uma, xml, flags=re.S)
     return xml, ajustadas
 
+
+def monoespacada(xml_doc):
+    """Garante a fonte do código por formatação direta.
+
+    O estilo de caractere VerbatimChar declara Liberation Mono, mas o LibreOffice
+    não o resolve dentro de célula de tabela e o algoritmo saía em serifada. Quem
+    vence sempre é a formatação direta no run.
+    """
+    alvo = '<w:rStyle w:val="VerbatimChar" />'
+    fonte = ('<w:rFonts w:ascii="Liberation Mono" w:hAnsi="Liberation Mono"'
+             ' w:cs="Liberation Mono"/>')
+    return xml_doc.replace(alvo, alvo + fonte), xml_doc.count(alvo)
 
 def aplicar(caminho):
     if not os.path.exists(caminho):
@@ -118,6 +150,15 @@ def aplicar(caminho):
 
     with zipfile.ZipFile(tmp, 'w', zipfile.ZIP_DEFLATED) as zout:
         for info, dados in itens:
+            if info.filename == 'docProps/core.xml':
+                xml = dados.decode('utf-8')
+                for campo in ['dc:creator', 'cp:lastModifiedBy', 'dc:title',
+                              'cp:lastPrinted', 'dc:subject', 'cp:keywords',
+                              'cp:category', 'dc:description']:
+                    xml = re.sub(r'<%s>.*?</%s>' % (campo, campo),
+                                 '<%s></%s>' % (campo, campo), xml, flags=re.S)
+                    xml = re.sub(r'<%s/>' % campo, '<%s></%s>' % (campo, campo), xml)
+                dados = xml.encode('utf-8')
             if info.filename == 'word/document.xml':
                 xml = dados.decode('utf-8')
                 if re.search(r'<w:sectPr\b[^>]*/>', xml):
@@ -130,6 +171,9 @@ def aplicar(caminho):
                 xml, n = ajustar_tabelas(xml)
                 if n:
                     print('  %d tabelas ajustadas à largura útil de 16 cm' % n)
+                xml, m = monoespacada(xml)
+                if m:
+                    print('  %d trechos de código em monoespaçada' % m)
                 dados = xml.encode('utf-8')
             zout.writestr(info, dados)
 

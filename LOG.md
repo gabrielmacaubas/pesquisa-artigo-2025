@@ -1144,3 +1144,132 @@ autoria. Estilo dentro do perfil do grupo nas sete seções.
 
 Mandar `build/artigo.pdf` para a orientadora. Quando vier o retorno dela,
 `/aplicar-review-orientadora`.
+
+### 2026-10-18 — Sessão 16: revisão do orientador aplicada, e o build passa a reproduzi-la
+
+O artigo voltou revisado por Francisco Petrônio em 09/10/2026, em `.docx` **com controle
+de alterações ligado** — 178 inserções, 22 exclusões, 250 mudanças de formatação de
+parágrafo, 368 de trecho e 148 em tabelas. O arquivo está versionado em
+`docs/revisao-orientador-2026-10-09.docx` e é, a partir de agora, a referência de
+conferência.
+
+#### O caminho escolhido
+
+As correções voltaram para o pipeline (`secoes/*.md` + build), e não o contrário. O
+`.docx` dele viraria fonte da verdade ao custo de perder o gate, a numeração automática
+de figuras e o controle de orçamento — e seria sobrescrito no build seguinte. Mais
+importante: o pedido era que **os motivos da correção não se repetissem**, e isso só se
+cumpre transformando a formatação dele no padrão do build.
+
+#### Texto — 21 pontos, todos aplicados
+
+Título novo (D-31), "ferramenta" → "ferramentas de baixo código", dois pares de parágrafos
+fundidos na introdução, "sustentar decisão" → "sustentar uma decisão", "competência de
+inteligência emocional", "apresentado" → "apresentados", "contêiner" → "container",
+"utilizada até o final de 2024", "em vez de repetir o conteúdo", "registrado na tabela do
+banco", "decai" → "cai", "Esses" → "Estes", "aplica às duas condições".
+
+⚠️ **Quatro ajustes dele introduzem erro, e foram aplicados assim mesmo por decisão do
+autor (D-33).** Ficam registrados para serem levados a ele:
+
+| Onde | Como ficou | Por que é problema |
+|---|---|---|
+| 2.1 | "A automação é **classificada** pela substituição…" | era "classicamente definida"; Groover **define** automação, não a classifica por isso |
+| 2.3 | "ao construírem e **validaram** um instrumento" | concordância: o paralelo pede "validarem" |
+| 1 | "sem **autorização de** afirmação sobre escala" | era "sem autorizar afirmação"; a nova forma troca o sujeito da ação |
+| 4.3 | "aplica **às** duas condições de disparo" | "aplicar" aqui é transitivo direto: aplica **as** condições |
+
+Some-se a isso que "container" ficou em 3.2 enquanto "contêiner" permanece em 4.6 — ele
+mudou só uma ocorrência.
+
+#### O pseudocódigo virou o Algoritmo 1
+
+A melhor contribuição da revisão dele. O bloco de código virou **tabela numerada de 22
+passos**, editável, com legenda acima e fonte abaixo, chamada no texto como "conforme o
+pseudocódigo apresentado no Algoritmo 1". No pipeline isso virou `figuras/tab-03-2.md`
+mais um bloco `[[TAB:03-2]]` com `rotulo: algoritmo` — o `build.py` ganhou a sequência de
+numeração própria para algoritmos, ao lado de figura, tabela e quadro.
+
+Três armadilhas resolvidas no caminho, todas registradas em comentário no código:
+
+- a barra vertical de `ARREDONDAR(|restantes|)` é delimitador de célula no markdown; virou
+  o sinal de divisibilidade `∣`, que atravessa sem escape (no arquivo dele a barra some na
+  extração, porque lá ela também é delimitador);
+- o recuo dentro de code span é descartado pelo pandoc, então os níveis de aninhamento
+  passaram a espaço inquebrável;
+- o `VerbatimChar` declara Liberation Mono, mas o LibreOffice não resolve estilo de
+  caractere dentro de célula: a fonte passou a ser aplicada por formatação direta, no
+  `formato_principia.py`.
+
+#### Formatação — a parte que não pode se repetir
+
+Cada correção de diagramação dele virou regra do build:
+
+| O que ele corrigiu | Onde passou a viver |
+|---|---|
+| Corpo de tabela em 10 pt (estava 11) | estilo `Compact` no `reference-abnt.docx` |
+| Cabeçalho de tabela em negrito | `formato_principia.py`, só em linha com `cnfStyle firstRow` |
+| Tabela centralizada no bloco de texto | `formato_principia.py`, `jc=center` |
+| Título do artigo em 12 pt negrito | estilo `TituloArtigo`, novo |
+| Linhas de tabela mais compactas | `Compact` sem espaço de parágrafo, célula com 40 twips, entrelinha 230 |
+
+E uma correção que **ele não pediu mas a norma exige**: os títulos de seção vinham do
+default do pandoc com 12 pt antes e 6 depois, enquanto as Diretrizes mandam "espaçamento
+simples entre linhas **e parágrafos**, com 0 pt antes e depois". Passaram a 6 pt antes e 0
+depois. Só isso devolveu meia página.
+
+#### As 18 páginas (D-32)
+
+O arquivo dele ainda tinha 19 e ele apontou que precisa ser 18. Nosso build chegou a 20
+com o Algoritmo 1. O caminho até 18, na ordem em que rendeu:
+
+| Medida | Ganho |
+|---|---|
+| Tabelas compactas (parágrafo, célula, entrelinha) | 1 página |
+| Títulos de seção em 6/0, como a norma pede | ~0,5 página |
+| Três parágrafos do referencial que repetiam a introdução e a 3.1 | 252 palavras |
+| Três parágrafos condensados em 1 e 4, sem perder dado nem ressalva | ~200 palavras |
+
+**Nenhuma figura foi retirada** — era a condição do autor. O teto do gate voltou de 20
+para 18, e a folga de diagramação do modelo foi recalibrada de 1,2 para 0,4 página, porque
+a diagramação ficou mais apertada.
+
+#### A conferência, que é a garantia
+
+`scripts/conferir_docx.py`, novo, extrai o texto dos dois `.docx` e compara parágrafo a
+parágrafo, normalizando o desenho das tabelas. Roda a cada `build.sh`. Hoje imprime
+**"TEXTO IDÊNTICO ao da revisão do orientador"**. As divergências deliberadas — título em
+inglês refeito, cortes de página — estão numa lista no próprio script, **cada uma com o
+motivo escrito**, para que a lista não vire tapete.
+
+#### Diretrizes conferidas na fonte
+
+Lidas as Diretrizes aos Autores publicadas no site, como ele pediu. Batem com
+`.claude/rules/revista-principia.md` em tudo: 12 a 18 páginas, margens, 0 pt entre
+parágrafos, título 12 negrito, corpo 11, tabela 10, fonte de ilustração 8, resumo de 200 a
+300 palavras, 3 a 5 palavras-chave em ordem alfabética, tabelas editáveis, figuras em 300
+dpi, PDF sem identificação **inclusive nas propriedades do arquivo**.
+
+Uma correção à nossa regra: **a exigência de texto interno de figura em TNR ≥ 18 não
+aparece na versão publicada no site**, só os 300 dpi. Ela vem do modelo em `docs/`.
+Registrada em `figuras.md` como recomendação forte, não como motivo de rejeição — o que
+reduz o risco M-4 do review de 20/09.
+
+#### Metadados
+
+O arquivo dele chegou com `lastModifiedBy: Francisco Medeiros`, o que quebraria o
+duplo-cego. O `formato_principia.py` passa a **zerar os campos de autoria do `.docx` a
+cada build**, e não só a confiar em que o pandoc os emita vazios.
+
+#### Pendente
+
+- **Levar a ele os quatro ajustes que introduzem erro** (tabela acima) e a inconsistência
+  container/contêiner.
+- `02-referencial.md` ficou 18% abaixo do alvo de palavras depois dos cortes. Não é
+  problema de norma; é sinal de que a seção encolheu.
+- **`master` está 10 commits à frente de `origin/master`.**
+
+#### Próximo
+
+Mandar o `.docx` para ele e para a orientadora. O arquivo a enviar é `build/artigo.docx`,
+18 páginas, texto idêntico ao da revisão dele.

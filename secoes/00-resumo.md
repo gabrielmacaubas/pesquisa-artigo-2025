@@ -4,10 +4,13 @@ titulo: Título, resumo, abstract e palavras-chave
 alvo_palavras: 550
 status: rascunho
 ---
+::: {custom-style="TituloArtigo"}
+Automação da avaliação longitudinal de competências socioemocionais na educação profissional: certificação baseada em regras e apoio à decisão
+:::
 
-# Automação de certificação e recomendação pedagógica em programa de capacitação profissional: da geração de indicadores à camada de decisão
 
 ## Resumo
+
 
 Programas de capacitação profissional que acompanham o desenvolvimento de competências
 socioemocionais produzem, a cada unidade avaliativa, um volume de medições cuja
@@ -33,12 +36,18 @@ do ciclo formativo depende menos da orquestração do que da propriedade da cama
 dados que a sustenta, e que o demonstrado é viabilidade em condições reais de uso, não
 escala.
 
+
 Palavras-chave: automação de processos; avaliação de competências socioemocionais; baixo
 código; certificação; rastreabilidade histórica.
 
-# Automating certification and pedagogical recommendation in a professional training program: from indicator generation to the decision layer
+
+::: {custom-style="TituloArtigo"}
+Automating the longitudinal assessment of socioemotional skills in professional education: rule-based certification and decision support
+:::
+
 
 ## Abstract
+
 
 ::: {custom-style="AbstractEN"}
 Professional training programs that monitor the development of socioemotional skills
@@ -64,6 +73,7 @@ layers and of the integrity guarantees. It is concluded that closing the trainin
 depends less on orchestration than on the property of the data layer that sustains it,
 and that what was demonstrated is feasibility under real conditions of use, not scale.
 :::
+
 
 ::: {custom-style="AbstractEN"}
 Keywords: certification; historical traceability; low-code; process automation;

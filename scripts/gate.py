@@ -31,12 +31,10 @@ SECOES = os.path.join(RAIZ, 'secoes')
 REFS = os.path.join(RAIZ, 'refs.md')
 
 # 18 é o teto da Revista Principia, e passar dele é rejeição automática na triagem.
-# O autor decidiu em 20/09/2026 (D-30) aceitar até 20 páginas para caber as figuras
-# vindas de artefato real. O gate deixa de bloquear em 18, mas nunca deixa de avisar:
-# entre 18 e 20 a pendência diz, com todas as letras, que o manuscrito está fora da
-# norma do veículo.
+# D-30 havia afrouxado para 20 em 20/09/2026; o orientador reafirmou as 18 na revisão
+# de 09/10/2026 (D-32) e o documento voltou a caber. O teto volta a bloquear.
 TETO_REVISTA = 18.0
-TETO_PAGINAS = 20.0
+TETO_PAGINAS = 18.0
 MIN_PAGINAS = 12.0
 ALVO_PAGINAS = 16.0
 PALAVRAS_POR_PAGINA = 700.0
@@ -47,10 +45,12 @@ CM_POR_PAGINA = 24.0
 REFS_POR_PAGINA = 15.0
 # O modelo soma texto, ilustrações e referências e ignora o que a diagramação cria:
 # figura que não cabe no pé da página e desce inteira, linha órfã de parágrafo,
-# espaço antes e depois de cada título de seção. Medido no PDF formatado de
-# 20/09/2026: o modelo dava 16,8 páginas e o documento saiu com 18. A diferença
-# entra aqui, explícita, em vez de ficar escondida numa constante ajustada à mão.
-FOLGA_DIAGRAMACAO = 1.2
+# espaço antes e depois de cada título de seção. Medido no PDF formatado e recalibrado
+# a cada mudança de diagramação: em 20/09/2026 valia 1,2 página; depois da revisão do
+# orientador (tabela compacta, título de seção com 6 pt antes e 0 depois, corpo de
+# tabela em 10 pt) o desperdício caiu, e em 18/10/2026 o modelo dava 17,6 contra 18
+# reais.
+FOLGA_DIAGRAMACAO = 0.4
 FOLGA_LEGENDA_CM = 1.5
 
 CAMPOS_FIG = ['tipo', 'status', 'origem', 'dados', 'descricao',

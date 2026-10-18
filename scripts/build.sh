@@ -53,6 +53,13 @@ fi
 pandoc "${ARGS[@]}"
 python3 scripts/formato_principia.py
 
+# o documento gerado tem de continuar batendo com a revisão do orientador
+if [ -f docs/revisao-orientador-2026-10-09.docx ]; then
+  echo
+  echo "── conferência contra a revisão do orientador ───"
+  python3 scripts/conferir_docx.py || true
+fi
+
 if command -v soffice >/dev/null 2>&1; then
   echo
   echo "── pdf ──────────────────────────────────"
